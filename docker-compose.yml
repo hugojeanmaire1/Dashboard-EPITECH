@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  java:
+    restart: always
+    build: ./java/.
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./java:/app
+    networks:
+      - dashboard-net
+
+  angular:
+    restart: always
+    build: ./angular/.
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./angular:/app
+    networks:
+      - dashboard-net
+
+networks:
+  dashboard-net:
