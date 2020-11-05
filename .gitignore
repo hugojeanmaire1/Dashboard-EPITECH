@@ -1,5 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Gradle template
+.idea/
 .gradle
 **/build/
 !src/**/build/
