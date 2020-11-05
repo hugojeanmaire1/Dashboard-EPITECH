@@ -3,7 +3,6 @@ import { User } from "../services/user";
 import firebase from 'firebase/app';
 import "firebase/auth";
 import 'firebase/firestore';
-import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 
@@ -16,13 +15,10 @@ export class AuthService {
 
   constructor(
     public afs: AngularFirestore,     // Inject Firestore service
-    public afAuth: AngularFireAuth,   // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone,            // NgZone service to remove outside scope warning
     ) {
-      /* Saving user data in localstorage when
-      logged in and setting up null when logged out */
-      this.afAuth.authState.subscribe(user => {
+      firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
@@ -36,7 +32,7 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email, password) {
-    return this.afAuth.signInWithEmailAndPassword(email, password)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
           this.ngZone.run(() => {
             this.router.navigate(['test'])
@@ -50,20 +46,20 @@ export class AuthService {
 
   // Sign up with email/password
   SignUp(email, password) {
-    return this.afAuth.createUserWithEmailAndPassword(email, password)
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
+        this.SendVerificationMail();
         this.SetUserData(result.user);
-        this.SendVerificationMail(this.userData.email);
       }).catch((error) => {
         window.alert(error.message)
       })
   }
 
   //Send email verfificaiton when new user sign up
-  SendVerificationMail(email) {
-    return this.afAuth.isSignInWithEmailLink(email, )
+  SendVerificationMail() {
+    return firebase.auth().currentUser.sendEmailVerification()
       .then(() => {
         this.router.navigate(['verify-email-address']);
       })
@@ -71,7 +67,7 @@ export class AuthService {
 
   // Reset Forggot password
   ForgotPassword(passwordResetEmail) {
-    return this.afAuth.sendPasswordResetEmail(passwordResetEmail)
+    return firebase.auth().sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
         window.alert('Password reset email sent, check your inbox.');
       }).catch((error) => {
@@ -92,7 +88,7 @@ export class AuthService {
 
   // Auth logic to run auth providers
   AuthLogin(provider) {
-    return this.afAuth.signInWithPopup(provider)
+    return firebase.auth().signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
           this.router.navigate(['test']);
@@ -104,8 +100,8 @@ export class AuthService {
   }
 
   /* Setting up user data when sign in with username/password,
-sign up with username/password and sign in with social auth
-provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  sign up with username/password and sign in with social auth
+  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   SetUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
@@ -122,7 +118,7 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
 
   // Sign out
   SignOut() {
-    return this.afAuth.signOut().then(() => {
+    return firebase.auth().signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['sign-in']);
     })
