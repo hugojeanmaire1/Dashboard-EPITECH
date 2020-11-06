@@ -2,6 +2,7 @@ version: '3'
 
 services:
   java:
+    container_name: backend-java
 #    restart: always
     build: java/.
     ports:
@@ -12,12 +13,14 @@ services:
       - dashboard-net
 
   angular:
+    container_name: front-angular
     restart: always
     build: angular/.
     ports:
       - "4200:4200"
     volumes:
       - ./angular:/app
+      - /app/node_modules/
     networks:
       - dashboard-net
 
