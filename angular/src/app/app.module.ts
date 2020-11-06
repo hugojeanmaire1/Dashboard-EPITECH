@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from "../env";
+import { environment } from "../environments/environment";
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
@@ -17,6 +17,8 @@ import { TestComponent } from './components/test/test.component';
 
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { AuthService } from "./shared/services/auth.service";
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
+    BrowserAnimationsModule,
+    FontAwesomeModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

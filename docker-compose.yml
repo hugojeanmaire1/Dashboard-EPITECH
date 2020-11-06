@@ -2,7 +2,7 @@ version: '3'
 
 services:
   java:
-    restart: always
+#    restart: always
     build: java/.
     ports:
       - "8080:8080"
