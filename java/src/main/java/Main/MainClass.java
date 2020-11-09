@@ -10,7 +10,7 @@ import java.io.InputStream;
 public class MainClass {
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Hello Worldzzz");
+        System.out.println("Hello World !!!!");
         InputStream fis = MainClass.class.getClassLoader().getResourceAsStream("ServiceAccountKey.json");
         if (fis == null) {
             System.out.println("Dzezeze");
