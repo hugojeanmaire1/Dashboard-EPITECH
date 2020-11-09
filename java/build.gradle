@@ -3,10 +3,12 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
+    id 'org.springframework.boot' version '2.3.2.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 }
 
 ext {
-    javaMainClass = "Main.MainClass"
+    javaMainClass = "App.MainClass"
 }
 
 application {
@@ -31,10 +33,10 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-log4j12:1.7.30'
     compile 'com.google.firebase:firebase-admin:7.0.1'
     compile 'com.google.auth:google-auth-library-credentials:0.22.0'
     compile 'com.google.auth:google-auth-library-oauth2-http:0.22.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
