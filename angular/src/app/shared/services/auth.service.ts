@@ -86,6 +86,11 @@ export class AuthService {
     return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
   }
 
+  // Sign in with GitHub
+  GithubAuth() {
+    return this.AuthLogin(new firebase.auth.GithubAuthProvider());
+  }
+
   // Auth logic to run auth providers
   AuthLogin(provider) {
     return firebase.auth().signInWithPopup(provider)

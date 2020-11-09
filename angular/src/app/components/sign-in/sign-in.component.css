@@ -1,23 +1,32 @@
 .sign-form {
     min-width: 150px;
-    max-width: 250px;
-    width: 100%;
+    padding: 30px;
+}
+
+.mat-card {
+    border-radius: 30px;
+    margin-top: 100px;
 }
 
 .sign-form-input {
     width: 100%;
 }
 
-.signin-content {
+.signin-content, mat-card-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .button-container {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.forgot-password{
+    margin-top: 10px;
 }
 
 .google-icon {
@@ -29,4 +38,5 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    margin: 20px;
 }

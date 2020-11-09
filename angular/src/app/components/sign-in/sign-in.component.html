@@ -13,12 +13,13 @@
           <input type="password" matInput #userPassword required/>
         </mat-form-field>
 
-        <div class="forgotPassword">
+        <!-- Calling SignIn Api from AuthService -->
+        <div class="text-center">
+          <button mat-raised-button  color="primary" type="button" (click)="authService.SignIn(userName.value, userPassword.value)">Log In</button>
+        </div>
+        <div class="forgot-password text-center">
           <mat-card-subtitle routerLink="/forgot-password">Forgot Password?</mat-card-subtitle>
         </div>
-
-        <!-- Calling SignIn Api from AuthService -->
-        <button mat-raised-button color="primary" type="button" (click)="authService.SignIn(userName.value, userPassword.value)">Log In</button>
       </div>
       <div>
         <span>Or login with:</span>
@@ -29,8 +30,8 @@
             </button>
           </div>
           <div class="button-container">
-            <button mat-fab color="basic" >
-              <mat-icon aria-hidden="false" color="primary">facebook</mat-icon>
+            <button mat-fab color="basic" (click)="authService.GithubAuth()">
+              <img class="google-icon" src="assets/github_logo.png" />
             </button>
           </div>
           <div class="button-container">
