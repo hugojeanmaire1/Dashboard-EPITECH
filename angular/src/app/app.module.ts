@@ -28,6 +28,11 @@ import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 
+// Gridster
+import { GridsterModule} from "angular-gridster2";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSidenavModule} from "@angular/material/sidenav";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +58,9 @@ import {MatIconModule} from "@angular/material/icon";
     MatCardModule,
     MatTableModule,
     MatIconModule,
+    GridsterModule,
+    MatTooltipModule,
+    MatSidenavModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

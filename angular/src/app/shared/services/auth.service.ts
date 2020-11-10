@@ -91,6 +91,10 @@ export class AuthService {
     return this.AuthLogin(new firebase.auth.GithubAuthProvider());
   }
 
+  TwitterAuth() {
+    return this.AuthLogin(new firebase.auth.TwitterAuthProvider());
+  }
+
   MicrosoftAuth() {
     return this.AuthLogin(new firebase.auth.OAuthProvider('microsoft.com'));
   }
