@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
-import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-dashboard',

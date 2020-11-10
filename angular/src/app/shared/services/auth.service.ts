@@ -35,7 +35,7 @@ export class AuthService {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
           this.ngZone.run(() => {
-            this.router.navigate(['test'])
+            this.router.navigate(['dashboard'])
           });
           this.SetUserData(result.user);
       }).catch((error) => {
@@ -104,7 +104,7 @@ export class AuthService {
     return firebase.auth().signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['test']);
+          this.router.navigate(['dashboard']);
         })
         this.SetUserData(result.user);
       }).catch((error) => {
