@@ -1,15 +1,15 @@
 <mat-drawer-container class="sidebar-container" autosize>
   <mat-drawer #drawer class="sidebar-elem" mode="side">
-    <p>Auto-resizing sidenav</p>
+    <p>SideBar</p>
     <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
     <button (click)="showFiller = !showFiller" mat-raised-button>
-      Toggle extra text
+      Add Widget
     </button>
   </mat-drawer>
 
   <div class="sidenav-content">
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
+    <button class="button" mat-fab color="primary" (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
     </button>
   </div>
   <gridster [options]="options">
