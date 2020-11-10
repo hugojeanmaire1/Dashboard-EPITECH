@@ -39,6 +39,7 @@ export class AuthService {
           });
           this.SetUserData(result.user);
       }).catch((error) => {
+        console.log(error)
         window.alert(error.message);
       })
   }
@@ -83,6 +84,11 @@ export class AuthService {
   // Sign in with Google
   GoogleAuth() {
     return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
+  }
+
+  // Sign in with GitHub
+  GithubAuth() {
+    return this.AuthLogin(new firebase.auth.GithubAuthProvider());
   }
 
   // Auth logic to run auth providers

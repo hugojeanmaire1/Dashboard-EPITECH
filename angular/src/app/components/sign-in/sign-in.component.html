@@ -1,42 +1,53 @@
-<div class="container">
-    <form class="login-100-form text-center align-items-center" style="color: #757575;">
+<div class="signin-content">
+  <mat-card>
+    <mat-card-content>
+      <div class="sign-form">
+        <mat-card-title>Sign In.</mat-card-title>
+        <mat-form-field class="sign-form-input">
+          <mat-label>Mail</mat-label>
+          <input type="text" matInput #userName required/>
+        </mat-form-field>
 
-        <div class="authBlock">
-            <h3>Sign In</h3>
-            <div class="md-form">
-                <input type="email" class="form-control" placeholder="Email" #userName required>
-            </div>
+        <mat-form-field class="sign-form-input">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput #userPassword required/>
+        </mat-form-field>
 
-            <div class="md-form">
-                <input type="password" class="form-control" placeholder="Password" #userPassword required>
-            </div>
-
-            <!-- Calling SignIn Api from AuthService -->
-            <div class="md-form">
-              <button class="btn-grad" (click)="authService.SignIn(userName.value, userPassword.value)">Login</button>
-            </div>
-
-          <div class="redirectToLogin">
-            <span>Don't have an account?<span class="redirect" routerLink="/register-user">Sign Up</span></span>
-          </div>
-
-            <div class="forgotPassword">
-                <span routerLink="/forgot-password">Forgot Password?</span>
-            </div>
+        <!-- Calling SignIn Api from AuthService -->
+        <div class="text-center">
+          <button mat-raised-button  color="primary" type="button" (click)="authService.SignIn(userName.value, userPassword.value)">Log In</button>
         </div>
-
-      <div class="md-form">
-        <span class="or"><span class="orInner">Or sign in with:</span></span>
+        <div class="forgot-password text-center">
+          <mat-card-subtitle routerLink="/forgot-password">Forgot Password?</mat-card-subtitle>
+        </div>
+      </div>
+      <div>
+        <span>Or login with:</span>
+        <div class="flex-button-container">
+          <div class="button-container">
+            <button mat-fab color="basic" (click)="authService.GoogleAuth()">
+              <img class="google-icon" src="assets/google_icon.png" />
+            </button>
+          </div>
+          <div class="button-container">
+            <button mat-fab color="basic" (click)="authService.GithubAuth()">
+              <img class="google-icon" src="assets/github_logo.png" />
+            </button>
+          </div>
+          <div class="button-container">
+            <button mat-fab color="basic" >
+              <mat-icon aria-hidden="false" color="warn">cloud</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- Calling GoogleAuth Api from AuthService -->
-      <div class="md-form">
-        <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
-          <i class="fab fa-google"></i>
-          Log in with Google
-        </button>
-      </div>
 
-    </form>
+      <div class="redirectToLogin">
+        <mat-card-subtitle>Don't have an account ?<span class="redirect" routerLink="/register-user"> Sign Up</span></mat-card-subtitle>
+      </div>
+    </mat-card-content>
+  </mat-card>
 </div>
+
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import firebase from 'firebase/app';
+import { AuthService } from "./shared/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -7,8 +7,9 @@ import firebase from 'firebase/app';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor() {
-    // Initialize Firebase App
+  constructor(
+    public authService: AuthService
+  ) {
   }
 
   title = 'dashboard';
