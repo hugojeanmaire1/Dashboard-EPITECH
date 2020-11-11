@@ -2,11 +2,15 @@ package App;
 
 import App.Twitter.TwitterClient;
 import App.controller.DAO;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.ExecutionException;
 
 
@@ -36,6 +40,21 @@ public class MainClass {
      */
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         System.setProperty("java.net.preferIPv4Stack" , "true");
+
+        InputStream fis = MainClass.class.getClassLoader().getResourceAsStream("ServiceAccountKey.json");
+        if (fis != null) {
+            try {
+                FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
+                        .setCredentials(GoogleCredentials.fromStream(fis))
+                        .setDatabaseUrl("https://dashboard-eb9b3.firebaseio.com")
+                        .build();
+                FirebaseApp.initializeApp(firebaseOptions);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error when reading the file");
+        }
 
 /*        try {
             TwitterClient twitterClient = DAO.getTwitterClientInstance();
