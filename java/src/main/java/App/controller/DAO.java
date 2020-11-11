@@ -1,17 +1,19 @@
 package App.controller;
-import App.Twitter.TwitterClient;
-import App.Twitter.TwitterCredentials;
 import org.springframework.stereotype.Service;
+import twitter4j.Twitter;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
 
 @Service
 public class DAO {
 
     private static DAO instance = new DAO();
-    private static TwitterClient twitterClient = null;
+    private static Twitter twitter = null;
 
     private DAO()
     {
-        System.out.println("Construction du Singleton au premier appel");
+            System.out.println("Construction du Singleton au premier appel");
     }
 
     public static DAO getInstance()
@@ -21,14 +23,20 @@ public class DAO {
         return instance;
     }
 
-    public static TwitterClient getTwitterClientInstance() {
-        if (twitterClient == null)
-            twitterClient = new TwitterClient(TwitterCredentials.builder()
-                    .accessToken("892450431816871937-BQexzSGrVxlgVWahoSzlL2l5Oq6VlFO")
-                    .accessTokenSecret("xCBYfI03dYCF2LwowByAakhW1aqxPuLeoWghPIrptLtuZ")
-                    .apiKey("S2O303TWOCfZHx3e8Jt16AgCr")
-                    .apiSecretKey("VEquyDohQ2YaXueBqmL0akbAJR16v0GxxTXpxRGDCjuJ9F0QRk")
-                    .build());
-        return twitterClient;
+    public static Twitter getTwitter()
+    {
+        if (twitter == null) {
+            String consumerKey = "S2O303TWOCfZHx3e8Jt16AgCr";
+            String consumerSecret = "VEquyDohQ2YaXueBqmL0akbAJR16v0GxxTXpxRGDCjuJ9F0QRk";
+
+            ConfigurationBuilder builder = new ConfigurationBuilder();
+            builder.setOAuthConsumerKey(consumerKey);
+            builder.setOAuthConsumerSecret(consumerSecret);
+            Configuration configuration = builder.build();
+
+            TwitterFactory factory = new TwitterFactory(configuration);
+            twitter = factory.getInstance();
+        }
+        return twitter;
     }
 }

@@ -1,0 +1,27 @@
+{
+  "services": [{
+    "name":"weather",
+    "widgets":[{
+      "name":"city_temperature",
+      "description":"Displaytemperatureforacity",
+      "params":[{
+        "name":"city",
+        "type":"string"
+      }]
+    }]
+  },{
+    "name":"rss",
+    "widgets":[{
+      "name":"article_list",
+      "description":"Displayingthelistofthelastarticles",
+      "params":[{
+        "name":"link",
+        "type":"string"
+      },
+      {
+        "name":"number",
+        "type":"integer"
+      }]
+    }]
+  }]
+}

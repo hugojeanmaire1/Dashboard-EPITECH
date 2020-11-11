@@ -1,7 +1,5 @@
 package App;
 
-import App.Twitter.TwitterClient;
-import App.controller.DAO;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -11,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.ExecutionException;
 
 
 /*
@@ -38,7 +35,7 @@ public class MainClass {
      * @param args
      * args are parameters passed to the application
      */
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args){
         System.setProperty("java.net.preferIPv4Stack" , "true");
 
         InputStream fis = MainClass.class.getClassLoader().getResourceAsStream("ServiceAccountKey.json");
