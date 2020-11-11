@@ -12,6 +12,12 @@ public class Widgets {
 
     }
 
+    public Widgets(String name, String description) {
+        this.name = name;
+        this.description = description;
+        this.params = new HashMap<String, String>();
+    }
+
     public String getName() {
         return name;
     }
@@ -36,12 +42,4 @@ public class Widgets {
         this.params = params;
     }
 
-    @Override
-    public String toString() {
-        return "widgets{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", params=" + params +
-                '}';
-    }
 }

@@ -26,4 +26,5 @@ public class About {
     public void setServer(Server server) {
         this.server = server;
     }
+
 }

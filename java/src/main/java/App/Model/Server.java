@@ -29,11 +29,4 @@ public class Server {
         this.services = services;
     }
 
-    @Override
-    public String toString() {
-        return "Server{" +
-                "currentTime=" + current_time +
-                ", services=" + services +
-                '}';
-    }
 }

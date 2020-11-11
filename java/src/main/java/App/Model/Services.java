@@ -8,7 +8,14 @@ public class Services {
     private ArrayList<Widgets> widgets;
 
     public Services() {
+        this.name = "null";
+        this.widgets = new ArrayList<Widgets>();
+    }
 
+    public Services(String name) {
+        this.name = name;
+        this.widgets = new ArrayList<Widgets>();
+        this.widgets.add(new Widgets("city_temperature", "Display temperature for a city"));
     }
 
     public String getName() {
@@ -31,7 +38,6 @@ public class Services {
     public String toString() {
         return "Services{" +
                 "name='" + name + '\'' +
-                ", widgets=" + widgets +
                 '}';
     }
 }

@@ -5,6 +5,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'org.springframework.boot' version '2.3.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'jacoco'
 }
 
 ext {
@@ -22,6 +23,7 @@ sourceSets {
             include 'ServiceAccountKey.json'
         }
     }
+
 }
 
 group 'org.epitech.dashboard'
@@ -33,11 +35,19 @@ repositories {
 }
 
 dependencies {
+    implementation 'junit:junit:4.12'
+    compile 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0-RC1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0-rc1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.0-rc1'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.0-rc1'
     compile 'com.google.firebase:firebase-admin:7.0.1'
     compile 'com.google.auth:google-auth-library-credentials:0.22.0'
     compile 'com.google.auth:google-auth-library-oauth2-http:0.22.0'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.3.5.RELEASE'
 }
 
 shadowJar {
@@ -53,3 +63,52 @@ jar {
         )
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+    classDirectories.setFrom(
+            fileTree(dir: "build/classes/java/main")
+                    .filter({file -> !file.name.contains('MainClass')})
+    )
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.5
+            }
+        }
+
+        rule {
+            enabled = false
+            element = 'CLASS'
+            includes = ['App.*']
+
+            limit {
+                counter = 'LINE'
+                value = 'TOTALCOUNT'
+                maximum = 0.3
+            }
+        }
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/ReportDir")
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+}
+

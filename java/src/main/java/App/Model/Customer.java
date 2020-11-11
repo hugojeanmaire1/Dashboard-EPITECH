@@ -16,11 +16,4 @@ public class Customer {
     public void setHost(String host) {
         this.host = host;
     }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "host='" + host + '\'' +
-                '}';
-    }
 }
