@@ -35,10 +35,11 @@ export class AuthService {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
           this.ngZone.run(() => {
-            this.router.navigate(['test'])
+            this.router.navigate(['dashboard'])
           });
           this.SetUserData(result.user);
       }).catch((error) => {
+        console.log(error)
         window.alert(error.message);
       })
   }
@@ -85,12 +86,25 @@ export class AuthService {
     return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
   }
 
+  // Sign in with GitHub
+  GithubAuth() {
+    return this.AuthLogin(new firebase.auth.GithubAuthProvider());
+  }
+
+  TwitterAuth() {
+    return this.AuthLogin(new firebase.auth.TwitterAuthProvider());
+  }
+
+  MicrosoftAuth() {
+    return this.AuthLogin(new firebase.auth.OAuthProvider('microsoft.com'));
+  }
+
   // Auth logic to run auth providers
   AuthLogin(provider) {
     return firebase.auth().signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['test']);
+          this.router.navigate(['dashboard']);
         })
         this.SetUserData(result.user);
       }).catch((error) => {
