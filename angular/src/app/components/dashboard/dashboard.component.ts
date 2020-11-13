@@ -1,5 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
+import { Store } from '@ngrx/store';
+import {AuthService} from "../../shared/services/auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,8 +16,11 @@ export class DashboardComponent implements OnInit {
   options: GridsterConfig;
   dashboard: Array<GridsterItem>;
   showFiller = false;
+  data: Observable<any>;
 
-  constructor() { }
+
+  constructor(private store: Store<any>,
+              public authService: AuthService) {}
 
   ngOnInit(): void {
 
@@ -56,6 +62,8 @@ export class DashboardComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.data = this.authService.getUserData()
+    console.log(this.data)
   }
 
   addItem(): void {

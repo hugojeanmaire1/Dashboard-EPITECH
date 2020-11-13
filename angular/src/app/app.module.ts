@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -34,6 +36,9 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatTreeModule} from "@angular/material/tree";
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 
+import { StoreModule } from '@ngrx/store';
+import { reducer } from "./store/reducers/store.reducer";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +51,7 @@ import { SidebarComponent } from './components/dashboard/sidebar/sidebar.compone
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
@@ -63,6 +69,7 @@ import { SidebarComponent } from './components/dashboard/sidebar/sidebar.compone
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
+    StoreModule.forRoot({infos: reducer}),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
