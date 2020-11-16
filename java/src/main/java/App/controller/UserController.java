@@ -4,22 +4,28 @@ import App.Model.About;
 import App.Model.User;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @EnableAutoConfiguration
 public class UserController {
 
-    @RequestMapping(path = "/create-user/{uid}", method = RequestMethod.POST)
-    public void PostNewUser(@PathVariable(value = "uid")String uid) {
-        User test = new User();
+    @PostMapping(value = "/create-user")
+    public void PostNewUser(@RequestBody User body, HttpServletRequest request) throws ExecutionException, InterruptedException {
+        request.getSession().setAttribute("Create", body);
 
-        test.createUser(uid);
-    };
+        body.createNewUser();
+    }
+
+    @PostMapping(value = "/check-user")
+    public User checkUser(@RequestBody User body, HttpServletRequest request) throws ExecutionException, InterruptedException {
+        request.getSession().setAttribute("Login", body);
+
+        return body.userLogIn();
+    }
 
 }

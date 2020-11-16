@@ -3,9 +3,13 @@ package App;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -121,6 +125,21 @@ public class MainClass {
         usersRef.setValueAsync(widgets);*/
 
         SpringApplication.run(MainClass.class, args);
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(@NotNull CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "PUT", "POST", "DELETE")
+                        .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers")
+                        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
+                        .allowCredentials(true).maxAge(3600);
+            }
+        };
     }
 
 }
