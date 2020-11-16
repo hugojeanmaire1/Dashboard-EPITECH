@@ -1,30 +1,45 @@
-<div class="signin-content">
-  <mat-card>
-    <mat-card-content>
-      <div class="sign-form">
-        <mat-card-title>Sign Up.</mat-card-title>
-        <mat-form-field class="sign-form-input">
-          <mat-label>Email Address</mat-label>
-          <input type="text" matInput #userEmail required/>
-        </mat-form-field>
+<div class="displayTable">
+    <div class="displayTableCell">
 
-        <mat-form-field class="sign-form-input">
-          <mat-label>Password</mat-label>
-          <input type="password" matInput #userPassword required/>
-        </mat-form-field>
+        <div class="authBlock">
+            <h3>Sign Up</h3>
 
-        <!-- Calling SignIn Api from AuthService -->
-        <div class="text-center">
-          <button mat-raised-button color="primary" (click)="authService.SignUp(userEmail.value, userPassword.value)">Sign Up</button>
+            <div class="formGroup">
+                <input type="email" class="formControl" placeholder="Email Address" #userEmail required>
+            </div>
+
+            <div class="formGroup">
+                <input type="password" class="formControl" placeholder="Password" #userPwd required>
+            </div>
+
+            <div class="formGroup">
+                <input type="button" class="btn btnPrimary" value="Sign Up" (click)="authService.SignUp(userEmail.value, userPwd.value)">
+            </div>
+
+            <div class="formGroup">
+                <span class="or"><span class="orInner">Or</span></span>
+            </div>
+
+            <!-- Continue with Google -->
+            <div class="formGroup">
+                <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">
+                    <i class="fab fa-google-plus-g"></i>
+                    Continue with Google
+                </button>
+            </div>
+
+<!--            &lt;!&ndash; Continue with Facebook &ndash;&gt;-->
+<!--            <div class="formGroup">-->
+<!--                <button type="button" class="btn facebookBtn" (click)="authService.FacebookAuth()">-->
+<!--                    <i class="fab fa-facebook"></i>-->
+<!--                    Continue with Facebook-->
+<!--                </button>-->
+<!--            </div>-->
         </div>
-      </div>
 
-      <div class="redirectToLogin text-center">
-        <div>
-          <span>Or login with:</span>
+        <div class="redirectToLogin">
+            <span>Already have an account? <span class="redirect" routerLink="/sign-in">Log In</span></span>
         </div>
-        <mat-card-subtitle>Already have an account? <span class="redirect" routerLink="/sign-in">Log In</span></mat-card-subtitle>
-      </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+
 </div>
