@@ -33,14 +33,12 @@ repositories {
     google()
     jcenter()
     mavenCentral()
-    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
     implementation 'junit:junit:4.12'
-    implementation 'com.github.VeteranSoftware:Java-Twitch-Api-Wrapper:5.0.2'
-    compile 'org.projectlombok:lombok:1.18.16'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    compile 'org.projectlombok:lombok:1.18.16'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0-RC1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0-rc1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.0-rc1'
