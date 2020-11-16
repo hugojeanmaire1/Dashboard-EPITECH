@@ -1,0 +1,9 @@
+.icon-dash {
+  height: 55px;
+  width: 55px;
+  margin: 15px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

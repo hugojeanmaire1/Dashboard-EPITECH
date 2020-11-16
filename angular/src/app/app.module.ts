@@ -13,12 +13,26 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { TestComponent } from './components/test/test.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from "@angular/material/card";
+import {MatTableModule} from "@angular/material/table";
+import {MatIconModule} from "@angular/material/icon";
+
+// Gridster
+import { GridsterModule} from "angular-gridster2";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatSidenavModule} from "@angular/material/sidenav";
+import {MatTreeModule} from "@angular/material/tree";
+import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +41,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SignUpComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    TestComponent
+    DashboardComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +52,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     AngularFirestoreModule,
     BrowserAnimationsModule,
     FontAwesomeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatTableModule,
+    MatIconModule,
+    GridsterModule,
+    MatTooltipModule,
+    MatSidenavModule,
+    MatTreeModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
