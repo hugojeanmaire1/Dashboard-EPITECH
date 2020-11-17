@@ -27,7 +27,6 @@ public class User {
     }
 
     public User createNewUser() throws ExecutionException, InterruptedException {
-        System.out.println("CREATE NEW USER");
         Map<String, Object> docData = new HashMap<>();
         docData.put("displayName", this.getDisplayName());
         docData.put("email", this.getEmail());
@@ -51,7 +50,6 @@ public class User {
     public User userLogIn() throws ExecutionException, InterruptedException {
         System.out.println("USER LOGIN");
         User response = null;
-        this.printData();
 
         // Get user data from Firestore
         DocumentReference docRef = db.collection("users").document(this.getUid());
@@ -67,7 +65,6 @@ public class User {
         } else {
             response = this.createNewUser();
         }
-
         return response;
     }
 

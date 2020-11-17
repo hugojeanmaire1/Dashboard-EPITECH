@@ -17,7 +17,6 @@ export function reducer(state = initialState, action: UserActions) {
         isAuthenticated: false,
       };
     case UserActionTypes.LOGIN_COMPLETE:
-      console.log("LOGIN COMPLETE = ", action.payload);
       return {
         ...state,
         isAuthenticated: true,
