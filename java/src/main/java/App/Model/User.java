@@ -3,11 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.gson.Gson;
-import com.google.protobuf.Any;
 
-import javax.swing.text.Document;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +26,7 @@ public class User {
 
     }
 
-    public void createNewUser() throws ExecutionException, InterruptedException {
+    public User createNewUser() throws ExecutionException, InterruptedException {
         System.out.println("CREATE NEW USER");
         Map<String, Object> docData = new HashMap<>();
         docData.put("displayName", this.getDisplayName());
@@ -42,6 +38,14 @@ public class User {
         docData.put("widgets", null);
 
         db.collection("users").document(this.getUid()).set(docData);
+
+        DocumentReference docRef = db.collection("users").document(this.getUid());
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+
+        User data = document.toObject(User.class);
+        return data;
+
     }
 
     public User userLogIn() throws ExecutionException, InterruptedException {
@@ -61,7 +65,7 @@ public class User {
             response = document.toObject(User.class);
             response.printData();
         } else {
-            this.createNewUser();
+            response = this.createNewUser();
         }
 
         return response;

@@ -9,10 +9,16 @@ import { Store } from '@ngrx/store';
 import { UserActionTypes } from "../../store/actions/store.actions";
 import { LoginComplete, Login, LoginError} from "../../store/actions/store.actions";
 
-import { HttpClient } from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {reduce} from "rxjs/operators";
 import {reducer} from "../../store/reducers/store.reducer";
 import { Observable } from "rxjs";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': "application/json",
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -44,15 +50,14 @@ export class AuthService {
   SignIn(email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
-          this.ngZone.run(() => {
-            this.router.navigate(['dashboard'])
-          });
-          this.SetUserData(result.user);
-          this._httpClient.get("http://localhost:8080/checkuser/" + result.user.uid)
+          this._httpClient.post("http://localhost:8080/users/check-user", result.user, httpOptions)
             .subscribe(response => {
-              console.log("Result = ", response);
-              this.store.dispatch(new LoginComplete(response));
-            });
+              console.log("Response SignIn = ", response)
+              this.ngZone.run(() => {
+                this.router.navigate(['dashboard'])
+                this.store.dispatch(new LoginComplete(response));
+              });
+            })
       }).catch((error) => {
         console.log(error)
         window.alert(error.message);
@@ -63,20 +68,19 @@ export class AuthService {
   SignUp(email, password) {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign
+        /* Call the SendVerificationMail() function when new user sign
         up and returns promise */
         this.SendVerificationMail();
-        this.SetUserData(result.user);
-        this._httpClient.get("http://localhost:8080/create-user/" + result.user.uid)
+        this._httpClient.post("http://localhost:8080/users/create-user", result.user, httpOptions)
           .subscribe(response => {
-            console.log("User Created !", response)
+            console.log("Response SignUp = ", response)
           })
       }).catch((error) => {
         window.alert(error.message)
       })
   }
 
-  //Send email verfificaiton when new user sign up
+  //Send email verification when new user sign up
   SendVerificationMail() {
     return firebase.auth().currentUser.sendEmailVerification()
       .then(() => {
@@ -84,7 +88,7 @@ export class AuthService {
       })
   }
 
-  // Reset Forggot password
+  // Reset Forgot password
   ForgotPassword(passwordResetEmail) {
     return firebase.auth().sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
@@ -94,7 +98,7 @@ export class AuthService {
       })
   }
 
-  // Returns true when user is looged in and email is verified
+  // Returns true when user is logged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return (user !== null);
@@ -123,36 +127,16 @@ export class AuthService {
     return firebase.auth().signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this._httpClient.get("http://localhost:8080/checkuser/" + result.user.uid)
+          this._httpClient.post("http://localhost:8080/users/check-user", result.user, httpOptions)
             .subscribe(response => {
-              console.log("Response = ", response);
+              console.log("Response AuthLogin = ", response)
               this.store.dispatch(new LoginComplete(response));
-              this.SetUserData(response);
-            });
-          this.router.navigate(['dashboard']);
+              this.router.navigate(['dashboard']);
+            })
         })
       }).catch((error) => {
         window.alert(error)
       })
-  }
-
-  /* Setting up user data when sign in with username/password,
-  sign up with username/password and sign in with social auth
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoUrl: user.photoURL,
-      emailVerified: user.emailVerified,
-      services: user.services,
-      widgets: user.widgets,
-    }
-    return userRef.set(userData, {
-      merge: true
-    })
   }
 
   getUserData() {
