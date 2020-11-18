@@ -1,15 +1,4 @@
-import { createReducer, on } from "@ngrx/store";
 import {UserActions, UserActionTypes} from "../actions/store.actions";
-import { User } from "../../shared/services/user";
-
-// export interface State {
-//   // is a user authenticated?
-//   isAuthenticated: boolean;
-//   // if authenticated, there should be a user object
-//   user: null;
-//   // error message
-//   errorMessage: string | null;
-// };
 
 export const initialState = {
   isAuthenticated: false,

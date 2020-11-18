@@ -2,20 +2,15 @@
   <mat-drawer #drawer class="sidebar-elem" mode="side">
     <app-sidebar></app-sidebar>
   </mat-drawer>
-
   <div class="sidenav-content">
     <button class="button" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
+    <a class="btn btn-success" href="http://localhost:8080/services/twitter/login">Login Twitter</a>
   </div>
   <gridster [options]="options" style="background-color: whitesmoke">
-    <gridster-item [item]="item" *ngFor="let item of dashboard">
-      <div class="button-holder">
-        <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </gridster-item>
+    <app-twitter></app-twitter>
+    <app-spotify></app-spotify>
+    <app-twitch></app-twitch>
   </gridster>
-
 </mat-drawer-container>
