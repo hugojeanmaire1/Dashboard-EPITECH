@@ -1,25 +1,25 @@
 package App.controller;
 
+import lombok.SneakyThrows;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import org.slf4j.Logger;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 
 
-@RestController
+@Controller
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/twitter")
 public class TwitterController {
 
@@ -41,42 +41,24 @@ public class TwitterController {
         }
         Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
         RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
-        response.setContentType("application/json");
-        HashMap<String, String> map = new HashMap<>();
-
-        PrintWriter out = null;
-        try {
-            out = response.getWriter();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         try {
             if (twitter == null)
                 throw new Exception("Twitter is null");
             AccessToken token = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
-
             request.getSession().removeAttribute("requestToken");
-
             model.addAttribute("username", twitter.getScreenName());
             twitter.setOAuthAccessToken(token);
-
-            response.setContentType("application/json");
-            map.put("name", twitter.getScreenName());
-            map.put("id", String.valueOf(twitter.getId()));
-            assert out != null;
-            out.print(map);
-            out.flush();
+            Cookie cookie = new Cookie("twitter_name", twitter.getScreenName());
+            response.addCookie(cookie);
+            response.sendRedirect("http://localhost:4200/dashboard");
         } catch (Exception e) {
-            map.put("name", null);
-            map.put("id", null);
-            assert out != null;
-            out.print(map);
+            e.printStackTrace();
         }
-        out.flush();
     }
 
+    @SneakyThrows
     @GetMapping(path="/login")
-    public RedirectView LoginTwitter(HttpServletRequest request)
+    public void LoginTwitter(HttpServletRequest request, HttpServletResponse response)
     {
         String twitterUrl = "";
 
@@ -98,12 +80,9 @@ public class TwitterController {
             twitterUrl = requestToken.getAuthorizationURL();
         } catch (Exception e) {
             LOGGER.error("Problem logging in with Twitter!", e);
-            return null;
+            return;
         }
-
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(twitterUrl);
-        return redirectView;
+        response.sendRedirect(twitterUrl);
     }
 
 /*    @GetMapping(path="/{username}")

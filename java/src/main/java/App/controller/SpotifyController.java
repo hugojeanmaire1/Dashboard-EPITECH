@@ -54,20 +54,3 @@ public class SpotifyController {
         return new RedirectView(String.valueOf(authorizationCodeUriRequest.execute()));
     }
 }
-
-/*
-        try {
-            Twitter twitter = DAO.getTwitter();
-            String callbackUrl = "http://localhost:8080/services/twitter/login/callback";
-            RequestToken requestToken = twitter.getOAuthRequestToken(callbackUrl);
-            request.getSession().setAttribute("requestToken", requestToken);
-            request.getSession().setAttribute("twitter", twitter);
-            twitterUrl = requestToken.getAuthorizationURL();
-        } catch (Exception e) {
-            LOGGER.error("Problem logging in with Twitter!", e);
-        }
-
-        RedirectView redirectView = new RedirectView();
-        redirectView.setUrl(twitterUrl);
-        return redirectView;
- */
