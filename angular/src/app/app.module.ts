@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,15 +10,13 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+
 import { environment } from "../environments/environment";
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
+import { TwitterService} from "./shared/services/twitter.service";
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -34,10 +32,19 @@ import { GridsterModule} from "angular-gridster2";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatTreeModule} from "@angular/material/tree";
-import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 
 import { StoreModule } from '@ngrx/store';
 import { reducer } from "./store/reducers/store.reducer";
+
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TwitterComponent } from './components/services/twitter/twitter.component';
+import { SpotifyComponent } from './components/services/spotify/spotify.component';
+import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
+import { TwitchComponent } from './components/services/twitch/twitch.component';
 
 @NgModule({
   declarations: [
@@ -47,11 +54,15 @@ import { reducer } from "./store/reducers/store.reducer";
     ForgotPasswordComponent,
     VerifyEmailComponent,
     DashboardComponent,
-    SidebarComponent
+    SidebarComponent,
+    TwitterComponent,
+    SpotifyComponent,
+    TwitchComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    HttpClientJsonpModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
@@ -71,7 +82,11 @@ import { reducer } from "./store/reducers/store.reducer";
     MatTreeModule,
     StoreModule.forRoot({infos: reducer}),
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    TwitterService,
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

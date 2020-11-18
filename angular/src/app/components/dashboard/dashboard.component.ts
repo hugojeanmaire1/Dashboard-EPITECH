@@ -1,8 +1,10 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
+import {CompactType, GridsterConfig, GridsterItem, GridsterItemComponent, GridType} from 'angular-gridster2';
 import { Store } from '@ngrx/store';
 import {AuthService} from "../../shared/services/auth.service";
 import {Observable} from "rxjs";
+import {TwitterComponent} from "../services/twitter/twitter.component";
+import {SpotifyComponent} from "../services/spotify/spotify.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -37,19 +39,19 @@ export class DashboardComponent implements OnInit {
       }
     };
 
-    this.dashboard = [
-      {cols: 2, rows: 1, y: 0, x: 0},
-      {cols: 2, rows: 2, y: 0, x: 2},
-      {cols: 1, rows: 1, y: 0, x: 4},
-      {cols: 3, rows: 2, y: 1, x: 4},
-      {cols: 1, rows: 1, y: 4, x: 5},
-      {cols: 1, rows: 1, y: 2, x: 1},
-      {cols: 2, rows: 2, y: 5, x: 5},
-      {cols: 2, rows: 2, y: 3, x: 2},
-      {cols: 2, rows: 1, y: 2, x: 2},
-      {cols: 1, rows: 1, y: 3, x: 4},
-      {cols: 1, rows: 1, y: 0, x: 6}
-    ];
+    // this.dashboard = [
+    //   {cols: 3, rows: 1, y: 3, x: 0},
+    //   {cols: 2, rows: 2, y: 0, x: 2},
+    //   {cols: 1, rows: 1, y: 0, x: 4},
+    //   {cols: 3, rows: 2, y: 1, x: 4},
+    //   {cols: 1, rows: 1, y: 4, x: 5},
+    //   {cols: 1, rows: 1, y: 2, x: 1},
+    //   {cols: 2, rows: 2, y: 5, x: 5},
+    //   {cols: 2, rows: 2, y: 3, x: 2},
+    //   {cols: 2, rows: 1, y: 2, x: 2},
+    //   {cols: 1, rows: 1, y: 3, x: 4},
+    //   {cols: 1, rows: 1, y: 0, x: 6}
+    // ];
   }
 
   changedOptions() {
@@ -62,8 +64,6 @@ export class DashboardComponent implements OnInit {
     $event.preventDefault();
     $event.stopPropagation();
     this.dashboard.splice(this.dashboard.indexOf(item), 1);
-    this.data = this.authService.getUserData()
-    console.log(this.data)
   }
 
   addItem(): void {
