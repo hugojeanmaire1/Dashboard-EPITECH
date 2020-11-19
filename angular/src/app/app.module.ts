@@ -42,6 +42,8 @@ import { TwitterComponent } from './components/services/twitter/twitter.componen
 import { SpotifyComponent } from './components/services/spotify/spotify.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import { TwitchComponent } from './components/services/twitch/twitch.component';
+import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -54,7 +56,8 @@ import { TwitchComponent } from './components/services/twitch/twitch.component';
     SidebarComponent,
     TwitterComponent,
     SpotifyComponent,
-    TwitchComponent
+    TwitchComponent,
+    LoadingscreenComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,7 @@ import { TwitchComponent } from './components/services/twitch/twitch.component';
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     AuthService,
