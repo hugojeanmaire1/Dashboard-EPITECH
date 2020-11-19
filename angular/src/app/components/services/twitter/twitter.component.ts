@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridsterItemComponent, GridType} from 'angular-gridster2';
 import {TwitterService} from "../../../shared/services/twitter.service";
-import { Store } from '@ngrx/store';
 import {Observable} from "rxjs";
 
 @Component({
@@ -13,10 +12,7 @@ import {Observable} from "rxjs";
 export class TwitterComponent implements OnInit {
   dashboard: Array<GridsterItem>;
 
-  constructor(
-    private store: Store<any>,
-    public twitterService: TwitterService,
-    ) { }
+  constructor(public twitterService: TwitterService) { }
 
   ngOnInit(): void {
 

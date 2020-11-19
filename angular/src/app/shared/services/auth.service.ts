@@ -4,14 +4,7 @@ import "firebase/auth";
 import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
-import { Store } from '@ngrx/store';
-import { UserActionTypes } from "../../store/actions/store.actions";
-import { LoginComplete, Login, LoginError} from "../../store/actions/store.actions";
-
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {reduce} from "rxjs/operators";
-import {reducer} from "../../store/reducers/store.reducer";
-import { Observable } from "rxjs";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -31,7 +24,6 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone,             // NgZone service to remove outside scope warning
     private _httpClient: HttpClient,
-    private store: Store<any>,
     ) {
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -54,7 +46,6 @@ export class AuthService {
               console.log("Response SignIn = ", response)
               this.ngZone.run(() => {
                 this.router.navigate(['dashboard'])
-                this.store.dispatch(new LoginComplete(response));
               });
             })
       }).catch((error) => {
@@ -129,7 +120,6 @@ export class AuthService {
           this._httpClient.post("http://localhost:8080/users/check-user", result.user, httpOptions)
             .subscribe(response => {
               console.log("Response AuthLogin = ", response)
-              this.store.dispatch(new LoginComplete(response));
               this.router.navigate(['dashboard']);
             })
         })

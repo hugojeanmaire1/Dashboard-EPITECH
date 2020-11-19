@@ -32,6 +32,7 @@ export class TwitterGuard implements CanActivate {
     this._httpClient.post("http://localhost:8080/services/twitter/login/callback" + "?oauth_verifier=" + data.oauth_verifier + "&oauth_token=" + data.oauth_token, body, httpOptions)
       .subscribe(response => {
         localStorage.setItem('user', JSON.stringify(response));
+        console.log("LocalStorage User = ", JSON.parse(localStorage.getItem("user")));
         this.router.navigate(['dashboard']);
       })
 

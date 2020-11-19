@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {CompactType, GridsterConfig, GridsterItem, GridsterItemComponent, GridType} from 'angular-gridster2';
-import { Store } from '@ngrx/store';
+import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {AuthService} from "../../shared/services/auth.service";
 import {Observable} from "rxjs";
 import {TwitterComponent} from "../services/twitter/twitter.component";
@@ -21,8 +20,7 @@ export class DashboardComponent implements OnInit {
   data: Observable<any>;
 
 
-  constructor(private store: Store<any>,
-              public authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
 

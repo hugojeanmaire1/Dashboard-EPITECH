@@ -1,16 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpClientJsonpModule, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import {catchError, map, retry} from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    //"Access-Control-Allow-Headers": "Authorization",
     "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS, DELETE",
-    // "Content-Type": "application/javascript;charset=utf-8",
   })
 };
 
@@ -25,7 +20,6 @@ export class TwitterService {
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _httpClient: HttpClient,
-    private store: Store<any>,
   ) {
 
   }

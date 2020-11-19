@@ -29,12 +29,9 @@ import {MatIconModule} from "@angular/material/icon";
 
 // Gridster
 import { GridsterModule} from "angular-gridster2";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatTreeModule} from "@angular/material/tree";
-
-import { StoreModule } from '@ngrx/store';
-import { reducer } from "./store/reducers/store.reducer";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatTreeModule } from "@angular/material/tree";
 
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -80,7 +77,6 @@ import { TwitchComponent } from './components/services/twitch/twitch.component';
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
-    StoreModule.forRoot({infos: reducer}),
   ],
   providers: [
     AuthService,

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 
-import { Store } from '@ngrx/store';
-import {Observable} from "rxjs";
-
 @Component({
   selector: 'app-spotify',
   templateUrl: './spotify.component.html',
