@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-@CrossOrigin(origins = "http://localhost:4200")
+@RestController
 @RequestMapping("/services/twitter")
 public class TwitterController extends HttpServlet {
 
