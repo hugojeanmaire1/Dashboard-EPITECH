@@ -20,7 +20,6 @@ export class TwitterComponent implements OnInit {
       {cols: 2, rows: 1, y: 0, x: 0},
     ];
 
-    this.twitterService.LogIn();
 
   };
 

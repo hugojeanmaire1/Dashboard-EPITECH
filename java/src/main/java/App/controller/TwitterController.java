@@ -21,6 +21,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 
@@ -77,8 +78,7 @@ public class TwitterController extends HttpServlet {
     }
 
     @GetMapping(path="/login")
-    public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid)
-    {
+    public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid) throws IOException {
         try {
             String callbackUrl = "http://localhost:4200/login/twitter/callback";
             RequestToken requestToken = twitter.getOAuthRequestToken(callbackUrl);
@@ -87,6 +87,7 @@ public class TwitterController extends HttpServlet {
             response.sendRedirect(requestToken.getAuthenticationURL());
         } catch (Exception e) {
             LOGGER.error("Problem logging in with Twitter!", e);
+            response.sendRedirect("http://localhost:4200/login/twitter/callback");
         }
     }
 
