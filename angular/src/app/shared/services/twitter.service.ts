@@ -60,4 +60,11 @@ export class TwitterService {
     //     console.log("Login Twitter = ", response);
     //   })
   }
+
+  getTimeline() {
+    this._httpClient.get('http://localhost:8080/services/twitter/timeline?user=' + "TrashTalk_fr")
+      .subscribe(response => {
+        console.log('Yes !', response);
+    })
+  }
 }

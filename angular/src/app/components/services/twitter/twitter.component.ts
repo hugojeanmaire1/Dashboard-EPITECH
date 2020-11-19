@@ -19,9 +19,6 @@ export class TwitterComponent implements OnInit {
     this.dashboard = [
       {cols: 2, rows: 1, y: 0, x: 0},
     ];
-
-    this.twitterService.LogIn();
-
   };
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
@@ -32,6 +29,10 @@ export class TwitterComponent implements OnInit {
 
   addItem(): void {
     this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
+  }
+
+  callTimeLine() {
+    this.twitterService.getTimeline();
   }
 
 }

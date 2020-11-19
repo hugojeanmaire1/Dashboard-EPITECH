@@ -50,7 +50,6 @@ public class User {
     }
 
     public User userLogIn() throws ExecutionException, InterruptedException {
-        System.out.println("USER LOGIN");
         User response = null;
 
         // Get user data from Firestore

@@ -21,6 +21,7 @@ import twitter4j.conf.ConfigurationBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -35,7 +36,8 @@ public class TwitterController extends HttpServlet {
         .setOAuthConsumerKey("S2O303TWOCfZHx3e8Jt16AgCr")
         .setOAuthConsumerSecret("VEquyDohQ2YaXueBqmL0akbAJR16v0GxxTXpxRGDCjuJ9F0QRk")
         .build();
-    Twitter twitter = new TwitterFactory(configuration).getInstance();
+    TwitterFactory factory = new TwitterFactory(configuration);
+    Twitter twitter = factory.getInstance();
 
 
     @GetMapping(path="/", consumes= MediaType.APPLICATION_JSON_VALUE)
@@ -61,6 +63,7 @@ public class TwitterController extends HttpServlet {
                     try {
                         RequestToken requestToken = new RequestToken(service.getRequestToken(), service.getRequestTokenSecret());
                         AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
+                        twitter.setOAuthAccessToken(accessToken);
                         //System.out.println("AccessToken = " + accessToken);
                         service.setUserId(Long.toString(accessToken.getUserId()));
                         service.setUserName(accessToken.getScreenName());
@@ -112,5 +115,11 @@ public class TwitterController extends HttpServlet {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @GetMapping(path = "/timeline")
+    public List getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
+        List<Status> statuses = twitter.getUserTimeline(username);
+        return statuses;
     }
 }
