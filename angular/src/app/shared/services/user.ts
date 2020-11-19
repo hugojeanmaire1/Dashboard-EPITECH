@@ -4,4 +4,6 @@ export interface User {
   displayName: string;
   photoUrl: string;
   emailVerified: boolean;
+  services: string;
+  widgets: string;
 }
