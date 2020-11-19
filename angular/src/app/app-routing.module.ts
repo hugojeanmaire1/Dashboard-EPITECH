@@ -20,7 +20,6 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'login/twitter/callback', canActivate: [TwitterGuard], component: LoadingscreenComponent},
-  { path: 'loadingscreen', component: LoadingscreenComponent}
 ];
 
 @NgModule({

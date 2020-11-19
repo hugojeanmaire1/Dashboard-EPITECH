@@ -43,6 +43,7 @@ import { SpotifyComponent } from './components/services/spotify/spotify.componen
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import { TwitchComponent } from './components/services/twitch/twitch.component';
 import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.c
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     AuthService,
