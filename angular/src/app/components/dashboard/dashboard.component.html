@@ -6,7 +6,7 @@
     <button class="button" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a class="btn btn-success" href="http://localhost:8080/services/twitter/login">Login Twitter</a>
+    <a class="btn btn-success" href="http://localhost:8080/services/twitter/login?uid={{getId()}}">Login Twitter</a>
   </div>
   <gridster [options]="options" style="background-color: whitesmoke">
     <app-twitter></app-twitter>

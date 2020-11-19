@@ -54,6 +54,11 @@ export class DashboardComponent implements OnInit {
     // ];
   }
 
+  getId () {
+    let data = JSON.parse(localStorage.getItem('user'));
+    return data.uid;
+  }
+
   changedOptions() {
     if (this.options.api && this.options.api.optionsChanged) {
       this.options.api.optionsChanged();
