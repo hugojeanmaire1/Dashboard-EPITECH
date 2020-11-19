@@ -2,6 +2,7 @@ import { Injectable, NgZone } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpClientJsonpModule, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable, throwError } from 'rxjs';
+import {map} from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -62,9 +63,7 @@ export class TwitterService {
   }
 
   getTimeline() {
-    this._httpClient.get('http://localhost:8080/services/twitter/timeline?user=' + "TrashTalk_fr")
-      .subscribe(response => {
-        console.log('Yes !', response);
-    })
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + "TrashTalk_fr")
+      .pipe(map(data => data));
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridsterItemComponent, GridType} from 'angular-gridster2';
 import {TwitterService} from "../../../shared/services/twitter.service";
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-twitter',
@@ -28,11 +27,13 @@ export class TwitterComponent implements OnInit {
   }
 
   addItem(): void {
-    this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
+    this.dashboard.push({cols: 2, rows: 1, y: 0, x: 0});
   }
 
-  callTimeLine() {
-    this.twitterService.getTimeline();
-  }
+  addTimelineWidget(): void {}
+
+  // callTimeLine() {
+  //   this.twitterService.getTimeline();
+  // }
 
 }

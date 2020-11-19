@@ -1,10 +1,11 @@
 <div>
-  <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <div class="button-holder">
-      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <p>twitter works!</p>
-    </div>
-  </gridster-item>
+<!--  <gridster-item [item]="item" *ngFor="let item of dashboard">-->
+<!--    <div class="button-holder">-->
+<!--      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">-->
+<!--        <mat-icon>delete</mat-icon>-->
+<!--      </button>-->
+<!--      <p>twitter works!</p>-->
+<!--    </div>-->
+<!--  </gridster-item>-->
+  <app-timeline></app-timeline>
 </div>

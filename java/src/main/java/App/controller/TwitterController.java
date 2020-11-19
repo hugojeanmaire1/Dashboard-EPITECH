@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import java.util.*;
+
 
 @RestController
 @RequestMapping("/services/twitter")
@@ -119,7 +121,6 @@ public class TwitterController extends HttpServlet {
 
     @GetMapping(path = "/timeline")
     public List getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
-        List<Status> statuses = twitter.getUserTimeline(username);
-        return statuses;
+        return twitter.getUserTimeline(username);
     }
 }
