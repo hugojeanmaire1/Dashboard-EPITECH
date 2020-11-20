@@ -7,10 +7,15 @@
       <mat-icon>menu</mat-icon>
     </button>
     <a class="btn btn-success" href="http://localhost:8080/services/twitter/login?uid={{getId()}}">Login Twitter</a>
+    <button class="button" mat-fab color="primary" (click)="addItem()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
   <gridster [options]="options" style="background-color: whitesmoke">
-    <app-twitter></app-twitter>
-    <app-spotify></app-spotify>
-    <app-twitch></app-twitch>
+    <gridster-item [item]="item" *ngFor="let item of dashboard">
+      <app-twitter [widget]="item" [resizeEvent]="resizeEvent"></app-twitter>
+      <app-spotify [widget]="item" [resizeEvent]="resizeEvent"></app-spotify>
+      <app-twitch [widget]="item" [resizeEvent]="resizeEvent"></app-twitch>
+    </gridster-item>
   </gridster>
 </mat-drawer-container>

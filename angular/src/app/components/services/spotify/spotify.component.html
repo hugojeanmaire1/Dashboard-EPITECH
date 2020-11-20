@@ -1,10 +1,17 @@
-<div>
-  <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <div class="button-holder">
-      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <p>spotify works!</p>
-    </div>
-  </gridster-item>
-</div>
+<!--<div>-->
+<!--  <gridster-item [item]="item" *ngFor="let item of dashboard">-->
+<!--    <div class="button-holder">-->
+<!--      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">-->
+<!--        <mat-icon>delete</mat-icon>-->
+<!--      </button>-->
+<!--      <p>spotify works!</p>-->
+<!--    </div>-->
+<!--  </gridster-item>-->
+<!--</div>-->
+<app-search *ngIf="widget.type === 'SpotifySearch'" [resizeEvent]="resizeEvent" [widget]="widget"></app-search>
+<!--<div class="button-holder">-->
+<!--  <button mat-mini-fab>-->
+<!--    <mat-icon>delete</mat-icon>-->
+<!--  </button>-->
+<!--  <p>spotify works!</p>-->
+<!--</div>-->

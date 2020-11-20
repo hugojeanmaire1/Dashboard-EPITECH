@@ -1,6 +1,7 @@
-import {Component, Injectable, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Injectable, Input, OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-timeline',
@@ -8,26 +9,34 @@ import {TwitterService} from "../../../../shared/services/twitter.service";
   styleUrls: ['./timeline.component.css']
 })
 
-export class TimelineComponent implements OnInit {
-  dashboard: Array<GridsterItem>;
+export class TimelineComponent implements OnInit, OnDestroy {
   data: any[] = [];
+
+  @Input()
+  widget;
+  @Input()
+  resizeEvent: EventEmitter<GridsterItem>;
+
+  resizeSub: Subscription;
 
   constructor(public twitterService: TwitterService) { }
 
   ngOnInit(): void {
-    this.dashboard = [
-      {cols: 2, rows: 4, y: 0, x: 0}
-    ];
+    this.resizeSub = this.resizeEvent.subscribe((widget) => {
+      if (widget === this.widget) {
+        console.log(widget);
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.resizeSub.unsubscribe();
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
     $event.preventDefault();
     $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
-  }
-
-  addItem(): void {
-    this.dashboard.push({cols: 2, rows: 4, y: 0, x: 0});
+    //this.dashboard.splice(this.dashboard.indexOf(item), 1);
   }
 
   callTimeLine() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 
 @Component({
@@ -8,25 +8,29 @@ import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-grids
 })
 export class SpotifyComponent implements OnInit {
   //options: GridsterConfig;
-  dashboard: Array<GridsterItem>;
+  //dashboard: Array<GridsterItem>;
+  @Input()
+  widget;
+  @Input()
+  resizeEvent;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.dashboard = [
-      {cols: 2, rows: 1, y: 0, x: 2},
-      {cols: 2, rows: 1, y: 1, x: 2},
-    ];
+    // this.dashboard = [
+    //   {cols: 2, rows: 1, y: 0, x: 2},
+    //   {cols: 2, rows: 1, y: 1, x: 2},
+    // ];
   }
 
-  removeItem($event: MouseEvent | TouchEvent, item): void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
-  }
-
-  addItem(): void {
-    this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
-  }
+  // removeItem($event: MouseEvent | TouchEvent, item): void {
+  //   $event.preventDefault();
+  //   $event.stopPropagation();
+  //   this.dashboard.splice(this.dashboard.indexOf(item), 1);
+  // }
+  //
+  // addItem(): void {
+  //   this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
+  // }
 
 }
