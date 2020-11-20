@@ -63,8 +63,8 @@ export class TwitterService {
     //   })
   }
 
-  getTimeline() {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + "TrashTalk_fr")
+  getTimeline(screenName: string) {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName)
       .pipe(map(data => data));
   }
 

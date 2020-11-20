@@ -1,15 +1,44 @@
-<div class="button-holder">
-  <button mat-mini-fab (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
-    <mat-icon>delete</mat-icon>
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="twitter-icon" src="./assets/twitter_logo.png" />
   </button>
-  <button mat-mini-fab (click)="callTimeLine()">
-    <mat-icon>add</mat-icon>
+  <mat-label class="timeline-title" *ngIf="find">Timeline of <span style="font-size: 17px">{{timelineUsername}}</span></mat-label>
+  <div *ngIf="!find"class="input-user">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="timelineUsername" placeholder="Ex. Trashtalk_fr">
+    </mat-form-field>
+    <button mat-mini-fab color="basic" (click)="callTimeLine(timelineUsername)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
   </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeSearch()">
+      <mat-icon>search</mat-icon>
+      <span>Change follow user</span>
+    </button>
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<div *ngIf="data.length === 0" style="text-align: center; margin-top: '20%';">
+  <span style="font-size: 20px; font: bold;">Enter a username</span>
 </div>
-<div style="overflow-y: auto; max-height: calc(100% - 40px)">
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px)">
   <div *ngFor="let tweet of data">
-    <mat-card style="margin: 15px 10px;" >
-      <mat-card-content>{{tweet.user.screenName}} -- {{tweet.text}}</mat-card-content>
+    <mat-card style="margin: 15px 5px;">
+      <mat-card-title>
+        <img class="profile-img" src="{{tweet.user.profileImageURL}}">
+        {{tweet.user.name}}
+        <span class="textScreenName">@{{tweet.user.screenName}}</span>
+      </mat-card-title>
+      <mat-card-content>{{tweet.text}}</mat-card-content>
     </mat-card>
   </div>
 </div>

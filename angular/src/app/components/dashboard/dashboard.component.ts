@@ -58,6 +58,18 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  getColorServices(item) {
+    if (item.type === 'TwitterTimeline' || item.type === 'TwitterPostTweet') {
+      return '#00acee';
+    }
+    if (item.type === 'TwitchTopGames') {
+      return '#6441a5';
+    }
+    if (item.type === 'SpotifySearch') {
+      return '#1DB954';
+    }
+  }
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     $event.preventDefault();
     $event.stopPropagation();

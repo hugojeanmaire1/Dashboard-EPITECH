@@ -12,7 +12,7 @@
     </button>
   </div>
   <gridster [options]="options" style="background-color: whitesmoke">
-    <gridster-item [item]="item" *ngFor="let item of dashboard">
+    <gridster-item style="background: {{getColorServices(item)}};" [item]="item" *ngFor="let item of dashboard">
       <app-twitter [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitter>
       <app-spotify [widget]="item" [resizeEvent]="resizeEvent"></app-spotify>
       <app-twitch [widget]="item" [resizeEvent]="resizeEvent"></app-twitch>

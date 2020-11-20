@@ -21,6 +21,8 @@ import {Subscription} from 'rxjs';
 
 export class TimelineComponent implements OnInit, OnDestroy {
   data: any[] = [];
+  timelineUsername: string = "Trashtalk_fr";
+  find: boolean = false;
 
   @Input()
   widget;
@@ -49,12 +51,20 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
-  callTimeLine() {
-    this.twitterService.getTimeline()
+  callTimeLine(screenName: string) {
+    this.twitterService.getTimeline(screenName)
       .subscribe(response => {
         this.data = response;
+        this.find = true;
+
         console.log(this.data);
       })
+  }
+
+  changeSearch() {
+    this.find = false;
+    this.timelineUsername = "";
+    this.data.length = 0;
   }
 
 }

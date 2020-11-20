@@ -27,7 +27,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
-import {FormsModule} from "@angular/forms";
+import {MatMenuModule} from '@angular/material/menu';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 // Gridster
 import { GridsterModule} from "angular-gridster2";
@@ -92,9 +93,11 @@ import { PostTweetComponent } from './components/services/twitter/post-tweet/pos
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     ScrollingModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AuthService,

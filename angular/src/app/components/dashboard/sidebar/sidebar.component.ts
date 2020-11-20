@@ -7,8 +7,9 @@ const TREE_SERVICES: Services[] = [
   {
     name: "Twitter",
     widgets: [
-      { name: "Follow" },
-      { name: "Timeline" },
+      { name: "Post a tweet" },
+      { name: "My timeline" },
+      { name: "Search timeline" },
     ]
   },
   {

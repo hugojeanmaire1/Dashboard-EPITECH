@@ -21,3 +21,8 @@
 .button {
   margin-left: 15px;
 }
+
+gridster-item {
+  border-radius: 30px;
+  padding: 15px;
+}
