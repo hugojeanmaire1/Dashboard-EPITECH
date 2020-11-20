@@ -1,9 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {AuthService} from "../../shared/services/auth.service";
-import {Observable} from "rxjs";
-import {TwitterComponent} from "../services/twitter/twitter.component";
-import {SpotifyComponent} from "../services/spotify/spotify.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -18,18 +15,14 @@ export class DashboardComponent implements OnInit {
   dashboard: Array<GridsterItem>;
   resizeEvent: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   showFiller = false;
-  data: Observable<any>;
-
 
   constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
-
     this.options = {
       gridType: GridType.Fit,
       compactType: CompactType.None,
-      scrollToNewItems: false,
-      //maxCols: 10,
+      maxCols: 10,
       disableWarnings: false,
       ignoreMarginInRow: false,
       pushItems: true,
@@ -43,7 +36,7 @@ export class DashboardComponent implements OnInit {
         // update DB with new size
         // send the update to widgets
         this.resizeEvent.emit(item);
-      }
+      },
     };
 
     this.dashboard = [
@@ -55,7 +48,7 @@ export class DashboardComponent implements OnInit {
     ];
   }
 
-  getId () {
+  getUserId () {
     let data = JSON.parse(localStorage.getItem('user'));
     return data.uid;
   }
@@ -69,7 +62,7 @@ export class DashboardComponent implements OnInit {
   removeItem($event: MouseEvent | TouchEvent, item): void {
     $event.preventDefault();
     $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.dashboard.splice(this.dashboard.indexOf(item), 1)
   }
 
   addItem(): void {

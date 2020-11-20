@@ -1,4 +1,14 @@
-import {Component, Injectable, Input, OnInit, EventEmitter, OnChanges, SimpleChanges, OnDestroy} from '@angular/core';
+import {
+  Component,
+  Injectable,
+  Input,
+  OnInit,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  Output
+} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
 import {Subscription} from 'rxjs';
@@ -11,11 +21,14 @@ import {Subscription} from 'rxjs';
 
 export class TimelineComponent implements OnInit, OnDestroy {
   data: any[] = [];
+  dashboard: any[] = [];
 
   @Input()
   widget;
   @Input()
   resizeEvent: EventEmitter<GridsterItem>;
+  @Output()
+  removeWidget = new EventEmitter<any>();
 
   resizeSub: Subscription;
 
@@ -34,9 +47,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    //this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    console.log("DELETE")
+    this.removeWidget.emit({event: $event, item: item});
   }
 
   callTimeLine() {
