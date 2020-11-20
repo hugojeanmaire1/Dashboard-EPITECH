@@ -11,17 +11,18 @@ const httpOptions = {
 };
 
 
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class TwitterService {
+
   constructor(
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _httpClient: HttpClient,
-  ) {
+
+) {
 
   }
 
@@ -65,5 +66,10 @@ export class TwitterService {
   getTimeline() {
     return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + "TrashTalk_fr")
       .pipe(map(data => data));
+  }
+
+  postTweet(input) {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/tweet/post/' + input)
+        .subscribe((data) => { console.log(data)});
   }
 }

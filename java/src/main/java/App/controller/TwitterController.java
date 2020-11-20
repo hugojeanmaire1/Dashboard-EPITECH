@@ -111,7 +111,6 @@ public class TwitterController extends HttpServlet {
     public Status postTweet(@PathVariable String data, HttpServletRequest request)
     {
         try {
-            Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
             return (twitter.updateStatus(data));
         } catch (Exception e) {
             e.printStackTrace();

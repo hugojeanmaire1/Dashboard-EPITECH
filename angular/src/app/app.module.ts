@@ -46,6 +46,8 @@ import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.c
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { TimelineComponent } from './components/services/twitter/timeline/timeline.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import { PostTweetComponent } from './components/services/twitter/post-tweet/post-tweet.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     SpotifyComponent,
     TwitchComponent,
     LoadingscreenComponent,
-    TimelineComponent
+    TimelineComponent,
+    PostTweetComponent
   ],
   imports: [
     BrowserModule,
@@ -85,6 +88,7 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
     MatTreeModule,
     MatProgressSpinnerModule,
     ScrollingModule,
+    FormsModule,
   ],
   providers: [
     AuthService,
