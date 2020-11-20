@@ -1,26 +1,26 @@
 import {
+  AfterViewInit,
   Component,
-  Injectable,
-  Input,
-  OnInit,
+  ElementRef,
   EventEmitter,
-  OnChanges,
-  SimpleChanges,
+  Input,
   OnDestroy,
-  Output
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
-import {Subscription} from 'rxjs';
+import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css']
+  selector: 'app-post-tweet',
+  templateUrl: './post-tweet.component.html',
+  styleUrls: ['./post-tweet.component.css']
 })
+export class PostTweetComponent implements OnInit, OnDestroy {
 
-export class TimelineComponent implements OnInit, OnDestroy {
-  data: any[] = [];
+  input: string;
 
   @Input()
   widget;
@@ -49,12 +49,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
-  callTimeLine() {
-    this.twitterService.getTimeline()
-      .subscribe(response => {
-        this.data = response;
-        console.log(this.data);
-      })
+  postTweet() {
+    this.twitterService.postTweet(this.input);
+    this.input = "";
   }
-
 }

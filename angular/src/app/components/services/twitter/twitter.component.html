@@ -1,1 +1,12 @@
+<app-post-tweet *ngIf="widget.type === 'TwitterPostTweet'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-post-tweet>
 <app-timeline *ngIf="widget.type === 'TwitterTimeline'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-timeline>
+<!--  <gridster-item [item]="item" *ngFor="let item of dashboard">-->
+<!--    <div class="button-holder">-->
+<!--      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">-->
+<!--        <mat-icon>delete</mat-icon>-->
+<!--      </button>-->
+<!--      <p>twitter works!</p>-->
+<!--    </div>-->
+<!--  </gridster-item>-->
+<!--  <app-timeline></app-timeline>-->
+<!--  <app-post-tweet></app-post-tweet>-->

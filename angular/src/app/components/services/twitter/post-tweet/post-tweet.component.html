@@ -1,0 +1,32 @@
+<!--<div>-->
+<!--    <gridster-item [item]="item" *ngFor="let item of dashboard">-->
+<!--        <div class="button-holder">-->
+<!--            <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">-->
+<!--                <mat-icon>delete</mat-icon>-->
+<!--            </button>-->
+<!--            <div class="input">-->
+<!--                <form (submit)="$event.preventDefault()">-->
+<!--                    <mat-form-field>-->
+<!--                    <mat-label> Ecrire un tweet : </mat-label>-->
+<!--                        <input type="text" matInput [(ngModel)]="input" name="input">-->
+<!--                    </mat-form-field>-->
+<!--                </form>-->
+<!--                <button mat-raised-button color="primary" (click)="postTweet()">Tweet</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </gridster-item>-->
+<!--</div>-->
+<div class="button-holder">
+    <button mat-mini-fab (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>
+<div class="input">
+  <form (submit)="$event.preventDefault()">
+    <mat-form-field>
+      <mat-label> Ecrire un tweet : </mat-label>
+      <input type="text" matInput [(ngModel)]="input" name="input">
+    </mat-form-field>
+  </form>
+  <button mat-raised-button color="primary" (click)="postTweet()">Tweet</button>
+</div>

@@ -27,6 +27,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
 import {MatListModule} from "@angular/material/list";
+import {FormsModule} from "@angular/forms";
 
 // Gridster
 import { GridsterModule} from "angular-gridster2";
@@ -49,6 +50,7 @@ import { TimelineComponent } from './components/services/twitter/timeline/timeli
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { SearchComponent } from './components/services/spotify/search/search.component';
 import { TopgamesComponent } from './components/services/twitch/topgames/topgames.component';
+import { PostTweetComponent } from './components/services/twitter/post-tweet/post-tweet.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,8 @@ import { TopgamesComponent } from './components/services/twitch/topgames/topgame
     LoadingscreenComponent,
     TimelineComponent,
     SearchComponent,
-    TopgamesComponent
+    TopgamesComponent,
+    PostTweetComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +94,7 @@ import { TopgamesComponent } from './components/services/twitch/topgames/topgame
     MatTreeModule,
     MatProgressSpinnerModule,
     ScrollingModule,
+    FormsModule,
   ],
   providers: [
     AuthService,

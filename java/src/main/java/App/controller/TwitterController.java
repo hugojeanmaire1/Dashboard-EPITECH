@@ -25,8 +25,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import java.util.*;
-
 
 @RestController
 @RequestMapping("/services/twitter")
@@ -112,7 +110,6 @@ public class TwitterController extends HttpServlet {
     public Status postTweet(@PathVariable String data, HttpServletRequest request)
     {
         try {
-            Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
             return (twitter.updateStatus(data));
         } catch (Exception e) {
             e.printStackTrace();

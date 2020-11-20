@@ -40,10 +40,9 @@ export class DashboardComponent implements OnInit {
     };
 
     this.dashboard = [
-      {cols: 2, rows: 5, y: 0, x: 0, type: 'TwitterTimeline'},
-      {cols: 2, rows: 5, y: 4, x: 0, type: 'TwitterTimeline'},
-      {cols: 2, rows: 3, y: 0, x: 2, type: 'SpotifySearch'},
-      {cols: 2, rows: 3, y: 3, x: 2, type: 'SpotifySearch'},
+      {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline'},
+      {cols: 2, rows: 1, y: 0, x: 2, type: 'TwitterPostTweet'},
+      {cols: 2, rows: 3, y: 1, x: 2, type: 'SpotifySearch'},
       {cols: 2, rows: 2, y: 0, x: 4, type: 'TwitchTopGames'},
     ];
   }
