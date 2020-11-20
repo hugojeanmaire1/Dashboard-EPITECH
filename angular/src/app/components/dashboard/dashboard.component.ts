@@ -22,16 +22,16 @@ export class DashboardComponent implements OnInit {
     this.options = {
       gridType: GridType.Fit,
       compactType: CompactType.None,
-      maxCols: 10,
+      //maxCols: 10,
       disableWarnings: false,
       ignoreMarginInRow: false,
       pushItems: true,
       draggable: {
         enabled: true
       },
-      resizable: {
-        enabled: true
-      },
+      // resizable: {
+      //   enabled: true
+      // },
       itemResizeCallback: (item) => {
         // update DB with new size
         // send the update to widgets
@@ -40,8 +40,8 @@ export class DashboardComponent implements OnInit {
     };
 
     this.dashboard = [
-      {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline'},
-      {cols: 2, rows: 4, y: 4, x: 0, type: 'TwitterTimeline'},
+      {cols: 2, rows: 5, y: 0, x: 0, type: 'TwitterTimeline'},
+      {cols: 2, rows: 5, y: 4, x: 0, type: 'TwitterTimeline'},
       {cols: 2, rows: 3, y: 0, x: 2, type: 'SpotifySearch'},
       {cols: 2, rows: 3, y: 3, x: 2, type: 'SpotifySearch'},
       {cols: 2, rows: 2, y: 0, x: 4, type: 'TwitchTopGames'},

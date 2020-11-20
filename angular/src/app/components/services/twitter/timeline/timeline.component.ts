@@ -47,7 +47,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
-    console.log("DELETE")
     this.removeWidget.emit({event: $event, item: item});
   }
 
