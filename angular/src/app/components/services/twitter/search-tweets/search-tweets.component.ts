@@ -1,28 +1,16 @@
-import {
-  Component,
-  Injectable,
-  Input,
-  OnInit,
-  EventEmitter,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy,
-  Output
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
+import {Subscription} from "rxjs";
 import {TwitterService} from "../../../../shared/services/twitter.service";
-import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css']
+  selector: 'app-search-tweets',
+  templateUrl: './search-tweets.component.html',
+  styleUrls: ['./search-tweets.component.css']
 })
-
-export class TimelineComponent implements OnInit, OnDestroy {
+export class SearchTweetsComponent implements OnInit, OnDestroy {
+  search: string = "";
   data: any[] = [];
-  timelineUsername: string = "Trashtalk_fr";
-  find: boolean = false;
 
   @Input()
   widget;
@@ -51,18 +39,13 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
-  callTimeLine(screenName: string) {
-    this.twitterService.getTimeline(screenName)
+  searchTweet() {
+    this.twitterService.searchTweet(this.search)
       .subscribe(response => {
+        this.data.length = 0;
         this.data = response;
-        this.find = true;
-      })
+        console.log(this.data);
+        this.search = "";
+      });
   }
-
-  changeSearch() {
-    this.find = false;
-    this.timelineUsername = "";
-    this.data.length = 0;
-  }
-
 }

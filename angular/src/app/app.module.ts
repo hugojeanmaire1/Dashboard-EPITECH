@@ -52,6 +52,7 @@ import {ScrollingModule} from "@angular/cdk/scrolling";
 import { SearchComponent } from './components/services/spotify/search/search.component';
 import { TopgamesComponent } from './components/services/twitch/topgames/topgames.component';
 import { PostTweetComponent } from './components/services/twitter/post-tweet/post-tweet.component';
+import { SearchTweetsComponent } from './components/services/twitter/search-tweets/search-tweets.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { PostTweetComponent } from './components/services/twitter/post-tweet/pos
     SearchComponent,
     TopgamesComponent,
     PostTweetComponent,
+    SearchTweetsComponent,
   ],
   imports: [
     BrowserModule,

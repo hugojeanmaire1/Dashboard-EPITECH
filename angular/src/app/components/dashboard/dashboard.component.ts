@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {AuthService} from "../../shared/services/auth.service";
+import {TwitterService} from "../../shared/services/twitter.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -16,12 +17,13 @@ export class DashboardComponent implements OnInit {
   resizeEvent: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   showFiller = false;
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public twitterService: TwitterService) {}
 
   ngOnInit(): void {
     this.options = {
       gridType: GridType.Fit,
       compactType: CompactType.None,
+      displayGrid: "none",
       //maxCols: 10,
       disableWarnings: false,
       ignoreMarginInRow: false,
@@ -41,9 +43,10 @@ export class DashboardComponent implements OnInit {
 
     this.dashboard = [
       {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline'},
-      {cols: 2, rows: 1, y: 0, x: 2, type: 'TwitterPostTweet'},
-      {cols: 2, rows: 3, y: 1, x: 2, type: 'SpotifySearch'},
-      {cols: 2, rows: 2, y: 0, x: 4, type: 'TwitchTopGames'},
+      {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet'},
+      {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet'},
+      {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch'},
+      {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames'},
     ];
   }
 
@@ -59,7 +62,7 @@ export class DashboardComponent implements OnInit {
   };
 
   getColorServices(item) {
-    if (item.type === 'TwitterTimeline' || item.type === 'TwitterPostTweet') {
+    if (item.type === 'TwitterTimeline' || item.type === 'TwitterPostTweet' || item.type === 'TwitterSearchTweet' ) {
       return '#00acee';
     }
     if (item.type === 'TwitchTopGames') {

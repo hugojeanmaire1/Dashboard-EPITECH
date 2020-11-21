@@ -8,4 +8,4 @@
 <!--    </div>-->
 <!--  </gridster-item>-->
 <!--</div>-->
-<app-topgames *ngIf="widget.type === 'TwitchTopGames'" [resizeEvent]="resizeEvent" [widget]="widget"></app-topgames>
+<app-topgames *ngIf="widget.type === 'TwitchTopGames'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-topgames>

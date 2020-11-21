@@ -1,5 +1,5 @@
 <mat-drawer-container class="sidebar-container" autosize>
-  <mat-drawer #drawer class="sidebar-elem" mode="side">
+  <mat-drawer #drawer class="sidebar-elem" mode="side" style="background-color: rgb(199, 199, 204);">
     <app-sidebar></app-sidebar>
   </mat-drawer>
   <div class="sidenav-content">
@@ -11,11 +11,11 @@
       <mat-icon>add</mat-icon>
     </button>
   </div>
-  <gridster [options]="options" style="background-color: whitesmoke">
+  <gridster [options]="options" style="background-color: rgb(229, 229, 234)">
     <gridster-item style="background: {{getColorServices(item)}};" [item]="item" *ngFor="let item of dashboard">
       <app-twitter [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitter>
-      <app-spotify [widget]="item" [resizeEvent]="resizeEvent"></app-spotify>
-      <app-twitch [widget]="item" [resizeEvent]="resizeEvent"></app-twitch>
+      <app-spotify [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-spotify>
+      <app-twitch [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitch>
     </gridster-item>
   </gridster>
 </mat-drawer-container>

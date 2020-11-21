@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
 import {Subscription} from "rxjs";
 
@@ -14,6 +14,8 @@ export class TopgamesComponent implements OnInit, OnDestroy {
   widget;
   @Input()
   resizeEvent: EventEmitter<GridsterItem>;
+  @Output()
+  removeWidget = new EventEmitter<any>();
 
   resizeSub: Subscription;
 
@@ -29,6 +31,10 @@ export class TopgamesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeSub.unsubscribe();
+  }
+
+  removeItem($event: MouseEvent | TouchEvent, item): void {
+    this.removeWidget.emit({event: $event, item: item});
   }
 
 }

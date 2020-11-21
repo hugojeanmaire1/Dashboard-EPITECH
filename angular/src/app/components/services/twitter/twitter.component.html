@@ -1,2 +1,3 @@
 <app-post-tweet *ngIf="widget.type === 'TwitterPostTweet'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-post-tweet>
 <app-timeline *ngIf="widget.type === 'TwitterTimeline'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-timeline>
+<app-search-tweets  *ngIf="widget.type === 'TwitterSearchTweet'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-search-tweets>

@@ -19,7 +19,6 @@ import {Subscription} from "rxjs";
   styleUrls: ['./post-tweet.component.css']
 })
 export class PostTweetComponent implements OnInit, OnDestroy {
-
   input: string;
 
   @Input()
