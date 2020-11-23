@@ -74,7 +74,7 @@ public class SpotifyController {
 
     @GetMapping(path="/login")
     public void loginSpotify(HttpServletResponse response, @RequestParam(value="uid") String uid) throws ExecutionException, InterruptedException, IOException {
-        URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/services/spotify/login/callback");
+        URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4200/login/spotify/callback");
         SpotifyApi spotifyApi = new SpotifyApi.Builder()
                 .setClientId("7836b9f51111454685e0c44568bf67da")
                 .setClientSecret("97bd2040312b4dd499fe27d0df6cfe97")
@@ -85,6 +85,7 @@ public class SpotifyController {
                 .build();
         User user = new User();
         user.createService(uid, null, null, "spotify");
+        System.out.println("LAAAAA !!!" + String.valueOf(authorizationCodeUriRequest.execute()));
         response.sendRedirect(String.valueOf(authorizationCodeUriRequest.execute()));
 
 

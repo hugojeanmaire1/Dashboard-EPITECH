@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router} from '@angular/router';
 import { Observable } from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': "application/json",
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +24,7 @@ export class SpotifyGuard implements CanActivate {
     let data = route.queryParams
     console.log("DATA = ", data);
     let body = JSON.parse(localStorage.getItem('user'));
-    this._httpClient.post("http://localhost:8080/services/spotify/login/callback?code=" + data.code, body)
+    this._httpClient.post("http://localhost:8080/services/spotify/login/callback?code=" + data.code, body, httpOptions)
       .subscribe(response => {
         localStorage.setItem('user', JSON.stringify(response));
         console.log("LocalStorage User = ", JSON.parse(localStorage.getItem("user")));
