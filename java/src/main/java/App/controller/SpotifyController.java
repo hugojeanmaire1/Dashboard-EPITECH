@@ -32,22 +32,20 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/services/spotify")
 public class SpotifyController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TwitterController.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyController.class);
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
+    private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4200/login/spotify/callback");
+    private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
+            .setClientId("1510f8bbdfae4bc2acd94094b2cac94e")
+            .setClientSecret("f199f9625cd9441d93fd637602c8d146")
+            .setRedirectUri(redirectUri)
+            .build();
 
     @PostMapping(path="/login/callback")
     public User CallbackLogin(@RequestBody User body,
                                 @RequestParam(value = "code")String code) throws ExecutionException, InterruptedException {
-        URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/services/spotify/login/callback");
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setClientId("7836b9f51111454685e0c44568bf67da")
-                .setClientSecret("97bd2040312b4dd499fe27d0df6cfe97")
-                .setRedirectUri(redirectUri)
-                .build();
-//        AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-//                .show_dialog(true)
-//                .build();
+        spotifyApi.authorizationCodeUri().show_dialog(true).build();
 
         DocumentReference docRef = db.collection("users").document(body.getUid());
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -74,12 +72,6 @@ public class SpotifyController {
 
     @GetMapping(path="/login")
     public void loginSpotify(HttpServletResponse response, @RequestParam(value="uid") String uid) throws ExecutionException, InterruptedException, IOException {
-        URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4200/login/spotify/callback");
-        SpotifyApi spotifyApi = new SpotifyApi.Builder()
-                .setClientId("7836b9f51111454685e0c44568bf67da")
-                .setClientSecret("97bd2040312b4dd499fe27d0df6cfe97")
-                .setRedirectUri(redirectUri)
-                .build();
         AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
                 .show_dialog(true)
                 .build();
@@ -87,9 +79,5 @@ public class SpotifyController {
         user.createService(uid, null, null, "spotify");
         System.out.println("LAAAAA !!!" + String.valueOf(authorizationCodeUriRequest.execute()));
         response.sendRedirect(String.valueOf(authorizationCodeUriRequest.execute()));
-
-
-        //request.getSession().setAttribute("spotifyApi", spotifyApi);
-        //return new RedirectView(String.valueOf(authorizationCodeUriRequest.execute()));
     }
 }
