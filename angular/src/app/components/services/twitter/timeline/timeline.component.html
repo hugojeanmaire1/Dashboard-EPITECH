@@ -30,7 +30,7 @@
 <div *ngIf="data.length === 0" style="text-align: center; margin-top: '20%';">
   <span style="font-size: 20px; font: bold;">Enter a username</span>
 </div>
-<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px)">
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
   <div *ngFor="let tweet of data">
     <mat-card style="margin: 15px 5px;">
       <mat-card-title>

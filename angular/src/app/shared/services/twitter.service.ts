@@ -56,4 +56,11 @@ export class TwitterService {
     return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/search/tweet?search=' + search)
       .pipe(map(data => data));
   }
+
+  updatePosition(uid, data) {
+    return this._httpClient.post('http://localhost:8080/users/update-widgets?uid=' + uid + "&serviceName=twitter", data)
+      .subscribe(response => {
+        console.log("UPDATE POSITION", response);
+      })
+  }
 }

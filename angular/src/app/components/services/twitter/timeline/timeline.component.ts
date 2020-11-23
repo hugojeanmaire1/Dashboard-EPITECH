@@ -39,6 +39,14 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.resizeSub = this.resizeEvent.subscribe((widget) => {
       if (widget === this.widget) {
         console.log(widget);
+        let user = JSON.parse(localStorage.getItem("user"));
+        let data = {
+          "name": "TwitterTimeline",
+          "description": "See timeline of a user.",
+          "params": null,
+          "position": widget,
+        }
+        this.twitterService.updatePosition(user.uid, data);
       }
     })
   }

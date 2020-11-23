@@ -7,36 +7,36 @@ const TREE_SERVICES: Services[] = [
   {
     name: "Twitter",
     widgets: [
-      { name: "Post a tweet" },
-      { name: "My timeline" },
-      { name: "Search timeline" },
+      { title: "Post a tweet", name: "TwitterPostTweet", description: "Post a tweet in the user timeline", params: null, positions: null },
+      { title: "Search timeline", name: "TwitterTimeline", description: "Post a tweet in the user timeline", params: null, positions: null },
+      { title: "Search", name: "TwitterSearchTweet", description: "Post a tweet in the user timeline", params: null, positions: null },
     ]
   },
   {
     name: "Twitch",
     widgets: [
-      { name: "Live" },
-      { name: "Favorite" },
+      { title: "Live", name: "TwitchLive", description: "Post a tweet in the user timeline", params: null, positions: null },
+      { title: "Favorite", name: "TwitchFavorite", description: "Post a tweet in the user timeline", params: null, positions: null },
     ]
   },
   {
     name: "Spotify",
     widgets: [
-      { name: "Listen" },
-      { name: "Favorite" },
+      { title: "Listen", name: "SpotifyListen", description: "Post a tweet in the user timeline", params: null, positions: null },
+      { title: "Favorite", name: "SpotifyFavorite", description: "Post a tweet in the user timeline", params: null, positions: null },
     ]
   },
   {
     name: "Youtube",
     widgets: [
-      { name: "Explorer" },
-      { name: "Abonnements" },
+      { title: "Explorer", name: "YoutubeExpolorer", description: "Post a tweet in the user timeline", params: null, positions: null },
+      { title: "Abonnements", name: "YoutubeAbonnements", description: "Post a tweet in the user timeline", params: null, positions: null },
     ]
   },
   {
     name: "Weather",
     widgets: [
-      { name: "Town" },
+      { title: "Town", name: "WeatherTown", description: "Post a tweet in the user timeline", params: null, positions: null },
     ]
   }
 ]

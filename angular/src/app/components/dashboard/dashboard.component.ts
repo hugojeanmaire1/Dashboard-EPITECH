@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, EventEmit
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {AuthService} from "../../shared/services/auth.service";
 import {TwitterService} from "../../shared/services/twitter.service";
+import { UUID } from "angular2-uuid";
 
 @Component({
   selector: 'app-dashboard',
@@ -34,7 +35,7 @@ export class DashboardComponent implements OnInit {
       // resizable: {
       //   enabled: true
       // },
-      itemResizeCallback: (item) => {
+      itemChangeCallback: (item) => {
         // update DB with new size
         // send the update to widgets
         this.resizeEvent.emit(item);
@@ -42,11 +43,11 @@ export class DashboardComponent implements OnInit {
     };
 
     this.dashboard = [
-      {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline'},
-      {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet'},
-      {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet'},
-      {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch'},
-      {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames'},
+      {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline', id: UUID.UUID()},
+      {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet', id: UUID.UUID()},
+      {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet', id: UUID.UUID()},
+      {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch', id: UUID.UUID()},
+      {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames', id: UUID.UUID()},
     ];
   }
 
@@ -80,6 +81,6 @@ export class DashboardComponent implements OnInit {
   }
 
   addItem(): void {
-    this.dashboard.push({cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterTimeline'});
+    this.dashboard.push({cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterTimeline', id: UUID.UUID()});
   }
 }
