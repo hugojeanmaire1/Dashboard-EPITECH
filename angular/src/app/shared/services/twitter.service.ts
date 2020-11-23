@@ -42,9 +42,8 @@ export class TwitterService {
       'Something bad happened; please try again later.');
   }
 
-  getTimeline(screenName: string) {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName)
-      .pipe(map(data => data));
+  getTimeline(screenName: string): Observable<any> {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName);
   }
 
   postTweet(input) {

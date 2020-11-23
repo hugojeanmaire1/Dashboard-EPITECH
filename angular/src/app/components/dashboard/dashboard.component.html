@@ -1,6 +1,6 @@
 <mat-drawer-container class="sidebar-container" autosize>
   <mat-drawer #drawer class="sidebar-elem" mode="side" style="background-color: rgb(199, 199, 204);">
-    <app-sidebar></app-sidebar>
+    <app-sidebar (addItem)="addItem($event.type, $event.position)"></app-sidebar>
   </mat-drawer>
   <div class="sidenav-content">
     <button class="button" mat-fab color="primary" (click)="drawer.toggle()">
@@ -8,7 +8,7 @@
     </button>
     <a class="btn btn-success" href="http://localhost:8080/services/twitter/login?uid={{getUserId()}}">Login Twitter</a>
     <a class="btn btn-success" href="http://localhost:8080/services/spotify/login?uid={{getUserId()}}">Login Spotify</a>
-    <button class="button" mat-fab color="primary" (click)="addItem()">
+    <button class="button" mat-fab color="primary">
       <mat-icon>add</mat-icon>
     </button>
   </div>

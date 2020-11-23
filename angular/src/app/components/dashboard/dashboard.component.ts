@@ -14,7 +14,7 @@ import { UUID } from "angular2-uuid";
 
 export class DashboardComponent implements OnInit {
   options: GridsterConfig;
-  dashboard: Array<GridsterItem>;
+  dashboard: Array<GridsterItem> = [];
   resizeEvent: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   showFiller = false;
 
@@ -22,19 +22,19 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.options = {
-      gridType: GridType.Fit,
+      gridType: GridType.ScrollHorizontal,
       compactType: CompactType.None,
       displayGrid: "none",
       //maxCols: 10,
-      disableWarnings: false,
-      ignoreMarginInRow: false,
+      //disableWarnings: false,
+      //ignoreMarginInRow: false,
       pushItems: true,
       draggable: {
         enabled: true
       },
-      // resizable: {
-      //   enabled: true
-      // },
+      resizable: {
+        enabled: true
+      },
       itemChangeCallback: (item) => {
         // update DB with new size
         // send the update to widgets
@@ -42,13 +42,13 @@ export class DashboardComponent implements OnInit {
       },
     };
 
-    this.dashboard = [
-      {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline', id: UUID.UUID()},
-      {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet', id: UUID.UUID()},
-      {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet', id: UUID.UUID()},
-      {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch', id: UUID.UUID()},
-      {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames', id: UUID.UUID()},
-    ];
+    // this.dashboard = [
+    //   {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline', id: UUID.UUID()},
+    //   {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet', id: UUID.UUID()},
+    //   {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet', id: UUID.UUID()},
+    //   {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch', id: UUID.UUID()},
+    //   {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames', id: UUID.UUID()},
+    // ];
   }
 
   getUserId () {
@@ -80,7 +80,14 @@ export class DashboardComponent implements OnInit {
     this.dashboard.splice(this.dashboard.indexOf(item), 1)
   }
 
-  addItem(): void {
-    this.dashboard.push({cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterTimeline', id: UUID.UUID()});
+  addItem(type, position): void {
+    this.dashboard.push({
+        cols: position.cols,
+        rows: position.rows,
+        y: position.y,
+        x: position.x,
+        type: type,
+        id: UUID.UUID()
+      });
   }
 }

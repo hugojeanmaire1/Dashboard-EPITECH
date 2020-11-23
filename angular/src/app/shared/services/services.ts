@@ -8,6 +8,6 @@ export interface Widget {
   id?: string;
   name: string;
   description: string,
-  params: any,
-  positions: any;
+  params?: any,
+  position?: any;
 }
