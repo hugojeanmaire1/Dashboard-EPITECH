@@ -1,16 +1,22 @@
 <mat-drawer-container class="sidebar-container" autosize>
-  <mat-drawer #drawer class="sidebar-elem" mode="side">
-    <app-sidebar></app-sidebar>
+  <mat-drawer #drawer class="sidebar-elem" mode="side" style="background-color: rgb(199, 199, 204);">
+    <app-sidebar (addItem)="addItem($event.type, $event.position)"></app-sidebar>
   </mat-drawer>
   <div class="sidenav-content">
     <button class="button" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a class="btn btn-success" href="http://localhost:8080/services/twitter/login">Login Twitter</a>
+    <a class="btn btn-success" href="http://localhost:8080/services/twitter/login?uid={{getUserId()}}">Login Twitter</a>
+    <a class="btn btn-success" href="http://localhost:8080/services/spotify/login?uid={{getUserId()}}">Login Spotify</a>
+    <button class="button" mat-fab color="primary">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
-  <gridster [options]="options" style="background-color: whitesmoke">
-    <app-twitter></app-twitter>
-    <app-spotify></app-spotify>
-    <app-twitch></app-twitch>
+  <gridster [options]="options" style="background-color: rgb(229, 229, 234)">
+    <gridster-item style="background: {{getColorServices(item)}};" [item]="item" *ngFor="let item of dashboard">
+      <app-twitter [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitter>
+      <app-spotify [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-spotify>
+      <app-twitch [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitch>
+    </gridster-item>
   </gridster>
 </mat-drawer-container>

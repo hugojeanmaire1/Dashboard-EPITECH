@@ -10,6 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.Configuration;
+import twitter4j.conf.ConfigurationBuilder;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -37,6 +41,7 @@ public class MainClass {
                         .setDatabaseUrl("https://dashboard-eb9b3.firebaseio.com")
                         .build();
                 FirebaseApp.initializeApp(firebaseOptions);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -51,7 +56,7 @@ public class MainClass {
      * @return
      * WebMVCConfigurer
      */
-    @Bean
+/*    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
@@ -64,6 +69,6 @@ public class MainClass {
                         .allowCredentials(true).maxAge(3600);
             }
         };
-    }
+    }*/
 
 }

@@ -1,0 +1,14 @@
+.send-email {
+    min-width: 100px;
+    max-width: 430px;
+    width: 100%;
+    margin: auto;
+}
+
+.log-in {
+    margin-left: 130px;
+}
+
+.redirect {
+    text-decoration: underline;
+}

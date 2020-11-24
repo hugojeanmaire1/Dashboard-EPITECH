@@ -26,15 +26,15 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
+import {MatListModule} from "@angular/material/list";
+import {MatMenuModule} from '@angular/material/menu';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 // Gridster
 import { GridsterModule} from "angular-gridster2";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatTreeModule} from "@angular/material/tree";
-
-import { StoreModule } from '@ngrx/store';
-import { reducer } from "./store/reducers/store.reducer";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatTreeModule } from "@angular/material/tree";
 
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -45,6 +45,14 @@ import { TwitterComponent } from './components/services/twitter/twitter.componen
 import { SpotifyComponent } from './components/services/spotify/spotify.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import { TwitchComponent } from './components/services/twitch/twitch.component';
+import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { TimelineComponent } from './components/services/twitter/timeline/timeline.component';
+import {ScrollingModule} from "@angular/cdk/scrolling";
+import { SearchComponent } from './components/services/spotify/search/search.component';
+import { TopgamesComponent } from './components/services/twitch/topgames/topgames.component';
+import { PostTweetComponent } from './components/services/twitter/post-tweet/post-tweet.component';
+import { SearchTweetsComponent } from './components/services/twitter/search-tweets/search-tweets.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +65,13 @@ import { TwitchComponent } from './components/services/twitch/twitch.component';
     SidebarComponent,
     TwitterComponent,
     SpotifyComponent,
-    TwitchComponent
+    TwitchComponent,
+    LoadingscreenComponent,
+    TimelineComponent,
+    SearchComponent,
+    TopgamesComponent,
+    PostTweetComponent,
+    SearchTweetsComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +85,7 @@ import { TwitchComponent } from './components/services/twitch/twitch.component';
     FontAwesomeModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -80,7 +95,11 @@ import { TwitchComponent } from './components/services/twitch/twitch.component';
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
-    StoreModule.forRoot({infos: reducer}),
+    MatMenuModule,
+    MatProgressSpinnerModule,
+    ScrollingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AuthService,

@@ -1,0 +1,26 @@
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="twitter-icon" src="./assets/twitter_logo.png" />
+  </button>
+  <mat-card-title>Post a tweet</mat-card-title>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div class="input">
+  <form>
+    <mat-form-field>
+      <mat-label>Ex. Hello World !</mat-label>
+      <input type="text" matInput [(ngModel)]="input" name="input">
+    </mat-form-field>
+    <button class="post-button" mat-raised-button color="basic" (click)="postTweet()">Tweet</button>
+  </form>
+</div>

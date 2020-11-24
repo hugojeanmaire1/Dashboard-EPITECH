@@ -1,19 +1,14 @@
 import { Injectable, NgZone } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpClientJsonpModule, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import {catchError, map, retry} from 'rxjs/operators';
+import {map} from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({
-    //"Access-Control-Allow-Headers": "Authorization",
     "Access-Control-Allow-Origin": "*",
-    // "Access-Control-Allow-Methods": "GET, POST, PUT, OPTIONS, DELETE",
-    // "Content-Type": "application/javascript;charset=utf-8",
   })
 };
-
 
 
 @Injectable({
@@ -21,12 +16,13 @@ const httpOptions = {
 })
 
 export class TwitterService {
+
   constructor(
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _httpClient: HttpClient,
-    private store: Store<any>,
-  ) {
+
+) {
 
   }
 
@@ -46,24 +42,24 @@ export class TwitterService {
       'Something bad happened; please try again later.');
   }
 
-  LogIn() {
-    // this._httpClient.jsonp('http://localhost:8080/services/twitter/login/', 'callback')
-    //   .pipe(map(res => {
-    //     console.log("Res = ", res);
-    //     })
-    //   )
-    //   .subscribe(response => {
-    //     console.log("Response = ", response);
-    //   })
-    // window.location.href='http://localhost:8080/services/twitter/login';
-    // this._httpClient.get("http://localhost:8080/services/twitter/login")
-    //   .subscribe(response => {
-    //     console.log("Login Twitter = ", response)
-    //   })
+  getTimeline(screenName: string): Observable<any> {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName);
+  }
 
-    // this._httpClient.get("http://localhost:8080/services/twitter/login", httpOptions)
-    //   .subscribe(response => {
-    //     console.log("Login Twitter = ", response);
-    //   })
+  postTweet(input) {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/tweet/post/' + input)
+        .subscribe((data) => { console.log(data)});
+  }
+
+  searchTweet(search: string) {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/search/tweet?search=' + search)
+      .pipe(map(data => data));
+  }
+
+  updatePosition(uid, data) {
+    return this._httpClient.post('http://localhost:8080/users/update-widgets?uid=' + uid + "&serviceName=twitter", data)
+      .subscribe(response => {
+        console.log("UPDATE POSITION", response);
+      })
   }
 }

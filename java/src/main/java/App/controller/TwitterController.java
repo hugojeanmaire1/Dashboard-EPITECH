@@ -1,10 +1,15 @@
 package App.controller;
 
-import lombok.SneakyThrows;
+import App.Model.Services;
+import App.Model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
@@ -12,18 +17,28 @@ import twitter4j.auth.RequestToken;
 import org.slf4j.Logger;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-import javax.servlet.http.Cookie;
+
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
-@Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@RestController
 @RequestMapping("/services/twitter")
-public class TwitterController {
+public class TwitterController extends HttpServlet {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TwitterController.class);
+    @JsonIgnore
+    private static final Firestore db = FirestoreClient.getFirestore();
+    private final Configuration configuration = new ConfigurationBuilder()
+        .setOAuthConsumerKey("S2O303TWOCfZHx3e8Jt16AgCr")
+        .setOAuthConsumerSecret("VEquyDohQ2YaXueBqmL0akbAJR16v0GxxTXpxRGDCjuJ9F0QRk")
+        .build();
+    TwitterFactory factory = new TwitterFactory(configuration);
+    Twitter twitter = factory.getInstance();
 
 
     @GetMapping(path="/", consumes= MediaType.APPLICATION_JSON_VALUE)
@@ -31,58 +46,52 @@ public class TwitterController {
         return "Welcome to Twitter Controller";
     }
 
-    @RequestMapping(path="/login/callback")
-    public void CallbackLogin(@RequestParam(value="oauth_verifier", required=false) String oauthVerifier,
-                                @RequestParam(value="denied", required=false) String denied,
-                                HttpServletRequest request, HttpServletResponse response, Model model)
-    {
+    @PostMapping(value = "/login/callback")
+    public User CallbackLogin(@RequestBody User body,
+                                 @RequestParam(value="oauth_verifier", required=false) String oauthVerifier,
+                                 @RequestParam(value="denied", required=false) String denied) throws ExecutionException, InterruptedException {
         if (denied != null) {
-            return;
+            return null;
         }
-        Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
-        RequestToken requestToken = (RequestToken) request.getSession().getAttribute("requestToken");
-        try {
-            if (twitter == null)
-                throw new Exception("Twitter is null");
-            AccessToken token = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
-            request.getSession().removeAttribute("requestToken");
-            model.addAttribute("username", twitter.getScreenName());
-            twitter.setOAuthAccessToken(token);
-            Cookie cookie = new Cookie("twitter_name", twitter.getScreenName());
-            response.addCookie(cookie);
-            response.sendRedirect("http://localhost:4200/dashboard");
-        } catch (Exception e) {
-            e.printStackTrace();
+        DocumentReference docRef = db.collection("users").document(body.getUid());
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+
+        if (document.exists()) {
+            User user = document.toObject(User.class);
+            for (Services service: user.getServices()) {
+                if (service.getName().equals("twitter")) {
+                    try {
+                        RequestToken requestToken = new RequestToken(service.getRequestToken(), service.getRequestTokenSecret());
+                        AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
+                        twitter.setOAuthAccessToken(accessToken);
+                        service.setUserId(Long.toString(accessToken.getUserId()));
+                        service.setUserName(accessToken.getScreenName());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            return user;
+
         }
+        return null;
     }
 
-    @SneakyThrows
     @GetMapping(path="/login")
-    public void LoginTwitter(HttpServletRequest request, HttpServletResponse response)
-    {
-        String twitterUrl = "";
-
+    public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid) throws IOException {
         try {
-            String consumerKey = "S2O303TWOCfZHx3e8Jt16AgCr";
-            String consumerSecret = "VEquyDohQ2YaXueBqmL0akbAJR16v0GxxTXpxRGDCjuJ9F0QRk";
-
-            ConfigurationBuilder builder = new ConfigurationBuilder();
-            builder.setOAuthConsumerKey(consumerKey);
-            builder.setOAuthConsumerSecret(consumerSecret);
-            Configuration configuration = builder.build();
-
-            TwitterFactory factory = new TwitterFactory(configuration);
-            Twitter twitter = factory.getInstance();
-            String callbackUrl = "http://localhost:8080/services/twitter/login/callback";
+            String callbackUrl = "http://localhost:4200/login/twitter/callback";
             RequestToken requestToken = twitter.getOAuthRequestToken(callbackUrl);
-            request.getSession().setAttribute("requestToken", requestToken);
-            request.getSession().setAttribute("twitter", twitter);
-            twitterUrl = requestToken.getAuthorizationURL();
-        } catch (Exception e) {
-            LOGGER.error("Problem logging in with Twitter!", e);
-            return;
+            User user = new User();
+            user.createService(uid, requestToken.getToken(), requestToken.getTokenSecret(),"twitter");
+            response.sendRedirect(requestToken.getAuthenticationURL());
+        } catch (IllegalStateException error) {
+            System.out.println("Already Log");
+            response.sendRedirect("http://localhost:4200/dashboard");
+        } catch (Exception error) {
+            LOGGER.error("Problem logging in with Twitter!", error);
         }
-        response.sendRedirect(twitterUrl);
     }
 
 /*    @GetMapping(path="/{username}")
@@ -101,10 +110,26 @@ public class TwitterController {
     public Status postTweet(@PathVariable String data, HttpServletRequest request)
     {
         try {
-            Twitter twitter = (Twitter) request.getSession().getAttribute("twitter");
             return (twitter.updateStatus(data));
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path = "/timeline")
+    public List getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
+        return twitter.getUserTimeline(username);
+    }
+
+    @GetMapping(path = "/search/tweet")
+    public List getTweets(@RequestParam(value = "search")String search) {
+        try {
+            Query query = new Query(search);
+            QueryResult result = twitter.search(query);
+            return result.getTweets();
+        } catch (TwitterException te) {
+            te.printStackTrace();
             return null;
         }
     }

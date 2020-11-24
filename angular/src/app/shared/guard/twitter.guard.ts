@@ -29,10 +29,10 @@ export class TwitterGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let data = route.queryParams
     let body = JSON.parse(localStorage.getItem('user'))
-    console.log("Data :", data);
     this._httpClient.post("http://localhost:8080/services/twitter/login/callback" + "?oauth_verifier=" + data.oauth_verifier + "&oauth_token=" + data.oauth_token, body, httpOptions)
       .subscribe(response => {
-        console.log("Response = ", response);
+        localStorage.setItem('user', JSON.stringify(response));
+        console.log("LocalStorage User = ", JSON.parse(localStorage.getItem("user")));
         this.router.navigate(['dashboard']);
       })
 

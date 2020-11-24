@@ -1,0 +1,18 @@
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="spotify-icon" src="./assets/spotify_icon.png" />
+  </button>
+  <mat-card-title>Search</mat-card-title>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<p>search works!</p>
