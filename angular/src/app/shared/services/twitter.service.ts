@@ -42,34 +42,24 @@ export class TwitterService {
       'Something bad happened; please try again later.');
   }
 
-  LogIn() {
-    // this._httpClient.jsonp('http://localhost:8080/services/twitter/login/', 'callback')
-    //   .pipe(map(res => {
-    //     console.log("Res = ", res);
-    //     })
-    //   )
-    //   .subscribe(response => {
-    //     console.log("Response = ", response);
-    //   })
-    // window.location.href='http://localhost:8080/services/twitter/login';
-    // this._httpClient.get("http://localhost:8080/services/twitter/login")
-    //   .subscribe(response => {
-    //     console.log("Login Twitter = ", response)
-    //   })
-
-    // this._httpClient.get("http://localhost:8080/services/twitter/login", httpOptions)
-    //   .subscribe(response => {
-    //     console.log("Login Twitter = ", response);
-    //   })
-  }
-
-  getTimeline() {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + "TrashTalk_fr")
-      .pipe(map(data => data));
+  getTimeline(screenName: string): Observable<any> {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName);
   }
 
   postTweet(input) {
     return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/tweet/post/' + input)
         .subscribe((data) => { console.log(data)});
+  }
+
+  searchTweet(search: string) {
+    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/search/tweet?search=' + search)
+      .pipe(map(data => data));
+  }
+
+  updatePosition(uid, data) {
+    return this._httpClient.post('http://localhost:8080/users/update-widgets?uid=' + uid + "&serviceName=twitter", data)
+      .subscribe(response => {
+        console.log("UPDATE POSITION", response);
+      })
   }
 }

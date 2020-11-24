@@ -1,25 +1,16 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
-import {TwitterService} from "../../../../shared/services/twitter.service";
 import {Subscription} from "rxjs";
+import {TwitterService} from "../../../../shared/services/twitter.service";
 
 @Component({
-  selector: 'app-post-tweet',
-  templateUrl: './post-tweet.component.html',
-  styleUrls: ['./post-tweet.component.css']
+  selector: 'app-search-tweets',
+  templateUrl: './search-tweets.component.html',
+  styleUrls: ['./search-tweets.component.css']
 })
-export class PostTweetComponent implements OnInit, OnDestroy {
-  input: string;
+export class SearchTweetsComponent implements OnInit, OnDestroy {
+  search: string = "";
+  data: any[] = [];
 
   @Input()
   widget;
@@ -48,8 +39,13 @@ export class PostTweetComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
-  postTweet() {
-    this.twitterService.postTweet(this.input);
-    this.input = "";
+  searchTweet() {
+    this.twitterService.searchTweet(this.search)
+      .subscribe(response => {
+        this.data.length = 0;
+        this.data = response;
+        console.log(this.data);
+        this.search = "";
+      });
   }
 }

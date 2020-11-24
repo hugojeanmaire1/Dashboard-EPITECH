@@ -1,10 +1,11 @@
-<div>
-  <gridster-item [item]="item" *ngFor="let item of dashboard">
-    <div class="button-holder">
-      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">
-        <mat-icon>delete</mat-icon>
-      </button>
-      <p>twitch works!</p>
-    </div>
-  </gridster-item>
-</div>
+<!--<div>-->
+<!--  <gridster-item [item]="item" *ngFor="let item of dashboard">-->
+<!--    <div class="button-holder">-->
+<!--      <button mat-mini-fab (mousedown)="removeItem($event, item)" (touchstart)="removeItem($event, item)">-->
+<!--        <mat-icon>delete</mat-icon>-->
+<!--      </button>-->
+<!--      <p>twitch works!</p>-->
+<!--    </div>-->
+<!--  </gridster-item>-->
+<!--</div>-->
+<app-topgames *ngIf="widget.type === 'TwitchTopGames'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-topgames>

@@ -56,7 +56,7 @@ public class MainClass {
      * @return
      * WebMVCConfigurer
      */
-    @Bean
+/*    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
@@ -69,6 +69,6 @@ public class MainClass {
                         .allowCredentials(true).maxAge(3600);
             }
         };
-    }
+    }*/
 
 }

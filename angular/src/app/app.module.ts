@@ -26,6 +26,9 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatCardModule} from "@angular/material/card";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
+import {MatListModule} from "@angular/material/list";
+import {MatMenuModule} from '@angular/material/menu';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 // Gridster
 import { GridsterModule} from "angular-gridster2";
@@ -46,8 +49,10 @@ import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.c
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { TimelineComponent } from './components/services/twitter/timeline/timeline.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
+import { SearchComponent } from './components/services/spotify/search/search.component';
+import { TopgamesComponent } from './components/services/twitch/topgames/topgames.component';
 import { PostTweetComponent } from './components/services/twitter/post-tweet/post-tweet.component';
-import {FormsModule} from "@angular/forms";
+import { SearchTweetsComponent } from './components/services/twitter/search-tweets/search-tweets.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +68,10 @@ import {FormsModule} from "@angular/forms";
     TwitchComponent,
     LoadingscreenComponent,
     TimelineComponent,
-    PostTweetComponent
+    SearchComponent,
+    TopgamesComponent,
+    PostTweetComponent,
+    SearchTweetsComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,6 +85,7 @@ import {FormsModule} from "@angular/forms";
     FontAwesomeModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
@@ -86,9 +95,11 @@ import {FormsModule} from "@angular/forms";
     MatTooltipModule,
     MatSidenavModule,
     MatTreeModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     ScrollingModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     AuthService,

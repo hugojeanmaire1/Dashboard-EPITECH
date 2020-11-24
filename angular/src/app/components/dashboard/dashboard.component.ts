@@ -1,9 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {AuthService} from "../../shared/services/auth.service";
-import {Observable} from "rxjs";
-import {TwitterComponent} from "../services/twitter/twitter.component";
-import {SpotifyComponent} from "../services/spotify/spotify.component";
+import {TwitterService} from "../../shared/services/twitter.service";
+import { UUID } from "angular2-uuid";
 
 @Component({
   selector: 'app-dashboard',
@@ -15,44 +14,44 @@ import {SpotifyComponent} from "../services/spotify/spotify.component";
 
 export class DashboardComponent implements OnInit {
   options: GridsterConfig;
-  dashboard: Array<GridsterItem>;
+  dashboard: Array<GridsterItem> = [];
+  resizeEvent: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   showFiller = false;
-  data: Observable<any>;
 
-
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService, public twitterService: TwitterService) {}
 
   ngOnInit(): void {
-
     this.options = {
-      gridType: GridType.Fit,
+      gridType: GridType.ScrollHorizontal,
       compactType: CompactType.None,
-      maxCols: 10,
+      displayGrid: "none",
+      //maxCols: 10,
+      //disableWarnings: false,
+      //ignoreMarginInRow: false,
       pushItems: true,
       draggable: {
         enabled: true
       },
       resizable: {
         enabled: true
-      }
+      },
+      itemChangeCallback: (item) => {
+        // update DB with new size
+        // send the update to widgets
+        this.resizeEvent.emit(item);
+      },
     };
 
     // this.dashboard = [
-    //   {cols: 3, rows: 1, y: 3, x: 0},
-    //   {cols: 2, rows: 2, y: 0, x: 2},
-    //   {cols: 1, rows: 1, y: 0, x: 4},
-    //   {cols: 3, rows: 2, y: 1, x: 4},
-    //   {cols: 1, rows: 1, y: 4, x: 5},
-    //   {cols: 1, rows: 1, y: 2, x: 1},
-    //   {cols: 2, rows: 2, y: 5, x: 5},
-    //   {cols: 2, rows: 2, y: 3, x: 2},
-    //   {cols: 2, rows: 1, y: 2, x: 2},
-    //   {cols: 1, rows: 1, y: 3, x: 4},
-    //   {cols: 1, rows: 1, y: 0, x: 6}
+    //   {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline', id: UUID.UUID()},
+    //   {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet', id: UUID.UUID()},
+    //   {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet', id: UUID.UUID()},
+    //   {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch', id: UUID.UUID()},
+    //   {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames', id: UUID.UUID()},
     // ];
   }
 
-  getId () {
+  getUserId () {
     let data = JSON.parse(localStorage.getItem('user'));
     return data.uid;
   }
@@ -63,13 +62,32 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  getColorServices(item) {
+    if (item.type === 'TwitterTimeline' || item.type === 'TwitterPostTweet' || item.type === 'TwitterSearchTweet' ) {
+      return '#00acee';
+    }
+    if (item.type === 'TwitchTopGames') {
+      return '#6441a5';
+    }
+    if (item.type === 'SpotifySearch') {
+      return '#1DB954';
+    }
+  }
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     $event.preventDefault();
     $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.dashboard.splice(this.dashboard.indexOf(item), 1)
   }
 
-  addItem(): void {
-    this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
+  addItem(type, position): void {
+    this.dashboard.push({
+        cols: position.cols,
+        rows: position.rows,
+        y: position.y,
+        x: position.x,
+        type: type,
+        id: UUID.UUID()
+      });
   }
 }

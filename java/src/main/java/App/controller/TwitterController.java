@@ -21,10 +21,9 @@ import twitter4j.conf.ConfigurationBuilder;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import java.util.*;
 
 
 @RestController
@@ -66,7 +65,6 @@ public class TwitterController extends HttpServlet {
                         RequestToken requestToken = new RequestToken(service.getRequestToken(), service.getRequestTokenSecret());
                         AccessToken accessToken = twitter.getOAuthAccessToken(requestToken, oauthVerifier);
                         twitter.setOAuthAccessToken(accessToken);
-                        //System.out.println("AccessToken = " + accessToken);
                         service.setUserId(Long.toString(accessToken.getUserId()));
                         service.setUserName(accessToken.getScreenName());
                     } catch (Exception e) {
@@ -74,7 +72,6 @@ public class TwitterController extends HttpServlet {
                     }
                 }
             }
-            System.out.println(user);
             return user;
 
         }
@@ -82,16 +79,18 @@ public class TwitterController extends HttpServlet {
     }
 
     @GetMapping(path="/login")
-    public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid)
-    {
+    public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid) throws IOException {
         try {
             String callbackUrl = "http://localhost:4200/login/twitter/callback";
             RequestToken requestToken = twitter.getOAuthRequestToken(callbackUrl);
             User user = new User();
             user.createService(uid, requestToken.getToken(), requestToken.getTokenSecret(),"twitter");
             response.sendRedirect(requestToken.getAuthenticationURL());
-        } catch (Exception e) {
-            LOGGER.error("Problem logging in with Twitter!", e);
+        } catch (IllegalStateException error) {
+            System.out.println("Already Log");
+            response.sendRedirect("http://localhost:4200/dashboard");
+        } catch (Exception error) {
+            LOGGER.error("Problem logging in with Twitter!", error);
         }
     }
 
@@ -121,5 +120,17 @@ public class TwitterController extends HttpServlet {
     @GetMapping(path = "/timeline")
     public List getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
         return twitter.getUserTimeline(username);
+    }
+
+    @GetMapping(path = "/search/tweet")
+    public List getTweets(@RequestParam(value = "search")String search) {
+        try {
+            Query query = new Query(search);
+            QueryResult result = twitter.search(query);
+            return result.getTweets();
+        } catch (TwitterException te) {
+            te.printStackTrace();
+            return null;
+        }
     }
 }

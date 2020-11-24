@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -139,5 +140,9 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['sign-in']);
     })
+  }
+
+  getServices(): Observable<any> {
+    return this._httpClient.get<any>("http://localhost:8080/services/get", httpOptions);
   }
 }

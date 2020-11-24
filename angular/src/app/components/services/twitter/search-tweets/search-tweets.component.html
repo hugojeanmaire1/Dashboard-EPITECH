@@ -2,13 +2,12 @@
   <button mat-mini-fab color="basic">
     <img class="twitter-icon" src="./assets/twitter_logo.png" />
   </button>
-  <mat-label class="timeline-title" *ngIf="find">Timeline of <span style="font-size: 20px">{{timelineUsername}}</span></mat-label>
-  <div *ngIf="!find" class="input-user">
+  <div class="input-user">
     <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input matInput [(ngModel)]="timelineUsername" placeholder="Ex. Trashtalk_fr">
+      <mat-label>Search tweets</mat-label>
+      <input matInput [(ngModel)]="search" placeholder="Ex. ps5">
     </mat-form-field>
-    <button mat-mini-fab color="basic" (click)="callTimeLine(timelineUsername)">
+    <button mat-mini-fab color="basic" (click)="searchTweet()">
       <mat-icon>search</mat-icon>
     </button>
   </div>
@@ -17,10 +16,6 @@
     <mat-icon color="primary">menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="changeSearch()">
-      <mat-icon>search</mat-icon>
-      <span>Change follow user</span>
-    </button>
     <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
       <mat-icon>delete</mat-icon>
       <span>Remove</span>
@@ -28,9 +23,9 @@
   </mat-menu>
 </mat-toolbar>
 <div *ngIf="data.length === 0" style="text-align: center; margin-top: '20%';">
-  <span style="font-size: 20px; font: bold;">Enter a username</span>
+  <span style="font-size: 20px; font: bold;">Enter a input</span>
 </div>
-<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px)">
   <div *ngFor="let tweet of data">
     <mat-card style="margin: 15px 5px;">
       <mat-card-title>

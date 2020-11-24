@@ -10,6 +10,7 @@ import { VerifyEmailComponent } from "./components/verify-email/verify-email.com
 
 import {AuthGuard} from "./shared/guard/auth.guard";
 import {TwitterGuard} from "./shared/guard/twitter.guard";
+import {SpotifyGuard} from "./shared/guard/spotify.guard";
 import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'login/twitter/callback', canActivate: [TwitterGuard], component: LoadingscreenComponent},
+  { path: 'login/spotify/callback', canActivate: [SpotifyGuard], component: LoadingscreenComponent},
 ];
 
 @NgModule({

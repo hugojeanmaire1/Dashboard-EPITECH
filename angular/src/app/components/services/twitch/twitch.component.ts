@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridsterItemComponent, GridType} from 'angular-gridster2';
 import {TwitterService} from "../../../shared/services/twitter.service";
 import {Observable} from "rxjs";
@@ -9,25 +9,21 @@ import {Observable} from "rxjs";
   styleUrls: ['./twitch.component.css']
 })
 export class TwitchComponent implements OnInit {
-  dashboard: Array<GridsterItem>;
+  @Input()
+  widget;
+  @Input()
+  resizeEvent;
+  @Output()
+  removeWidget = new EventEmitter();
 
   constructor(public twitterService: TwitterService) { }
 
   ngOnInit(): void {
-    this.dashboard = [
-      {cols: 2, rows: 1, y: 0, x: 4},
-    ];
 
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
-  }
-
-  addItem(): void {
-    this.dashboard.push({x: 0, y: 0, cols: 1, rows: 1});
+    this.removeWidget.emit({event: $event, item: item});
   }
 
 }

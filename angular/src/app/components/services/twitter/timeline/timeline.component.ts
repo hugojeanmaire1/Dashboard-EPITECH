@@ -1,6 +1,17 @@
-import {Component, Injectable, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import {
+  Component,
+  Injectable,
+  Input,
+  OnInit,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+  OnDestroy,
+  Output
+} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-timeline',
@@ -8,34 +19,58 @@ import {TwitterService} from "../../../../shared/services/twitter.service";
   styleUrls: ['./timeline.component.css']
 })
 
-export class TimelineComponent implements OnInit {
-  dashboard: Array<GridsterItem>;
+export class TimelineComponent implements OnInit, OnDestroy {
   data: any[] = [];
+  timelineUsername: string = "Trashtalk_fr";
+  find: boolean = false;
+
+  @Input()
+  widget;
+  @Input()
+  resizeEvent: EventEmitter<GridsterItem>;
+  @Output()
+  removeWidget = new EventEmitter<any>();
+
+  resizeSub: Subscription;
 
   constructor(public twitterService: TwitterService) { }
 
   ngOnInit(): void {
-    this.dashboard = [
-      {cols: 2, rows: 4, y: 0, x: 0}
-    ];
+    this.resizeSub = this.resizeEvent.subscribe((widget) => {
+      if (widget === this.widget) {
+        console.log(widget);
+        let user = JSON.parse(localStorage.getItem("user"));
+        let data = {
+          "name": "TwitterTimeline",
+          "description": "See timeline of a user.",
+          "params": null,
+          "position": widget,
+        }
+        this.twitterService.updatePosition(user.uid, data);
+      }
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.resizeSub.unsubscribe();
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
-    $event.preventDefault();
-    $event.stopPropagation();
-    this.dashboard.splice(this.dashboard.indexOf(item), 1);
+    this.removeWidget.emit({event: $event, item: item});
   }
 
-  addItem(): void {
-    this.dashboard.push({cols: 2, rows: 4, y: 0, x: 0});
-  }
-
-  callTimeLine() {
-    this.twitterService.getTimeline()
+  callTimeLine(screenName: string) {
+    this.twitterService.getTimeline(screenName)
       .subscribe(response => {
         this.data = response;
-        console.log(this.data);
+        this.find = true;
       })
+  }
+
+  changeSearch() {
+    this.find = false;
+    this.timelineUsername = "";
+    this.data.length = 0;
   }
 
 }

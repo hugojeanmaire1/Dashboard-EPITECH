@@ -27,6 +27,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@ngrx/store": "^10.0.1",
     "angular-gridster2": "^10.1.7",
+    "angular2-uuid": "^1.1.1",
     "bootstrap": "^4.5.3",
     "firebase": "^8.0.0",
     "firebaseui": "^4.7.1",

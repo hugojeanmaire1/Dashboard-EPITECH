@@ -1,25 +1,14 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
-import {TwitterService} from "../../../../shared/services/twitter.service";
 import {Subscription} from "rxjs";
 
 @Component({
-  selector: 'app-post-tweet',
-  templateUrl: './post-tweet.component.html',
-  styleUrls: ['./post-tweet.component.css']
+  selector: 'app-topgames',
+  templateUrl: './topgames.component.html',
+  styleUrls: ['./topgames.component.css']
 })
-export class PostTweetComponent implements OnInit, OnDestroy {
-  input: string;
+export class TopgamesComponent implements OnInit, OnDestroy {
+  data: any[] = [];
 
   @Input()
   widget;
@@ -30,7 +19,7 @@ export class PostTweetComponent implements OnInit, OnDestroy {
 
   resizeSub: Subscription;
 
-  constructor(public twitterService: TwitterService) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.resizeSub = this.resizeEvent.subscribe((widget) => {
@@ -48,8 +37,4 @@ export class PostTweetComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
-  postTweet() {
-    this.twitterService.postTweet(this.input);
-    this.input = "";
-  }
 }
