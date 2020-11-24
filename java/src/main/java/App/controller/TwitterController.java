@@ -17,7 +17,6 @@ import twitter4j.auth.RequestToken;
 import org.slf4j.Logger;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/twitter")
 public class TwitterController extends HttpServlet {
 

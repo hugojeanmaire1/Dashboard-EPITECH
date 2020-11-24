@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@EnableAutoConfiguration
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/users")
 public class UserController {
 

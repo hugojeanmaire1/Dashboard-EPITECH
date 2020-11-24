@@ -6,11 +6,9 @@ import App.Model.Twitch;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import okhttp3.*;
+import okhttp3.RequestBody;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -19,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@EnableAutoConfiguration
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/twitch")
 public class TwitchController {
 

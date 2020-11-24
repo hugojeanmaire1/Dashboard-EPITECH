@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@EnableAutoConfiguration
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services")
 public class ServiceListController {
 
