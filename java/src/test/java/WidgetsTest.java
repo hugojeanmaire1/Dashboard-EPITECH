@@ -23,10 +23,6 @@ public class WidgetsTest {
         assertEquals(this.widgets.getName(), "Facebook");
         assertEquals(this.widgets.getDescription(), "Facebook widgets");
         assertEquals(this.widgets.getParams().size(), 0);
-        HashMap<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("value", "node");
-        hashMap.put("name", "zzz");
-        this.widgets.setParams(hashMap);
         this.widgets.setName("Google");
         this.widgets.setDescription("Google Widgets");
         assertEquals(this.widgets.getName(), "Google");

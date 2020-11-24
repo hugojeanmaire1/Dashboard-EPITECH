@@ -9,16 +9,16 @@ import java.util.ArrayList;
 public class ServicesAbout {
 
     private String name;
-    private ArrayList<Widgets> widgets;
+    private ArrayList<WidgetsAbout> widgets;
 
     public ServicesAbout() {
         this.name = "null";
-        this.widgets = new ArrayList<Widgets>();
+        this.widgets = new ArrayList<WidgetsAbout>();
     }
 
     public ServicesAbout(String name) {
         this.name = name;
-        this.widgets = new ArrayList<Widgets>();
+        this.widgets = new ArrayList<WidgetsAbout>();
     }
 
 }

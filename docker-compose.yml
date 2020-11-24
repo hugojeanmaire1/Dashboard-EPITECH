@@ -3,7 +3,9 @@ version: '3'
 services:
   java:
     container_name: backend-java
-#    restart: always
+    env_file:
+      ./api.env
+    restart: always
     build: java/.
     ports:
       - "8080:8080"

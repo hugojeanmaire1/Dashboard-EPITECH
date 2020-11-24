@@ -1,13 +1,18 @@
 package App.controller;
 
-
 import App.Model.CredentialsTwitch;
+import App.Model.Services;
 import App.Model.Twitch;
+import App.Model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.Firestore;
+import com.google.firebase.cloud.FirestoreClient;
 import lombok.SneakyThrows;
 import okhttp3.*;
 import okhttp3.RequestBody;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +28,8 @@ public class TwitchController {
 
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    private final Twitch twitch = new Twitch("kwhp5wznikfygc3faiad50fqep61w2", "emulvozjrzr3stv5fl5dzcvx42479r", "http://localhost:4200/login/twitch/callback");
+    private static final Firestore db = FirestoreClient.getFirestore();
 
     @SneakyThrows
     private Request PostRequestBuilder(String url, Map<String, String> parameters, Map<String, String> headers)
@@ -77,11 +83,9 @@ public class TwitchController {
                 .build();
     }
 
-    @SneakyThrows
-    @GetMapping("/login/callback")
-    public Object callbackTwitch(@RequestParam String code, HttpServletRequest request)
+    @PostMapping("/login/callback")
+    public Object callbackTwitch(@org.springframework.web.bind.annotation.RequestBody User body, @RequestParam String code, HttpServletRequest request)
     {
-        Twitch twitch = (Twitch)request.getSession().getAttribute("twitch");
         Map<String, String> params = new HashMap<>();
         params.put("client_id", twitch.getClientID());
         params.put("client_secret", twitch.getClientSecret());
@@ -89,24 +93,46 @@ public class TwitchController {
         params.put("grant_type", "authorization_code");
         params.put("redirect_uri", twitch.getRedirectUrl());
         Request r = PostRequestBuilder("https://id.twitch.tv/oauth2/token", params, null);
-        String s = Objects.requireNonNull(client.newCall(r).execute().body()).string();
-        CredentialsTwitch credentials = objectMapper.readValue(s, CredentialsTwitch.class);
-        twitch.setCredentials(credentials);
-        request.getSession().setAttribute("twitch", twitch);
-        return s;
+        try {
+            String s = Objects.requireNonNull(client.newCall(r).execute().body()).string();
+            CredentialsTwitch credentials = objectMapper.readValue(s, CredentialsTwitch.class);
+
+            DocumentReference docRef = db.collection("users").document(body.getUid());
+            ApiFuture<DocumentSnapshot> future = docRef.get();
+            DocumentSnapshot document = future.get();
+
+            if (document.exists()) {
+                User user = document.toObject(User.class);
+                for (Services service : user.getServices()) {
+                    if (service.getName().equals("twitch")) {
+                        try {
+                            service.setAccessToken(credentials.getAccess_token());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return user;
+            }
+            return s;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @SneakyThrows
     @GetMapping(path="/login")
-    public RedirectView loginTwitch(HttpServletRequest request)
+    public RedirectView loginTwitch(HttpServletRequest request, @RequestParam(value="uid") String uid)
     {
-        Twitch twitch = new Twitch("kwhp5wznikfygc3faiad50fqep61w2", "emulvozjrzr3stv5fl5dzcvx42479r", "http://localhost:8080/services/twitch/login/callback");
         Map<String, String> params = new HashMap<>();
         params.put("client_id", twitch.getClientID());
         params.put("redirect_uri", twitch.getRedirectUrl());
         params.put("response_type", "code");
         request.getSession().setAttribute("twitch", twitch);
         Request r = GetRequestBuilder("https://id.twitch.tv/oauth2/authorize", params, null);
+        User user = new User();
+        user.createService(uid, null, null, "twitch");
         return new RedirectView(r.url().toString());
     }
 

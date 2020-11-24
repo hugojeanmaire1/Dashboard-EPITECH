@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutionException;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/twitter")
-public class TwitterController extends HttpServlet {
+public class TwitterController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TwitterController.class);
     @JsonIgnore
