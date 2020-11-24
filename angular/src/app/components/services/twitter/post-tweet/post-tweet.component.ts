@@ -12,6 +12,7 @@ import {
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
 import {Subscription} from "rxjs";
+import {UserService} from "../../../../shared/services/user.service";
 
 @Component({
   selector: 'app-post-tweet',
@@ -30,12 +31,20 @@ export class PostTweetComponent implements OnInit, OnDestroy {
 
   resizeSub: Subscription;
 
-  constructor(public twitterService: TwitterService) { }
+  constructor(public twitterService: TwitterService, public userService: UserService) { }
 
   ngOnInit(): void {
     this.resizeSub = this.resizeEvent.subscribe((widget) => {
       if (widget === this.widget) {
-        console.log(widget);
+        let user = JSON.parse(localStorage.getItem("user"));
+        let data = {
+          "title": "Post a tweet",
+          "name": "TwitterPostTweet",
+          "description": "Post a tweet in the user timeline.",
+          "params": null,
+          "position": widget,
+        }
+        this.userService.addWidget(user.uid, "twitter", data);
       }
     })
   }

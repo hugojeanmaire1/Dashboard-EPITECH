@@ -16,7 +16,7 @@ import java.util.concurrent.TransferQueue;
 
 public class Widgets {
 
-    private String uid;
+    //private String id;
     private String title;
     private String name;
     private String description;
@@ -49,9 +49,9 @@ public class Widgets {
 
     }
 
-    public void generateUid() {
-        this.setUid(UUID.randomUUID().toString().replace("-", ""));
-    }
+//    public void generateUid() {
+//        this.setUid(UUID.randomUUID().toString().replace("-", ""));
+//    }
 
     public String getName() {
         return name;
@@ -71,9 +71,9 @@ public class Widgets {
 
     public void setParams(HashMap<String, String> params) { this.params = params; }
 
-    public String getUid() { return uid; }
-
-    public void setUid(String uid) { this.uid = uid; }
+//    public String getUid() { return id; }
+//
+//    public void setUid(String uid) { this.id = uid; }
 
     public String getTitle() { return title; }
 
@@ -81,7 +81,7 @@ public class Widgets {
 
     public void printData() {
         System.out.println("Widget Data:");
-        System.out.println("     " + this.getUid());
+        //System.out.println("     " + this.getUid());
         System.out.println("     " + this.getTitle());
         System.out.println("     " + this.getName());
         System.out.println("     " + this.getDescription());

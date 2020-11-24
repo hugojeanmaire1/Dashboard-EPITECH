@@ -12,6 +12,7 @@ import {
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
 import {Subscription} from 'rxjs';
+import {UserService} from "../../../../shared/services/user.service";
 
 @Component({
   selector: 'app-timeline',
@@ -33,20 +34,20 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   resizeSub: Subscription;
 
-  constructor(public twitterService: TwitterService) { }
+  constructor(public twitterService: TwitterService, public userService: UserService) { }
 
   ngOnInit(): void {
     this.resizeSub = this.resizeEvent.subscribe((widget) => {
       if (widget === this.widget) {
-        console.log(widget);
         let user = JSON.parse(localStorage.getItem("user"));
         let data = {
+          "title": "Timeline",
           "name": "TwitterTimeline",
           "description": "See timeline of a user.",
           "params": null,
           "position": widget,
         }
-        this.twitterService.updatePosition(user.uid, data);
+        this.userService.addWidget(user.uid, "twitter", data);
       }
     })
   }

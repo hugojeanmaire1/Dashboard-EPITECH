@@ -16,6 +16,7 @@ import { environment } from "../environments/environment";
 // Auth service
 import { AuthService } from "./shared/services/auth.service";
 import { TwitterService} from "./shared/services/twitter.service";
+import { UserService } from "./shared/services/user.service";
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -104,6 +105,7 @@ import { SearchTweetsComponent } from './components/services/twitter/search-twee
   providers: [
     AuthService,
     TwitterService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })

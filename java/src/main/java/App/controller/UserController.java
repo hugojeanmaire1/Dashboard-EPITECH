@@ -31,11 +31,17 @@ public class UserController {
     @PostMapping(value = "/update-widgets")
     public User postWidgets(@RequestBody Widgets body,
                             @RequestParam(value = "uid")String uid,
-                            @RequestParam(value = "serviceName")String serviceName,
-                            HttpServletRequest request) throws ExecutionException, InterruptedException {
-        System.out.println(body);
-        User test = new User();
+                            @RequestParam(value = "serviceName")String serviceName) throws ExecutionException, InterruptedException {
+        User user = new User();
 
-        return test.addWidget(uid, serviceName, body);
+        return user.addWidget(uid, serviceName, body);
+    }
+
+    @PostMapping(value = "/remove-widget")
+    public User postWidgets(@RequestBody Widgets body,
+                            @RequestParam(value = "uid")String uid) throws ExecutionException, InterruptedException {
+        User user = new User();
+
+        return user.removeWidget(uid, body);
     }
 }

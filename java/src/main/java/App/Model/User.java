@@ -93,10 +93,10 @@ public class User {
     }
 
     public User addWidget(String uid, String serviceName, Widgets new_widget) throws ExecutionException, InterruptedException {
-        new_widget.printData();
-        if (new_widget.getUid() == null) {
-            new_widget.generateUid();
-        }
+        //new_widget.printData();
+//        if (new_widget.getUid() == null) {
+//            new_widget.generateUid();
+//        }
         DocumentReference docRef = db.collection("users").document(uid);
 
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -108,8 +108,7 @@ public class User {
             for (Services service: services) {
                 if (service.getName().equals(serviceName)) {
                     ArrayList<Widgets> widgets = service.getWidgets();
-                    if (widgets == null) {
-                        System.out.println("ICI !");
+                    if (widgets == null || widgets.size() == 0) {
                         widgets = new ArrayList<>();
                         widgets.add(new_widget);
                     } else {
@@ -129,30 +128,54 @@ public class User {
                  }
             }
             docRef.update("services", services);
+            return user;
         }
         return null;
     }
 
-    public User updateUserWidgets(String uid, Widgets widget) throws ExecutionException, InterruptedException {
-        System.out.println("UID = " + uid);
-        widget.printData();
+    public User removeWidget(String uid, Widgets widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
-
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
 
         if (document.exists()) {
-            User old_infos = document.toObject(User.class);
-            docRef.update("widgets", this.getWidgets());
-            System.out.println("OLD INFOS = ");
-            old_infos.printData();
-            System.out.println("NEW INFOS = ");
-            this.printData();
-        } else {
-            System.out.println("User didn't exist !");
+            User user = document.toObject(User.class);
+            ArrayList<Services> services = user.getServices();
+            for (Services service: services) {
+                ArrayList<Widgets> widgets = service.getWidgets();
+                if (widgets == null) {
+                    return user;
+                } else {
+                    widgets.removeIf(elem -> widget.getPosition().get("id").equals(elem.getPosition().get("id")));
+                }
+                service.setWidgets(widgets);
+            }
+            docRef.update("services", services);
+            return user;
         }
         return null;
     }
+
+//    public User updateUserWidgets(String uid, Widgets widget) throws ExecutionException, InterruptedException {
+//        System.out.println("UID = " + uid);
+//        widget.printData();
+//        DocumentReference docRef = db.collection("users").document(uid);
+//
+//        ApiFuture<DocumentSnapshot> future = docRef.get();
+//        DocumentSnapshot document = future.get();
+//
+//        if (document.exists()) {
+//            User old_infos = document.toObject(User.class);
+//            docRef.update("widgets", this.getWidgets());
+//            System.out.println("OLD INFOS = ");
+//            old_infos.printData();
+//            System.out.println("NEW INFOS = ");
+//            this.printData();
+//        } else {
+//            System.out.println("User didn't exist !");
+//        }
+//        return null;
+//    }
 
     public void setServices(ArrayList<Services> services) {
         this.services = services;

@@ -14,15 +14,14 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
-export class TwitterService {
+export class UserService {
 
   constructor(
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _httpClient: HttpClient,
 
-) {
+  ) {
 
   }
 
@@ -42,17 +41,15 @@ export class TwitterService {
       'Something bad happened; please try again later.');
   }
 
-  getTimeline(screenName: string): Observable<any> {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName);
+  getServices(): Observable<any> {
+    return this._httpClient.get<any>("http://localhost:8080/services/get", httpOptions);
   }
 
-  postTweet(input) {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/tweet/post/' + input)
-        .subscribe((data) => { console.log(data)});
+  removeWidget(uid, widget) {
+    return this._httpClient.post<any>("http://localhost:8080/users/remove-widget?uid=" + uid, widget, httpOptions)
   }
 
-  searchTweet(search: string) {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/search/tweet?search=' + search)
-      .pipe(map(data => data));
+  addWidget(uid, serviceName, widget) {
+    return this._httpClient.post<any>("http://localhost:8080/users/update-widgets?uid=" + uid + "&serviceName=" + serviceName, widget);
   }
 }
