@@ -20,7 +20,7 @@ public class Widgets {
     private String title;
     private String name;
     private String description;
-    private HashMap<String, String> position;
+    private HashMap<String, Object> position;
     private HashMap<String, String> params;
 
     @JsonIgnore
@@ -57,9 +57,9 @@ public class Widgets {
         return name;
     }
 
-    public HashMap<String, String> getPosition() { return position; }
+    public HashMap<String, Object> getPosition() { return position; }
 
-    public void setPosition(HashMap<String, String> position) { this.position = position; }
+    public void setPosition(HashMap<String, Object> position) { this.position = position; }
 
     public void setName(String name) { this.name = name; }
 
