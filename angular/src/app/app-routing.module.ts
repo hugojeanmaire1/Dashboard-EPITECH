@@ -13,6 +13,7 @@ import {TwitterGuard} from "./shared/guard/twitter.guard";
 import {TwitchGuard} from "./shared/guard/twitch.guard";
 import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
 import {SpotifyGuard} from "./shared/guard/spotify.guard";
+import {GithubGuard} from "./shared/guard/github.guard";
 
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full'},
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'login/twitter/callback', canActivate: [TwitterGuard], component: LoadingscreenComponent},
   { path: 'login/spotify/callback', canActivate: [SpotifyGuard], component: LoadingscreenComponent},
   { path: 'login/twitch/callback', canActivate: [TwitchGuard], component: LoadingscreenComponent},
+  { path: 'login/github/callback', canActivate: [GithubGuard], component: LoadingscreenComponent},
 ];
 
 @NgModule({

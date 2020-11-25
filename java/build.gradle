@@ -38,6 +38,7 @@ repositories {
 dependencies {
     implementation 'junit:junit:4.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    compile 'com.github.scribejava:scribejava-apis:8.0.0'
     compile 'org.projectlombok:lombok:1.18.16'
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.10.0-RC1'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.0-rc1'

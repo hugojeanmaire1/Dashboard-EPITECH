@@ -9,12 +9,14 @@
     <a class="btn btn-success" href="http://localhost:8080/services/twitter/login?uid={{getUserId()}}">Login Twitter</a>
     <a class="btn btn-success" href="http://localhost:8080/services/spotify/login?uid={{getUserId()}}">Login Spotify</a>
     <a class="btn btn-success" href="http://localhost:8080/services/twitch/login?uid={{getUserId()}}">Login Twitch</a>
+    <a class="btn btn-success" href="http://localhost:8080/services/github/login?uid={{getUserId()}}">Login Github</a>
   </div>
   <gridster [options]="options" style="background-color: rgb(229, 229, 234)">
     <gridster-item style="background: {{getColorServices(item)}};" [item]="item" *ngFor="let item of dashboard">
       <app-twitter [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitter>
       <app-spotify [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-spotify>
       <app-twitch [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-twitch>
+      <app-github [widget]="item" [resizeEvent]="resizeEvent" (removeWidget)="removeItem($event.event, $event.item)"></app-github>
     </gridster-item>
   </gridster>
 </mat-drawer-container>

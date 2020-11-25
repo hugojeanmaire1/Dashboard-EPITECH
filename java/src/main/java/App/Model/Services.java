@@ -13,14 +13,23 @@ public class Services {
     private ArrayList<Widgets> widgets;
 
     public Services() {
-        this.name = "null";
+        this.name = null;
+        this.RequestToken = null;
+        this.RequestTokenSecret = null;
+        this.userName = null;
+        this.AccessToken = null;
+        this.userId = null;
         this.widgets = new ArrayList<Widgets>();
     }
 
     public Services(String name) {
         this.name = name;
+        this.RequestToken = null;
+        this.RequestTokenSecret = null;
+        this.userName = null;
+        this.AccessToken = null;
+        this.userId = null;
         this.widgets = new ArrayList<Widgets>();
-        this.widgets.add(new Widgets("city_temperature", "Display temperature for a city"));
     }
 
     public String getName() {

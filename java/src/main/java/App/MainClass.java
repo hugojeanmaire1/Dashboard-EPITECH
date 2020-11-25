@@ -1,21 +1,23 @@
 package App;
 
+import App.Model.Services;
+import App.Model.Widgets;
+import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import org.jetbrains.annotations.NotNull;
+import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.Configuration;
-import twitter4j.conf.ConfigurationBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * App.MainClass in order to laucnh Spring boot app
@@ -48,8 +50,34 @@ public class MainClass {
         } else {
             System.out.println("Error when reading the file");
         }
+
+/*        Firestore db = FirestoreClient.getFirestore();
+        Services services = new Services("Github");
+        ArrayList<Widgets> widgets = new ArrayList<>();
+        Widgets widgets1 = new Widgets("ProjectOrganization", "See Projects Organization");
+        ArrayList<HashMap<String, String>> params = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("name", "organization");
+        map.put("type", "string");
+        params.add(map);
+        widgets1.setParams(params);
+
+        HashMap<String, Object> position = new HashMap<>();
+        position.put("cols", 2);
+        position.put("rows", 4);
+        position.put("x", 0);
+        position.put("y", 0);
+        widgets1.setPosition(position);
+        widgets1.setTitle("Find Project Organization");
+        widgets.add(widgets1);
+
+        services.setWidgets(widgets);
+        ApiFuture<DocumentReference> future = db.collection("services").add(services);*/
+
         SpringApplication.run(MainClass.class, args);
     }
+
+
 
     /**
      * In order to configure CORS

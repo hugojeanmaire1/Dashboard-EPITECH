@@ -46,14 +46,17 @@ import { TwitterComponent } from './components/services/twitter/twitter.componen
 import { SpotifyComponent } from './components/services/spotify/spotify.component';
 import { SidebarComponent } from './components/dashboard/sidebar/sidebar.component';
 import { TwitchComponent } from './components/services/twitch/twitch.component';
-import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import { TimelineComponent } from './components/services/twitter/timeline/timeline.component';
 import {ScrollingModule} from "@angular/cdk/scrolling";
-import { SearchComponent } from './components/services/spotify/search/search.component';
-import { TopgamesComponent } from './components/services/twitch/topgames/topgames.component';
-import { PostTweetComponent } from './components/services/twitter/post-tweet/post-tweet.component';
-import { SearchTweetsComponent } from './components/services/twitter/search-tweets/search-tweets.component';
+import { GithubComponent } from './components/services/github/github.component';
+import {GithubService} from "./shared/services/github.service";
+import {OrganisationProjectComponent} from "./components/services/github/organisation-project/organisation-project.component";
+import {SearchComponent} from "./components/services/spotify/search/search.component";
+import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
+import {TimelineComponent} from "./components/services/twitter/timeline/timeline.component";
+import {TopgamesComponent} from "./components/services/twitch/topgames/topgames.component";
+import {PostTweetComponent} from "./components/services/twitter/post-tweet/post-tweet.component";
+import {SearchTweetsComponent} from "./components/services/twitter/search-tweets/search-tweets.component";
 
 @NgModule({
   declarations: [
@@ -73,6 +76,8 @@ import { SearchTweetsComponent } from './components/services/twitter/search-twee
     TopgamesComponent,
     PostTweetComponent,
     SearchTweetsComponent,
+    GithubComponent,
+    OrganisationProjectComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,6 +111,7 @@ import { SearchTweetsComponent } from './components/services/twitter/search-twee
     AuthService,
     TwitterService,
     UserService,
+    GithubService,
   ],
   bootstrap: [AppComponent]
 })

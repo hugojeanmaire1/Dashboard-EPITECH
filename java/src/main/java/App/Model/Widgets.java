@@ -21,7 +21,7 @@ public class Widgets {
     private String name;
     private String description;
     private HashMap<String, Object> position;
-    private HashMap<String, String> params;
+    private ArrayList<HashMap<String, String>> params;
 
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
@@ -32,8 +32,10 @@ public class Widgets {
 
     public Widgets(String name, String description) {
         this.name = name;
+        this.title = null;
         this.description = description;
-        this.params = new HashMap<String, String>();
+        this.params = new ArrayList<>();
+        this.position = new HashMap<>();
     }
 
     public void updatePosition(String uid, String serviceName, Widgets widget) throws ExecutionException, InterruptedException {
@@ -67,27 +69,16 @@ public class Widgets {
 
     public void setDescription(String description) { this.description = description; }
 
-    public HashMap<String, String> getParams() { return params; }
+    public ArrayList<HashMap<String, String>> getParams() {
+        return params;
+    }
 
-    public void setParams(HashMap<String, String> params) { this.params = params; }
-
-//    public String getUid() { return id; }
-//
-//    public void setUid(String uid) { this.id = uid; }
+    public void setParams(ArrayList<HashMap<String, String>> params) {
+        this.params = params;
+    }
 
     public String getTitle() { return title; }
 
     public void setTitle(String title) { this.title = title; }
-
-    public void printData() {
-        System.out.println("Widget Data:");
-        //System.out.println("     " + this.getUid());
-        System.out.println("     " + this.getTitle());
-        System.out.println("     " + this.getName());
-        System.out.println("     " + this.getDescription());
-        System.out.println("     " + this.getParams());
-        System.out.println("     " + this.getPosition());
-        System.out.println();
-    }
 
 }

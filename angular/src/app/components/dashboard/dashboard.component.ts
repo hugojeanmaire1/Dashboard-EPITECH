@@ -79,6 +79,9 @@ export class DashboardComponent implements OnInit {
     if (item.type === 'SpotifySearch') {
       return '#1DB954';
     }
+    if (item.type === 'ProjectOrganization') {
+      return '#d73a49';
+    }
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
@@ -89,6 +92,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getWidgetService(widgetTitle) {
+    console.log(widgetTitle)
     if (widgetTitle === "TwitterTimeline" || widgetTitle === 'TwitterPostTweet' || widgetTitle === "TwitterSearchTweet") {
       return "twitter";
     }
@@ -97,6 +101,9 @@ export class DashboardComponent implements OnInit {
     }
     if (widgetTitle === "Spotify") {
       return "spotify";
+    }
+    if (widgetTitle === "ProjectOrganization") {
+      return "github";
     }
   }
 
