@@ -10,8 +10,12 @@ import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import com.wrapper.spotify.model_objects.specification.*;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.data.search.simplified.SearchAlbumsRequest;
+import com.wrapper.spotify.requests.data.search.simplified.SearchArtistsRequest;
+import com.wrapper.spotify.requests.data.search.simplified.SearchPlaylistsRequest;
+import io.netty.util.concurrent.PromiseAggregator;
 import org.apache.hc.core5.http.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +46,9 @@ public class SpotifyController {
             .setRedirectUri(redirectUri)
             .build();
 
-    @PostMapping(path="/login/callback")
+    @PostMapping(path = "/login/callback")
     public User CallbackLogin(@RequestBody User body,
-                                @RequestParam(value = "code")String code) throws ExecutionException, InterruptedException {
+                              @RequestParam(value = "code") String code) throws ExecutionException, InterruptedException {
         spotifyApi.authorizationCodeUri().show_dialog(true).build();
 
         DocumentReference docRef = db.collection("users").document(body.getUid());
@@ -53,7 +57,7 @@ public class SpotifyController {
 
         if (document.exists()) {
             User user = document.toObject(User.class);
-            for (Services service: user.getServices()) {
+            for (Services service : user.getServices()) {
                 if (service.getName().equals("spotify")) {
                     try {
                         AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code).build();
@@ -73,13 +77,52 @@ public class SpotifyController {
         return null;
     }
 
-    @GetMapping(path="/login")
-    public void loginSpotify(HttpServletResponse response, @RequestParam(value="uid") String uid) throws ExecutionException, InterruptedException, IOException {
+    @GetMapping(path = "/login")
+    public void loginSpotify(HttpServletResponse response, @RequestParam(value = "uid") String uid) throws ExecutionException, InterruptedException, IOException {
         AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
                 .show_dialog(true)
                 .build();
         User user = new User();
         user.createService(uid, null, null, "spotify");
         response.sendRedirect(String.valueOf(authorizationCodeUriRequest.execute()));
+    }
+
+    @GetMapping(path = "search/artist")
+    public Artist[] getArtist(@RequestParam(value = "artist") String artist) throws ExecutionException, IOException {
+        try {
+            final SearchArtistsRequest searchArtistsRequest = spotifyApi.searchArtists(artist)
+                    .build();
+            final Paging<Artist> artistPaging = searchArtistsRequest.execute();
+            return (artistPaging.getItems());
+        } catch (ParseException | SpotifyWebApiException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path="search/album")
+    public AlbumSimplified[] getAlbums(@RequestParam(value = "albums") String albums) throws IOException {
+        try {
+            final SearchAlbumsRequest searchAlbumsRequest  = spotifyApi.searchAlbums(albums)
+                    .build();
+            final Paging<AlbumSimplified> albumSimplifiedPaging = searchAlbumsRequest.execute();
+            return (albumSimplifiedPaging.getItems());
+        } catch (ParseException | SpotifyWebApiException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @GetMapping(path="search/playlist")
+    public PlaylistSimplified[] getPlaylist(@RequestParam(value = "playlist") String playlist) throws IOException {
+        try {
+            final SearchPlaylistsRequest searchPlaylistsRequest = spotifyApi.searchPlaylists(playlist)
+                    .build();
+            final Paging<PlaylistSimplified> playlistSimplifiedPaging = searchPlaylistsRequest.execute();
+            return (playlistSimplifiedPaging.getItems());
+        } catch (ParseException | SpotifyWebApiException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
