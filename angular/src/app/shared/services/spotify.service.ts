@@ -15,7 +15,7 @@ const httpOptions = {
     providedIn: 'root'
 })
 
-export class TwitterService {
+export class SpotifyService {
 
     constructor(
         public router: Router,
@@ -43,17 +43,17 @@ export class TwitterService {
     }
 
     getArtist(artist: String) {
-        return this._httpClient.get<any[]>('http://localhost:8080/services/spotify/search/artist?=' + artist)
+        return this._httpClient.get<any[]>('http://localhost:8080/services/spotify/search/artist?artist=' + artist)
             .pipe(map(data => data));
     }
 
     getAlbums(albums: String) {
-        return this._httpClient.get<any[]>('http://localhost:8080/services/spotify/search/albums?=' + albums)
+        return this._httpClient.get<any[]>('http://localhost:8080/services/spotify/search/albums?albums=' + albums)
             .pipe(map(data => data));
     }
 
     getPlaylist(playlist: String) {
-        return this._httpClient.get<any[]>('http://localhost:8080/services/spotify/search/playlist?=' + playlist)
+        return this._httpClient.get<any[]>('http://localhost:8080/services/spotify/search/playlist?playlist=' + playlist)
             .pipe(map(data => data));
     }
 }

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
+import {SpotifyService} from "../../../shared/services/spotify.service";
 
 @Component({
   selector: 'app-spotify',
@@ -14,7 +15,7 @@ export class SpotifyComponent implements OnInit {
   @Output()
   removeWidget = new EventEmitter();
 
-  constructor() { }
+  constructor(public spotifyService: SpotifyService) { }
 
   ngOnInit(): void {
 

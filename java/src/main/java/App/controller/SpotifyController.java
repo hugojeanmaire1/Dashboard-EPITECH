@@ -100,7 +100,7 @@ public class SpotifyController {
         }
     }
 
-    @GetMapping(path="search/album")
+    @GetMapping(path="search/albums")
     public AlbumSimplified[] getAlbums(@RequestParam(value = "albums") String albums) throws IOException {
         try {
             final SearchAlbumsRequest searchAlbumsRequest  = spotifyApi.searchAlbums(albums)
