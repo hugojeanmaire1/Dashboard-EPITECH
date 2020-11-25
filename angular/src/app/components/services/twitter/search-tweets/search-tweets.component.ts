@@ -31,11 +31,15 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
         let data = {
           "title": "Search",
           "name": "TwitterSearchTweet",
-          "description": "Get a tweet of a subject.",
+          "description": "Get a tweet of a subject",
           "params": null,
           "position": widget,
         }
-        this.userService.addWidget(user.uid, "twitter", data);
+        this.userService.updateWidget(user.uid, data)
+          .subscribe(response => {
+            localStorage.removeItem("user")
+            localStorage.setItem("user", JSON.stringify(response));
+          });
       }
     })
   }
@@ -53,7 +57,6 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.data.length = 0;
         this.data = response;
-        console.log(this.data);
         this.search = "";
       });
   }

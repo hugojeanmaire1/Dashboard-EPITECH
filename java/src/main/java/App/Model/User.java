@@ -1,5 +1,6 @@
 package App.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.api.UsageRule;
 import com.google.api.client.auth.oauth2.RefreshTokenRequest;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
@@ -92,13 +93,34 @@ public class User {
         }
     }
 
-    public User addWidget(String uid, String serviceName, Widgets new_widget) throws ExecutionException, InterruptedException {
-        //new_widget.printData();
-//        if (new_widget.getUid() == null) {
-//            new_widget.generateUid();
-//        }
+    public User updateWidget(String uid, Widgets new_widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
 
+        if (document.exists()) {
+            User user = document.toObject(User.class);
+            ArrayList<Services> services = user.getServices();
+            for (Services service: services) {
+                ArrayList<Widgets> widgets = service.getWidgets();
+                if (widgets == null) {
+                    continue;
+                }
+                for (Widgets widget: widgets) {
+                    if (widget.getPosition().get("id").equals(new_widget.getPosition().get("id"))) {
+                        widget.setPosition(new_widget.getPosition());
+                        widget.setParams(new_widget.getParams());
+                    }
+                }
+            }
+            docRef.update("services", services);
+            return user;
+        }
+        return null;
+    }
+
+    public User addWidget(String uid, String serviceName, Widgets new_widget) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
 
@@ -156,26 +178,19 @@ public class User {
         return null;
     }
 
-//    public User updateUserWidgets(String uid, Widgets widget) throws ExecutionException, InterruptedException {
-//        System.out.println("UID = " + uid);
-//        widget.printData();
-//        DocumentReference docRef = db.collection("users").document(uid);
-//
-//        ApiFuture<DocumentSnapshot> future = docRef.get();
-//        DocumentSnapshot document = future.get();
-//
-//        if (document.exists()) {
-//            User old_infos = document.toObject(User.class);
-//            docRef.update("widgets", this.getWidgets());
-//            System.out.println("OLD INFOS = ");
-//            old_infos.printData();
-//            System.out.println("NEW INFOS = ");
-//            this.printData();
-//        } else {
-//            System.out.println("User didn't exist !");
-//        }
-//        return null;
-//    }
+    public ArrayList<Services> getWidgetsList(String uid) throws ExecutionException, InterruptedException {
+        DocumentReference docRef = db.collection("users").document(uid);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        DocumentSnapshot document = future.get();
+
+        if (document.exists()) {
+            User user = document.toObject(User.class);
+            ArrayList<Services> services = user.getServices();
+            return services;
+        }
+        return null;
+    }
+
 
     public void setServices(ArrayList<Services> services) {
         this.services = services;

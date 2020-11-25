@@ -1,11 +1,8 @@
 import {
   Component,
-  Injectable,
   Input,
   OnInit,
   EventEmitter,
-  OnChanges,
-  SimpleChanges,
   OnDestroy,
   Output
 } from '@angular/core';
@@ -43,11 +40,15 @@ export class TimelineComponent implements OnInit, OnDestroy {
         let data = {
           "title": "Timeline",
           "name": "TwitterTimeline",
-          "description": "See timeline of a user.",
+          "description": "See timeline of a user",
           "params": null,
           "position": widget,
         }
-        this.userService.addWidget(user.uid, "twitter", data);
+        this.userService.updateWidget(user.uid, data)
+          .subscribe(response => {
+            localStorage.removeItem("user")
+            localStorage.setItem("user", JSON.stringify(response));
+          });
       }
     })
   }

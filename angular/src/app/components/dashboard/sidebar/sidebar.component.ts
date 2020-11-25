@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Services} from "../../../shared/services/services";
 import {NestedTreeControl} from "@angular/cdk/tree";
-import {AuthService} from "../../../shared/services/auth.service";
 import {UserService} from "../../../shared/services/user.service";
 
 @Component({
@@ -24,12 +23,10 @@ export class SidebarComponent implements OnInit {
    ngOnInit(): any {
      this.userService.getServices().subscribe(response => {
        this.dataSource = response;
-       console.log(this.dataSource);
      })
   }
 
   addWidget(widget) {
-    console.log("Emit addItem = ", widget)
      this.addItem.emit(widget);
   }
 

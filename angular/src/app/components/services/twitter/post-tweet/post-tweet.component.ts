@@ -1,13 +1,10 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
 } from '@angular/core';
 import {GridsterItem} from "angular-gridster2";
 import {TwitterService} from "../../../../shared/services/twitter.service";
@@ -40,11 +37,15 @@ export class PostTweetComponent implements OnInit, OnDestroy {
         let data = {
           "title": "Post a tweet",
           "name": "TwitterPostTweet",
-          "description": "Post a tweet in the user timeline.",
+          "description": "Post a tweet in the user timeline",
           "params": null,
           "position": widget,
         }
-        this.userService.addWidget(user.uid, "twitter", data);
+        this.userService.updateWidget(user.uid, data)
+          .subscribe(response => {
+            localStorage.removeItem("user")
+            localStorage.setItem("user", JSON.stringify(response));
+          });
       }
     })
   }

@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnInit, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {CompactType, GridsterConfig, GridsterItem, GridType} from 'angular-gridster2';
 import {AuthService} from "../../shared/services/auth.service";
-import {TwitterService} from "../../shared/services/twitter.service";
 import { UUID } from "angular2-uuid";
 import {UserService} from "../../shared/services/user.service";
 
@@ -43,13 +42,20 @@ export class DashboardComponent implements OnInit {
       },
     };
 
-    // this.dashboard = [
-    //   {cols: 2, rows: 4, y: 0, x: 0, type: 'TwitterTimeline', id: UUID.UUID()},
-    //   {cols: 2, rows: 4, y: 0, x: 2, type: 'TwitterSearchTweet', id: UUID.UUID()},
-    //   {cols: 2, rows: 2, y: 4, x: 0, type: 'TwitterPostTweet', id: UUID.UUID()},
-    //   {cols: 2, rows: 2, y: 0, x: 4, type: 'SpotifySearch', id: UUID.UUID()},
-    //   {cols: 2, rows: 2, y: 2, x: 4, type: 'TwitchTopGames', id: UUID.UUID()},
-    // ];
+    this.userService.getUserWidgets(this.getUserId())
+      .subscribe(response => {
+        for (const service of response) {
+          if (service.widgets !== null) {
+            for (const widget of service.widgets) {
+              if (this.dashboard.length !== 0) {
+                this.dashboard = this.dashboard.concat(widget.position);
+              } else {
+                this.dashboard.push(widget.position);
+              }
+            }
+          }
+        }
+      })
   }
 
   getUserId() {
@@ -96,6 +102,7 @@ export class DashboardComponent implements OnInit {
 
   addItem(item): void {
     item.position.id = UUID.UUID()
+    item.position.type = item.name;
     this.dashboard.push({
         cols: item.position.cols,
         rows: item.position.rows,
@@ -104,7 +111,7 @@ export class DashboardComponent implements OnInit {
         type: item.name,
         id: item.position.id,
       });
-    this.userService.addWidget(this.getUserId(), this.getWidgetService(item.position.title), item)
+    this.userService.addWidget(this.getUserId(), this.getWidgetService(item.name), item)
       .subscribe(response => {
         localStorage.removeItem("user")
         localStorage.setItem("user", JSON.stringify(response));
