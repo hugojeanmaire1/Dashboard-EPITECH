@@ -1,0 +1,33 @@
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="twitch-icon" src="./assets/twitch_icon.png" />
+  </button>
+  <mat-card-title>Top stream games</mat-card-title>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+  <div *ngFor="let stream of data">
+    <mat-card style="margin: 15px 5px; padding: 20px">
+      <mat-card-content style="align-items: center">
+        <img src="{{stream.preview.medium}}">
+      </mat-card-content>
+      <mat-card-content style="display: flex">
+        <img style="height: 40px; width: 40px; border-radius: 30px;" src="{{stream.channel.logo}}">
+        <div>
+          <a style="font-size: 12px; overflow: hidden; white-space: nowrap;">{{ stream.channel.status }}</a><br>
+          <a href="{{stream.channel.url}}"  style="font-size: 11px; font: lighter; color: gray">{{ stream.channel.display_name }}</a><br>
+          <a style="font-size: 11px; font: lighter; color: gray">{{ stream.channel.game }}</a><br>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

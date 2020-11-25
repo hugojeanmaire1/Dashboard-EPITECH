@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
     if (item.type === 'TwitterTimeline' || item.type === 'TwitterPostTweet' || item.type === 'TwitterSearchTweet' ) {
       return '#00acee';
     }
-    if (item.type === 'TwitchTopGames') {
+    if (item.type === 'TwitchTopGames' || item.type === 'TwitchActiveStreams') {
       return '#6441a5';
     }
     if (item.type === 'SpotifySearch') {
@@ -96,7 +96,7 @@ export class DashboardComponent implements OnInit {
     if (widgetTitle === "TwitterTimeline" || widgetTitle === 'TwitterPostTweet' || widgetTitle === "TwitterSearchTweet") {
       return "twitter";
     }
-    if (widgetTitle === "TwitchTopGames") {
+    if (widgetTitle === "TwitchTopGames" || widgetTitle === "TwitchActiveStreams") {
       return "twitch";
     }
     if (widgetTitle === "Spotify") {

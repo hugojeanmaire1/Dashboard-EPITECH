@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -123,13 +124,11 @@ public class TwitchController {
 
     @SneakyThrows
     @GetMapping(path="/login")
-    public RedirectView loginTwitch(HttpServletRequest request, @RequestParam(value="uid") String uid)
-    {
+    public RedirectView loginTwitch(HttpServletRequest request, @RequestParam(value="uid") String uid) throws ExecutionException, InterruptedException {
         Map<String, String> params = new HashMap<>();
         params.put("client_id", twitch.getClientID());
         params.put("redirect_uri", twitch.getRedirectUrl());
         params.put("response_type", "code");
-        request.getSession().setAttribute("twitch", twitch);
         Request r = GetRequestBuilder("https://id.twitch.tv/oauth2/authorize", params, null);
         User user = new User();
         user.createService(uid, null, null, "twitch");
@@ -138,8 +137,7 @@ public class TwitchController {
 
     @SneakyThrows
     @GetMapping(path="/trends")
-    public Object getTrends(HttpServletRequest request)
-    {
+    public Object getTrends(HttpServletRequest request) throws IOException {
         Map<String, String> headers = new HashMap<>();
         headers.put("Client-ID", "kwhp5wznikfygc3faiad50fqep61w2");
         headers.put("Accept", "application/vnd.twitchtv.v5+json");
@@ -147,6 +145,25 @@ public class TwitchController {
         Request r = GetRequestBuilder("https://api.twitch.tv/kraken/games/top", null, headers);
         try {
             return Objects.requireNonNull(client.newCall(r).execute().body()).string();
+        } catch (IOException e) {
+            return Objects.requireNonNull(new Response.Builder().build().body()).string();
+        }
+    }
+
+    @SneakyThrows
+    @GetMapping(path = "/active-streams")
+    public Object getStreams() throws IOException {
+        Map<String, String> hearder = new HashMap<>();
+        hearder.put("Client-ID", "kwhp5wznikfygc3faiad50fqep61w2");
+        hearder.put("Accept", "application/vnd.twitchtv.v5+json");
+
+        Map<String, String> params = new HashMap<>();
+        params.put("language", "fr");
+        params.put("first", "30");
+
+        Request r = GetRequestBuilder("https://api.twitch.tv/kraken/streams", params, hearder);
+        try {
+            return Objects.requireNonNull(client.newCall(r).execute().body().string());
         } catch (IOException e) {
             return Objects.requireNonNull(new Response.Builder().build().body()).string();
         }

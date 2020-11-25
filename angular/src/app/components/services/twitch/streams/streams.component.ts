@@ -4,11 +4,12 @@ import {Subscription} from "rxjs";
 import {TwitchService} from "../../../../shared/services/twitch.service";
 
 @Component({
-  selector: 'app-topgames',
-  templateUrl: './topgames.component.html',
-  styleUrls: ['./topgames.component.css']
+  selector: 'app-streams',
+  templateUrl: './streams.component.html',
+  styleUrls: ['./streams.component.css']
 })
-export class TopgamesComponent implements OnInit, OnDestroy {
+
+export class StreamsComponent implements OnInit, OnDestroy {
   data: any[] = [];
 
   @Input()
@@ -29,10 +30,9 @@ export class TopgamesComponent implements OnInit, OnDestroy {
       }
     })
 
-    this.twitchService.getTrends()
+    this.twitchService.getStreams()
       .subscribe(response => {
-        console.log(response);
-        this.data = response.top
+        this.data = response.streams;
       })
   }
 
@@ -43,5 +43,4 @@ export class TopgamesComponent implements OnInit, OnDestroy {
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }
-
 }

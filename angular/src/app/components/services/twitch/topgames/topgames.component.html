@@ -14,4 +14,16 @@
     </button>
   </mat-menu>
 </mat-toolbar>
-<p>topgames works!</p>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+  <div *ngFor="let game of data">
+    <mat-card style="margin: 15px 5px;">
+      <mat-card-title style="display: flex">
+        <img class="profile-img" src="{{game.game.box.small}}">
+        <div style="margin-top: 10px; margin-left: 15px">
+          {{game.game.name}}
+          <mat-card-content>Viewers: {{game.viewers}}</mat-card-content>
+        </div>
+      </mat-card-title>
+    </mat-card>
+  </div>
+</div>
