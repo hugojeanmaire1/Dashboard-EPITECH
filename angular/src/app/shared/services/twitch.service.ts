@@ -47,4 +47,8 @@ export class TwitchService {
   getStreams(): Observable<any> {
     return this._httpClient.get<any>("http://localhost:8080/services/twitch/active-streams");
   }
+
+  getUser(login: string): Observable<any> {
+    return this._httpClient.get<any>("http://localhost:8080/services/twitch/get-user?login=" + login);
+  }
 }

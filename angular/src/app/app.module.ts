@@ -63,6 +63,7 @@ import {TopgamesComponent} from "./components/services/twitch/topgames/topgames.
 import {PostTweetComponent} from "./components/services/twitter/post-tweet/post-tweet.component";
 import {SearchTweetsComponent} from "./components/services/twitter/search-tweets/search-tweets.component";
 import { StreamsComponent } from './components/services/twitch/streams/streams.component';
+import {UsersComponent} from "./components/services/twitch/users/users.component";
 
 @NgModule({
   declarations: [
@@ -85,6 +86,8 @@ import { StreamsComponent } from './components/services/twitch/streams/streams.c
     GithubComponent,
     OrganisationProjectComponent,
     StreamsComponent,
+    UsersComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

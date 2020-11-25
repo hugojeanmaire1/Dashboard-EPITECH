@@ -1,0 +1,34 @@
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="twitch-icon" src="./assets/twitch_icon.png" />
+  </button>
+  <mat-card-title>Get a streamer</mat-card-title>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<div class="input">
+  <form>
+    <mat-form-field>
+      <mat-label>Ex. Hello World !</mat-label>
+      <input type="text" matInput [(ngModel)]="input" name="input">
+    </mat-form-field>
+    <button class="post-button" mat-raised-button color="basic" (click)="searchUser(input)">Search</button>
+  </form>
+  <div *ngIf="data">
+    <div *ngFor="let user of data">
+      <img style="width: 20px; height: 20px" src="{{user.logo}}">
+      <span>{{ user.display_name}}</span><br>
+      <span>{{ user.bio }}</span><br>
+      <span>{{ user.created_at }}</span><br>
+    </div>
+  </div>
+</div>

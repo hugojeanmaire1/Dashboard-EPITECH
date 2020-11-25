@@ -10,3 +10,4 @@
 <!--</div>-->
 <app-topgames *ngIf="widget.type === 'TwitchTopGames'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-topgames>
 <app-streams *ngIf="widget.type === 'TwitchActiveStreams'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-streams>
+<app-users *ngIf="widget.type === 'TwitchGetUser'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-users>
