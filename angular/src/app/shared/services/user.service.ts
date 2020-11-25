@@ -1,8 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpClientJsonpModule, HttpErrorResponse } from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { Observable, throwError } from 'rxjs';
-import {map} from "rxjs/operators";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -14,15 +13,14 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-
-export class TwitterService {
+export class UserService {
 
   constructor(
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning
     private _httpClient: HttpClient,
 
-) {
+  ) {
 
   }
 
@@ -42,17 +40,23 @@ export class TwitterService {
       'Something bad happened; please try again later.');
   }
 
-  getTimeline(screenName: string): Observable<any> {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/timeline?user=' + screenName);
+  getServices(): Observable<any> {
+    return this._httpClient.get<any>("http://localhost:8080/services/get", httpOptions);
   }
 
-  postTweet(input) {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/tweet/post/' + input)
-        .subscribe((data) => { console.log(data)});
+  getUserWidgets(uid): Observable<any> {
+    return this._httpClient.get("http://localhost:8080/users/get-widgets?uid=" + uid, httpOptions);
   }
 
-  searchTweet(search: string) {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/twitter/search/tweet?search=' + search)
-      .pipe(map(data => data));
+  removeWidget(uid, widget): Observable<any> {
+    return this._httpClient.post<any>("http://localhost:8080/users/remove-widget?uid=" + uid, widget, httpOptions);
+  }
+
+  addWidget(uid, serviceName, widget): Observable<any> {
+    return this._httpClient.post<any>("http://localhost:8080/users/add-widget?uid=" + uid + "&serviceName=" + serviceName, widget);
+  }
+
+  updateWidget(uid, widget): Observable<any> {
+    return this._httpClient.post<any>("http://localhost:8080/users/update-widget?uid=" + uid, widget);
   }
 }

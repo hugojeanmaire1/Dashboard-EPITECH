@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/services/spotify")
 public class SpotifyController {
 
-    //private static final Logger LOGGER = LoggerFactory.getLogger(SpotifyController.class);
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4200/login/spotify/callback");
@@ -61,6 +60,9 @@ public class SpotifyController {
                         AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
                         spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
                         spotifyApi.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+                        service.setAccessToken(authorizationCodeCredentials.getAccessToken());
+                        service.setRequestToken(authorizationCodeCredentials.getRefreshToken());
+                        user.createService(user.getUid(), service.getAccessToken(), service.getRequestToken(), "spotify");
                     } catch (ParseException | IOException | SpotifyWebApiException e) {
                         e.printStackTrace();
                     }
@@ -78,7 +80,6 @@ public class SpotifyController {
                 .build();
         User user = new User();
         user.createService(uid, null, null, "spotify");
-        System.out.println("LAAAAA !!!" + String.valueOf(authorizationCodeUriRequest.execute()));
         response.sendRedirect(String.valueOf(authorizationCodeUriRequest.execute()));
     }
 }

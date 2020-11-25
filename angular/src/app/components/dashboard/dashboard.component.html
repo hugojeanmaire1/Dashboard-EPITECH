@@ -1,6 +1,6 @@
 <mat-drawer-container class="sidebar-container" autosize>
   <mat-drawer #drawer class="sidebar-elem" mode="side" style="background-color: rgb(199, 199, 204);">
-    <app-sidebar (addItem)="addItem($event.type, $event.position)"></app-sidebar>
+    <app-sidebar (addItem)="addItem($event)"></app-sidebar>
   </mat-drawer>
   <div class="sidenav-content">
     <button class="button" mat-fab color="primary" (click)="drawer.toggle()">

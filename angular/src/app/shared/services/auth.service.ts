@@ -142,7 +142,4 @@ export class AuthService {
     })
   }
 
-  getServices(): Observable<any> {
-    return this._httpClient.get<any>("http://localhost:8080/services/get", httpOptions);
-  }
 }

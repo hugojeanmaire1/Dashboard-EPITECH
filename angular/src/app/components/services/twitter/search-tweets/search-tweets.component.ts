@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {GridsterItem} from "angular-gridster2";
 import {Subscription} from "rxjs";
 import {TwitterService} from "../../../../shared/services/twitter.service";
+import {UserService} from "../../../../shared/services/user.service";
 
 @Component({
   selector: 'app-search-tweets',
@@ -21,12 +22,24 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
 
   resizeSub: Subscription;
 
-  constructor(public twitterService: TwitterService) { }
+  constructor(public twitterService: TwitterService, public userService: UserService) { }
 
   ngOnInit(): void {
     this.resizeSub = this.resizeEvent.subscribe((widget) => {
       if (widget === this.widget) {
-        console.log(widget);
+        let user = JSON.parse(localStorage.getItem("user"));
+        let data = {
+          "title": "Search",
+          "name": "TwitterSearchTweet",
+          "description": "Get a tweet of a subject",
+          "params": null,
+          "position": widget,
+        }
+        this.userService.updateWidget(user.uid, data)
+          .subscribe(response => {
+            localStorage.removeItem("user")
+            localStorage.setItem("user", JSON.stringify(response));
+          });
       }
     })
   }
@@ -44,7 +57,6 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.data.length = 0;
         this.data = response;
-        console.log(this.data);
         this.search = "";
       });
   }
