@@ -65,6 +65,7 @@ import {SearchTweetsComponent} from "./components/services/twitter/search-tweets
 import { StreamsComponent } from './components/services/twitch/streams/streams.component';
 import {UsersComponent} from "./components/services/twitch/users/users.component";
 import { SearchAlbumsComponent } from './components/services/spotify/search-albums/search-albums.component';
+import { SearchPlaylistComponent } from './components/services/spotify/search-playlist/search-playlist.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { SearchAlbumsComponent } from './components/services/spotify/search-albu
     UsersComponent,
     UsersComponent,
     SearchAlbumsComponent,
+    SearchPlaylistComponent,
   ],
   imports: [
     BrowserModule,
