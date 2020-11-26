@@ -168,4 +168,22 @@ public class TwitchController {
             return Objects.requireNonNull(new Response.Builder().build().body()).string();
         }
     }
+
+    @SneakyThrows
+    @GetMapping(path = "/get-user")
+    public Object getUser(@RequestParam(value = "login")String login) throws IOException {
+        Map<String, String> hearder = new HashMap<>();
+        hearder.put("Client-ID", "kwhp5wznikfygc3faiad50fqep61w2");
+        hearder.put("Accept", "application/vnd.twitchtv.v5+json");
+
+        Map<String, String> params = new HashMap<>();
+        params.put("login", login);
+
+        Request r = GetRequestBuilder("https://api.twitch.tv/kraken/users", params, hearder);
+        try {
+            return Objects.requireNonNull(client.newCall(r).execute().body().string());
+        } catch (IOException e) {
+            return Objects.requireNonNull(new Response.Builder().build().body()).string();
+        }
+    }
 }

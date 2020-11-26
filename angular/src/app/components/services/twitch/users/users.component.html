@@ -16,7 +16,7 @@
 </mat-toolbar>
 
 <div class="input">
-  <form>
+  <form style="display: inline">
     <mat-form-field>
       <mat-label>Ex. Hello World !</mat-label>
       <input type="text" matInput [(ngModel)]="input" name="input">
@@ -25,10 +25,16 @@
   </form>
   <div *ngIf="data">
     <div *ngFor="let user of data">
-      <img style="width: 20px; height: 20px" src="{{user.logo}}">
-      <span>{{ user.display_name}}</span><br>
-      <span>{{ user.bio }}</span><br>
-      <span>{{ user.created_at }}</span><br>
+      <mat-card style="background-color: #543787">
+        <mat-card-header>
+          <img mat-card-avatar style="width: 50px; height: 50px" src="{{user.logo}}">
+          <mat-card-title style="margin: 10px">{{user.display_name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-label  style="margin: 5px">{{ user.bio }}</mat-label><br>
+          <mat-label style="margin: 5px">Creation: {{ getDate(user.created_at) }}</mat-label>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

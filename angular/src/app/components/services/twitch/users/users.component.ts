@@ -40,6 +40,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
+  getDate(value) {
+    let date = new Date(value);
+    return date.toDateString();
+  }
+
   searchUser(input: string) {
     this.twitchService.getUser(input)
       .subscribe(response => {

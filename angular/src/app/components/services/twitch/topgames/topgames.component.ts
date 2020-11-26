@@ -31,7 +31,6 @@ export class TopgamesComponent implements OnInit, OnDestroy {
 
     this.twitchService.getTrends()
       .subscribe(response => {
-        console.log(response);
         this.data = response.top
       })
   }
