@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
     if (item.type === 'TwitchTopGames' || item.type === 'TwitchActiveStreams' || item.type === 'TwitchGetUser') {
       return '#6441a5';
     }
-    if (item.type === 'SpotifySearch') {
+    if (item.type === 'SpotifyArtist' || item.type === 'SpotifyAlbum' || item.type === 'SpotifyPlaylist') {
       return '#1DB954';
     }
     if (item.type === 'ProjectOrganization') {
@@ -99,7 +99,7 @@ export class DashboardComponent implements OnInit {
     if (widgetTitle === "TwitchTopGames" || widgetTitle === "TwitchActiveStreams" || widgetTitle === "TwitchGetUser") {
       return "twitch";
     }
-    if (widgetTitle === "Spotify") {
+    if (widgetTitle === "SpotifyArtist" || widgetTitle === "SpotifyAlbum" || widgetTitle === "SpotifyPlaylist") {
       return "spotify";
     }
     if (widgetTitle === "ProjectOrganization") {

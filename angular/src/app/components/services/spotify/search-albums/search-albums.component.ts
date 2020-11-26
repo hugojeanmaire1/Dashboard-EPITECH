@@ -5,11 +5,11 @@ import {SpotifyService} from "../../../../shared/services/spotify.service";
 import {UserService} from "../../../../shared/services/user.service";
 
 @Component({
-  selector: 'app-search',
-  templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  selector: 'app-search-albums',
+  templateUrl: './search-albums.component.html',
+  styleUrls: ['./search-albums.component.css']
 })
-export class SearchComponent implements OnInit, OnDestroy {
+export class SearchAlbumsComponent implements OnInit, OnDestroy {
 
   search: string = "";
   data: any[] = [];
@@ -31,7 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         let user = JSON.parse(localStorage.getItem("user"));
         let data = {
           "title": "SearchArtist",
-          "name": "SpotifySearchArtist",
+          "name": "SpotifySearchAlbum",
           "description": "Search an artist with Spotify",
           "params": null,
           "position": widget,
@@ -53,8 +53,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
-  getArtist() {
-    this.spotifyService.getArtist(this.search)
+  getAlbum() {
+    this.spotifyService.getAlbums(this.search)
         .subscribe(response => {
           this.data.length = 0;
           this.data = response;

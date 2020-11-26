@@ -1,1 +1,2 @@
-<app-search *ngIf="widget.type === 'SpotifySearch'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-search>
+<app-search *ngIf="widget.type === 'SpotifyArtist'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-search>
+<app-search-albums *ngIf="widget.type === 'SpotifyAlbum'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-search-albums>
