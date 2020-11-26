@@ -1,8 +1,17 @@
 <mat-toolbar style="background-color: transparent;">
     <button mat-mini-fab color="basic">
-        <img class="twitter-icon" src="./assets/twitter_logo.png" />
+        <img class="twitter-icon" src="./assets/github_logo.png" />
     </button>
-    <mat-card-title>See Organization's project</mat-card-title>
+    <mat-label class="timeline-title" *ngIf="find">Repository list of <span style="font-size: 20px">{{input}}</span></mat-label>
+    <div *ngIf="!find" class="input-user">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput [(ngModel)]="input" placeholder="Ex. Trashtalk_fr">
+        </mat-form-field>
+        <button mat-mini-fab color="basic" (click)="findOrgProject()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
     <span class="example-spacer"></span>
     <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
         <mat-icon color="primary">menu</mat-icon>
@@ -14,13 +23,19 @@
         </button>
     </mat-menu>
 </mat-toolbar>
-
-<div class="input">
-    <form>
-        <mat-form-field>
-            <mat-label>Ex. Hello World !</mat-label>
-            <input type="text" matInput [(ngModel)]="input" name="input">
-        </mat-form-field>
-        <button class="post-button" mat-raised-button color="basic" (click)="findOrgProject()">Tweet</button>
-    </form>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+    <div *ngFor="let repo of data.items">
+        <mat-card style="margin: 15px 5px;">
+            <mat-card-title>
+                <img class="img-thumbnail" src="{{repo.avatar_url}}">
+                {{repo.language}}
+                {{repo.stargazers_count}}
+                {{repo.watchers_count}}
+                {{repo.description}}
+                <a href="{{repo.html_url}}">Repository link</a>
+            </mat-card-title>
+            <mat-card-content></mat-card-content>
+        </mat-card>
+    </div>
 </div>
+

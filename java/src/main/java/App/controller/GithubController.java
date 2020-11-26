@@ -41,7 +41,7 @@ public class GithubController {
     private static final Firestore db = FirestoreClient.getFirestore();
     final OAuth20Service service = new ServiceBuilder("3ef842eaee82559be97c")
             .apiSecret("cdc46a4beb24472144d4500981a3d3b52397ab87")
-            .defaultScope("repo:status read:org user")
+            .defaultScope("notifications")
             .callback("http://localhost:4200/login/github/callback")
             .build(GitHubApi.instance());
 
@@ -52,37 +52,29 @@ public class GithubController {
         try {
             OAuth2AccessToken accessToken = service.getAccessToken(code);
 
-            if (body.getServices() != null) {
-                for (Services services: body.getServices()) {
-                    if (services.getName().equals("github")) {
+            DocumentReference docRef = db.collection("users").document(body.getUid());
+            ApiFuture<DocumentSnapshot> future = docRef.get();
+            DocumentSnapshot document = future.get();
+
+            if (document.exists()) {
+                User user = document.toObject(User.class);
+                for (Services service : user.getServices()) {
+                    if (service.getName().equals("github")) {
                         try {
-                            services.setAccessToken(accessToken.getAccessToken());
+                            service.setAccessToken(accessToken.getAccessToken());
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    return body;
                 }
-            } else {
-
-                DocumentReference docRef = db.collection("users").document(body.getUid());
-                ApiFuture<DocumentSnapshot> future = docRef.get();
-                DocumentSnapshot document = future.get();
-
-                if (document.exists()) {
-                    User user = document.toObject(User.class);
-                    for (Services service: user.getServices()) {
-                        if (service.getName().equals("github"))
-                            service.setAccessToken(accessToken.getAccessToken());
-                    }
-                    return user;
-                }
+                db.collection("users").document(body.getUid()).set(user);
+                return user;
             }
             return null;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return body;
+        return null;
     }
 
     @GetMapping(path = "/login")
@@ -102,30 +94,22 @@ public class GithubController {
         return new RedirectView(authorizationUrl);
     }
 
-    @PostMapping(path = "/org")
-    public void getProjectOrg(@RequestBody User body, @RequestParam String organization)
+    @PostMapping(path = "/repositories")
+    public void getOrganizations(@RequestBody User body, @RequestParam String repo, HttpServletResponse res)
     {
         String accessToken = null;
         for (Services services: body.getServices()) {
             if (services.getName().equals("github"))
                 accessToken = services.getAccessToken();
         }
-        System.out.println(accessToken);
-    }
-
-    @PostMapping(path = "/organizations")
-    public void getOrganizations(@RequestBody User body)
-    {
-        String accessToken = null;
-        for (Services services: body.getServices()) {
-            if (services.getName().equals("github"))
-                accessToken = services.getAccessToken();
-        }
-        System.out.println(accessToken);
-        final OAuthRequest request = new OAuthRequest(Verb.GET, "https://api.github.com/user/orgs");
+        final OAuthRequest request = new OAuthRequest(Verb.GET, "https://api.github.com/search/repositories?q=" + repo);
         service.signRequest(accessToken, request);
         try (Response response = service.execute(request)) {
-            System.out.println(response.getBody());
+            res.setContentType("application/json");
+            PrintWriter out = res.getWriter();
+            out.print(response.getBody());
+            out.flush();
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

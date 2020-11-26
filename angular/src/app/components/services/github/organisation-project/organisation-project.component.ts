@@ -12,6 +12,8 @@ import {Subscription} from "rxjs";
 export class OrganisationProjectComponent implements OnInit {
 
   input: string;
+  find: boolean = false;
+  data;
 
   @Input()
   widget;
@@ -21,6 +23,7 @@ export class OrganisationProjectComponent implements OnInit {
   removeWidget = new EventEmitter<any>();
 
   resizeSub: Subscription;
+  subscriber: Subscription;
 
   constructor(public githubService: GithubService, public userService: UserService) { }
 
@@ -29,9 +32,9 @@ export class OrganisationProjectComponent implements OnInit {
       if (widget === this.widget) {
         let user = JSON.parse(localStorage.getItem("user"));
         let data = {
-          "title": "See Organization's project",
+          "title": "Find all topic with name",
           "name": "GithubOrgProject",
-          "description": "See Organization's project",
+          "description": "Find all topic with name",
           "params": null,
           "position": widget,
         }
@@ -42,11 +45,13 @@ export class OrganisationProjectComponent implements OnInit {
             });
       }
     })
-    this.githubService.getOrganisation();
   }
 
   ngOnDestroy(): void {
-    this.resizeSub.unsubscribe();
+    if (this.resizeSub)
+      this.resizeSub.unsubscribe();
+    if (this.subscriber)
+      this.subscriber.unsubscribe();
   }
 
   removeItem($event: MouseEvent | TouchEvent, item): void {
@@ -54,7 +59,10 @@ export class OrganisationProjectComponent implements OnInit {
   }
 
   findOrgProject() {
-    this.githubService.getProjectOrg(this.input);
+    console.log(this.input);
+    this.subscriber = this.githubService.getOrganisation(this.input).subscribe(data => {
+      this.data = data;
+    });
     this.input = "";
   }
 

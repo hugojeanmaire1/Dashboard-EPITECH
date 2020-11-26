@@ -81,4 +81,14 @@ public class Widgets {
 
     public void setTitle(String title) { this.title = title; }
 
+    @Override
+    public String toString() {
+        return "Widgets{" +
+                "title='" + title + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", position=" + position +
+                ", params=" + params +
+                '}';
+    }
 }

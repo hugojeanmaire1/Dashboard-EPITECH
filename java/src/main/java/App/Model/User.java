@@ -278,4 +278,17 @@ public class User {
     public ArrayList<Widgets> getWidgets() {
         return widgets;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid='" + uid + '\'' +
+                ", displayName='" + displayName + '\'' +
+                ", email='" + email + '\'' +
+                ", emailVerified=" + emailVerified +
+                ", photoUrl='" + photoUrl + '\'' +
+                ", services=" + services +
+                ", widgets=" + widgets +
+                '}';
+    }
 }

@@ -16,17 +16,9 @@ export class GithubService {
 
   constructor(public router: Router, public ngZone: NgZone, private _httpClient: HttpClient) { }
 
-  getProjectOrg(organization: string) {
-    return this._httpClient.get<any[]>('http://localhost:8080/services/github/org?organization=' + organization).subscribe((data) => {
-      console.log(data);
-    });
-  }
-
-  getOrganisation()
+  getOrganisation(inputData: string): Observable<Object>
   {
     let body = JSON.parse(localStorage.getItem('user'));
-    return this._httpClient.post<any[]>("http://localhost:8080/services/github/organizations", body, httpOptions).subscribe((data) => {
-      console.log(data);
-    });
+    return this._httpClient.post("http://localhost:8080/services/github/repositories?repo=" + inputData, body, httpOptions);
   }
 }

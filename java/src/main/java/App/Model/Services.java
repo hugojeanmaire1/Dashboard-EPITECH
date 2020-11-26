@@ -76,6 +76,13 @@ public class Services {
     public String toString() {
         return "Services{" +
                 "name='" + name + '\'' +
+                ", RequestToken='" + RequestToken + '\'' +
+                ", RequestTokenSecret='" + RequestTokenSecret + '\'' +
+                ", userName='" + userName + '\'' +
+                ", AccessToken='" + AccessToken + '\'' +
+                ", userId='" + userId + '\'' +
+                ", widgets=" + widgets +
                 '}';
     }
+
 }

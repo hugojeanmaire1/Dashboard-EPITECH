@@ -29,7 +29,6 @@ export class GithubGuard implements CanActivate {
         .subscribe(response => {
           localStorage.setItem('user', JSON.stringify(response));
           console.log("LocalStorage User = ", JSON.parse(localStorage.getItem("user")));
-          console.log("SPOTIFY RESPONSE = ", response);
           this.router.navigate(['dashboard']);
         })
     return true;
