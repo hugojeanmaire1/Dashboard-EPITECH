@@ -3,13 +3,35 @@
     <app-sidebar (addItem)="addItem($event)"></app-sidebar>
   </mat-drawer>
   <div class="sidenav-content">
-    <button class="button" mat-fab color="primary" (click)="drawer.toggle()">
+    <button class="button-top" mat-fab color="primary" (click)="drawer.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <a class="btn btn-success" href="http://localhost:8080/services/twitter/login?uid={{getUserId()}}">Login Twitter</a>
-    <a class="btn btn-success" href="http://localhost:8080/services/spotify/login?uid={{getUserId()}}">Login Spotify</a>
-    <a class="btn btn-success" href="http://localhost:8080/services/twitch/login?uid={{getUserId()}}">Login Twitch</a>
-    <a class="btn btn-success" href="http://localhost:8080/services/github/login?uid={{getUserId()}}">Login Github</a>
+    <div class="flex-button-container">
+      <a class="button-container" href="http://localhost:8080/services/twitter/login?uid={{getUserId()}}">
+        <button class="button-top" mat-mini-fab color="primary">
+          <img class="logo" src="./assets/twitter_logo.png" />
+        </button>
+        Login Twitter
+      </a>
+      <a class="button-container" href="http://localhost:8080/services/spotify/login?uid={{getUserId()}}">
+        <button class="button-top" mat-mini-fab color="primary">
+          <img class="logo" src="./assets/spotify_icon.png" />
+        </button>
+        Login Spotify
+      </a>
+      <a class="button-container" href="http://localhost:8080/services/twitch/login?uid={{getUserId()}}">
+        <button class="button-top" mat-mini-fab color="primary">
+          <img class="twitch-icon" src="./assets/twitch_icon.png" />
+        </button>
+        Login Twitch
+      </a>
+      <a class="button-container" href="http://localhost:8080/services/github/login?uid={{getUserId()}}">
+        <button class="button-top" mat-mini-fab color="primary">
+          <img class="logo" src="./assets/github_logo.png" />
+        </button>
+        Login Github
+      </a>
+    </div>
   </div>
   <gridster [options]="options" style="background-color: rgb(229, 229, 234)">
     <gridster-item style="background: {{getColorServices(item)}};" [item]="item" *ngFor="let item of dashboard">

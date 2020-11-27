@@ -13,10 +13,14 @@ const httpOptions = {
   })
 };
 
+/**
+ * Authentification Service
+ * List all the functions for Authentification of the app using Firebase
+ */
+
 @Injectable({
   providedIn: 'root'
 })
-
 export class AuthService {
   userData: any; // Save logged in user data
 
@@ -38,7 +42,14 @@ export class AuthService {
       })
   }
 
-  // Sign in with email/password
+  /**
+   * @example
+   * SignIn("prenom.nom@epitech.eu", "ABCDE12345")
+   *
+   * @param email User email
+   * @param password User password
+   * @return the user infos and redirect to /dashboard
+   */
   SignIn(email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then((result) => {
@@ -55,7 +66,14 @@ export class AuthService {
       })
   }
 
-  // Sign up with email/password
+  /**
+   * @example
+   * SignUp("prenom.nom@epitech.eu", "ABCDE12345")
+   *
+   * @param email User email
+   * @param password User password
+   * @return the user infos and send verification email then redirect to /dashboard
+   */
   SignUp(email, password) {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((result) => {
@@ -71,7 +89,10 @@ export class AuthService {
       })
   }
 
-  //Send email verification when new user sign up
+  /**
+   *
+   * @return send Verification email and redirect to /verify-email-address
+   */
   SendVerificationMail() {
     return firebase.auth().currentUser.sendEmailVerification()
       .then(() => {
@@ -79,7 +100,11 @@ export class AuthService {
       })
   }
 
-  // Reset Forgot password
+  /**
+   *
+   * @param passwordResetEmail
+   * @return Email reset password
+   */
   ForgotPassword(passwordResetEmail) {
     return firebase.auth().sendPasswordResetEmail(passwordResetEmail)
       .then(() => {
@@ -89,31 +114,44 @@ export class AuthService {
       })
   }
 
-  // Returns true when user is logged in and email is verified
+  /**
+   * Verify if the user is connected
+   */
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
     return (user !== null);
   }
 
-  // Sign in with Google
+  /**
+   * Google authentification to firebase
+   * @constructor
+   */
   GoogleAuth() {
     return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
   }
 
-  // Sign in with GitHub
+  /**
+   * Github authentification to firebase
+   * @constructor
+   */
   GithubAuth() {
     return this.AuthLogin(new firebase.auth.GithubAuthProvider());
   }
 
+  /**
+   * Twitter authentification to firebase
+   * @constructor
+   */
   TwitterAuth() {
     return this.AuthLogin(new firebase.auth.TwitterAuthProvider());
   }
 
-  MicrosoftAuth() {
-    return this.AuthLogin(new firebase.auth.OAuthProvider('microsoft.com'));
-  }
-
-  // Auth logic to run auth providers
+  /**
+   * Send the user to the login platform of the provider
+   * @param provider
+   * @constructor
+   * @return User infos and redirect to /dashboard
+   */
   AuthLogin(provider) {
     return firebase.auth().signInWithPopup(provider)
       .then((result) => {
@@ -129,12 +167,19 @@ export class AuthService {
       })
   }
 
+  /**
+   * @return User data stock in localStorage
+   */
   getUserData() {
     console.log(this.userData);
     return this.userData;
   }
 
-  // Sign out
+  /**
+   * User logout
+   *
+   * Redirect to /sign-in
+   */
   SignOut() {
     return firebase.auth().signOut().then(() => {
       localStorage.removeItem('user');

@@ -5,6 +5,8 @@
 **/build/
 !src/**/build/
 
+angular/documentation
+
 # Ignore Gradle GUI config
 gradle-app.setting
 

@@ -3,6 +3,17 @@
   height: 100%;
 }
 
+.logo {
+  height: 20px;
+  width: 20px;
+}
+
+
+.twitch-icon {
+  height: 25px;
+  width: 20px;
+}
+
 .sidenav-content {
   display: flex;
   flex-direction: row;
@@ -15,11 +26,27 @@
   padding: 20px 40px 20px 10px;
 }
 
-.button {
+.button-top {
   margin-left: 15px;
+  margin-right: 10px;
+}
+
+.button-container {
+  display: flex;
+  margin:  5px 20px;
+  justify-content: center;
+  align-items: center;
 }
 
 gridster-item {
   border-radius: 30px;
   padding: 15px;
+}
+
+
+.flex-button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 20px;
 }
