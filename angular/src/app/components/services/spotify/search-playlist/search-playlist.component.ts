@@ -49,9 +49,19 @@ export class SearchPlaylistComponent implements OnInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
 
+  /**
+   * Remove Widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }
+
+  /**
+   * Get a Playlist from Spotify API
+   */
 
   getPlaylist() {
     this.spotifyService.getPlaylist(this.search)
