@@ -4,10 +4,10 @@
     </button>
     <div class="input-user">
         <mat-form-field>
-            <mat-label>Search Album</mat-label>
-            <input matInput [(ngModel)]="search" placeholder="Ex. ASTROWORLD">
+            <mat-label>Search Playlist</mat-label>
+            <input matInput [(ngModel)]="search" placeholder="Ex. Rap Caviar">
         </mat-form-field>
-        <button mat-mini-fab color="basic" (click)="getAlbum()">
+        <button mat-mini-fab color="basic" (click)="getPlaylist()">
             <mat-icon>search</mat-icon>
         </button>
     </div>
@@ -23,13 +23,13 @@
     </mat-menu>
 </mat-toolbar>
 <div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px)">
-    <div *ngFor="let album of data">
+    <div *ngFor="let playlist of data">
         <mat-card style="margin: 15px 5px; border-radius: 30px;">
             <mat-card-title>
-                <img class="profile-img" src="{{album.images[0].url}}">
-                <span class="textScreenName">{{album.name}}</span>
+                <img class="profile-img" src="{{playlist.images[0].url}}">
+                <span class="textScreenName">{{playlist.name}}</span>
                 <div class="link-spotify">
-                    <a href="{{album.externalUrls.externalUrls.spotify}}">Click here to open Album's Spotify Page</a>
+                    <a href="{{playlist.externalUrls.externalUrls.spotify}}">Click here to open this Playlist</a>
                 </div>
             </mat-card-title>
         </mat-card>
