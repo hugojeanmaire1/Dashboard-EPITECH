@@ -7,7 +7,7 @@ export interface Services {
 }
 
 /**
- * @interface Widgets Services
+ * @interface widgets interface
  */
 export interface Widget {
   title: string;
