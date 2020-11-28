@@ -53,6 +53,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.removeWidget.emit({event: $event, item: item});
   }
 
+  /**
+   * Get the data from Spotify API (Artist)
+   */
+
   getArtist() {
     this.spotifyService.getArtist(this.search)
         .subscribe(response => {

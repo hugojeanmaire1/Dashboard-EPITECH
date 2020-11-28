@@ -22,6 +22,12 @@ export class TwitterComponent implements OnInit {
 
   };
 
+  /**
+   * Remove the widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }

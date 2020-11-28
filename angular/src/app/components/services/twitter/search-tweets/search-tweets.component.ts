@@ -48,9 +48,19 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
 
+  /**
+   * Remove the widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }
+
+  /**
+   * Function to search tweet with a key word with tweeter API
+   */
 
   searchTweet() {
     this.twitterService.searchTweet(this.search)

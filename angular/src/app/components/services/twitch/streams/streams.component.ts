@@ -40,6 +40,12 @@ export class StreamsComponent implements OnInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
 
+  /**
+   * Remove the Widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }

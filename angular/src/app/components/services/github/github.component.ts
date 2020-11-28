@@ -21,6 +21,12 @@ export class GithubComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Remove Widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }

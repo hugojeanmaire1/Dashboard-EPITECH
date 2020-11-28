@@ -39,6 +39,12 @@ export class TopgamesComponent implements OnInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
 
+  /**
+   * Remove Widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }

@@ -36,14 +36,30 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
 
+  /**
+   * Remove widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }
+
+  /**
+   * Get a date
+   * @param value
+   */
 
   getDate(value) {
     let date = new Date(value);
     return date.toDateString();
   }
+
+  /**
+   * Searching a specific user with Twitch API
+   * @param input
+   */
 
   searchUser(input: string) {
     this.twitchService.getUser(input)

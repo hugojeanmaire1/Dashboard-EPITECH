@@ -49,9 +49,19 @@ export class SearchAlbumsComponent implements OnInit, OnDestroy {
     this.resizeSub.unsubscribe();
   }
 
+  /**
+   * Remove the widget
+   * @param $event
+   * @param item
+   */
+
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }
+
+  /**
+   * Get the data from Spotify API (album)
+   */
 
   getAlbum() {
     this.spotifyService.getAlbums(this.search)
