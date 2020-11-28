@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './loadingscreen.component.html',
   styleUrls: ['./loadingscreen.component.css']
 })
+/**
+ * Component Loading Screen
+ */
 export class LoadingscreenComponent implements OnInit {
 
   constructor() { }

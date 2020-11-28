@@ -62,7 +62,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
    * @param $event
    * @param item
    */
-
   removeItem($event: MouseEvent | TouchEvent, item): void {
     this.removeWidget.emit({event: $event, item: item});
   }
@@ -70,7 +69,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
   /**
    * Function calling a Timeline from a specific @
    */
-
   callTimeLine(screenName: string) {
     this.twitterService.getTimeline(screenName)
       .subscribe(response => {
@@ -82,7 +80,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
   /**
    * Function who can change the @
    */
-
   changeSearch() {
     this.find = false;
     this.timelineUsername = "";

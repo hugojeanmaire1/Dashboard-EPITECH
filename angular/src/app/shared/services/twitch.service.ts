@@ -13,8 +13,17 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Twitch functions to call the backend
+ */
 export class TwitchService {
 
+  /**
+   *
+   * @param router
+   * @param ngZone
+   * @param _httpClient
+   */
   constructor(
     public router: Router,
     public ngZone: NgZone, // NgZone service to remove outside scope warning

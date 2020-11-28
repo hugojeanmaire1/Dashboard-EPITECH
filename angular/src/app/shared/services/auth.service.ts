@@ -5,7 +5,6 @@ import 'firebase/firestore';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -123,7 +122,7 @@ export class AuthService {
 
   /**
    * Google authentification to firebase
-   * @constructor
+   * @constructor redirect to Google login app
    */
   GoogleAuth() {
     return this.AuthLogin(new firebase.auth.GoogleAuthProvider());
@@ -131,7 +130,7 @@ export class AuthService {
 
   /**
    * Github authentification to firebase
-   * @constructor
+   * @constructor redirect to Github login app
    */
   GithubAuth() {
     return this.AuthLogin(new firebase.auth.GithubAuthProvider());
@@ -139,7 +138,7 @@ export class AuthService {
 
   /**
    * Twitter authentification to firebase
-   * @constructor
+   * @constructor redirect to Twitter login app
    */
   TwitterAuth() {
     return this.AuthLogin(new firebase.auth.TwitterAuthProvider());
@@ -147,7 +146,7 @@ export class AuthService {
 
   /**
    * Send the user to the login platform of the provider
-   * @param provider
+   * @param provider login to redirect
    * @return User infos and redirect to /dashboard
    */
   AuthLogin(provider) {

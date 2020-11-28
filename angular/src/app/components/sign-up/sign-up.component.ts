@@ -6,6 +6,9 @@ import { AuthService } from "../../shared/services/auth.service";
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
+/**
+ * Sign Up to firebase app
+ */
 export class SignUpComponent implements OnInit {
 
   constructor(

@@ -12,14 +12,31 @@ import {UserService} from "../../shared/services/user.service";
   encapsulation: ViewEncapsulation.None
 })
 
+/**
+ * Main Dashboard component
+ */
 export class DashboardComponent implements OnInit {
+  /**
+   * options: Otion for init the gridset
+   * dashboard: Array of the widget
+   * resizeEvent: Callback when a widget move
+   * showFiller: show the sidebar or not
+   */
   options: GridsterConfig;
   dashboard: Array<GridsterItem> = [];
   resizeEvent: EventEmitter<GridsterItem> = new EventEmitter<GridsterItem>();
   showFiller = false;
 
+  /**
+   * @constructor constructor of component
+   * @param authService authentification service
+   * @param userService user service
+   */
   constructor(public authService: AuthService, public userService: UserService) {}
 
+  /**
+   * Things to do on Component init
+   */
   ngOnInit(): void {
     this.options = {
       gridType: GridType.ScrollHorizontal,
@@ -58,17 +75,27 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+  /**
+   * get user id on firestore stock in localStorage
+   */
   getUserId() {
     let data = JSON.parse(localStorage.getItem('user'));
     return data.uid;
   }
 
+  /**
+   * Je sais pas à quoi sa sert mais il le faut
+   */
   changedOptions() {
     if (this.options.api && this.options.api.optionsChanged) {
       this.options.api.optionsChanged();
     }
   };
 
+  /**
+   * @return the widgets background color
+   * @param item widget info
+   */
   getColorServices(item) {
     if (item.type === 'TwitterTimeline' || item.type === 'TwitterPostTweet' || item.type === 'TwitterSearchTweet' ) {
       return '#00acee';
@@ -84,6 +111,11 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * Remove the widget on dashboard array
+   * @param $event event
+   * @param item widget infos
+   */
   removeItem($event: MouseEvent | TouchEvent, item): void {
     $event.preventDefault();
     $event.stopPropagation();
@@ -91,8 +123,11 @@ export class DashboardComponent implements OnInit {
     this.userService.removeWidget(this.getUserId(), item);
   }
 
+  /**
+   * get name of the service of the widget
+   * @param widgetTitle title
+   */
   getWidgetService(widgetTitle) {
-    console.log(widgetTitle)
     if (widgetTitle === "TwitterTimeline" || widgetTitle === 'TwitterPostTweet' || widgetTitle === "TwitterSearchTweet") {
       return "twitter";
     }
@@ -107,6 +142,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  /**
+   * add widget in dashboard array
+   * @param item widgets infos
+   */
   addItem(item): void {
     item.position.id = UUID.UUID()
     item.position.type = item.name;

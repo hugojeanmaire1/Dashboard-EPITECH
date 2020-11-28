@@ -1,3 +1,6 @@
+/**
+ * @interface User interface
+ */
 export interface User {
   uid: string;
   email: string;
