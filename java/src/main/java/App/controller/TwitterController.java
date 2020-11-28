@@ -24,12 +24,17 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-
+/**
+ * Twitter functions
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/twitter")
 public class TwitterController {
 
+    /**
+     * Static variables
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(TwitterController.class);
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
@@ -40,12 +45,24 @@ public class TwitterController {
     TwitterFactory factory = new TwitterFactory(configuration);
     Twitter twitter = factory.getInstance();
 
-
+    /**
+     * Inutile
+     * @return
+     */
     @GetMapping(path="/", consumes= MediaType.APPLICATION_JSON_VALUE)
     public String TwitterWelcome() {
         return "Welcome to Twitter Controller";
     }
 
+    /**
+     * Get acccess_token and refresh_token
+     * @param body body of the request
+     * @param oauthVerifier id of the request
+     * @param denied je sais pas
+     * @return user infos form firestore
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @PostMapping(value = "/login/callback")
     public User CallbackLogin(@RequestBody User body,
                                  @RequestParam(value="oauth_verifier", required=false) String oauthVerifier,
@@ -78,6 +95,12 @@ public class TwitterController {
         return null;
     }
 
+    /**
+     * Login to twitter plateform
+     * @param response link redirect
+     * @param uid user id
+     * @throws IOException
+     */
     @GetMapping(path="/login")
     public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid) throws IOException {
         try {
@@ -106,6 +129,12 @@ public class TwitterController {
         }
     }*/
 
+    /**
+     * Post a tweet
+     * @param data text of the tweet
+     * @param request nothing
+     * @return
+     */
     @GetMapping(path="/tweet/post/{data}")
     public Status postTweet(@PathVariable String data, HttpServletRequest request)
     {
@@ -117,11 +146,22 @@ public class TwitterController {
         }
     }
 
+    /**
+     * Get the timeline of a tweeter user
+     * @param username name of the user to follow
+     * @return list of data
+     * @throws TwitterException
+     */
     @GetMapping(path = "/timeline")
     public List getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
         return twitter.getUserTimeline(username);
     }
 
+    /**
+     * Get a list of tweet
+     * @param search name
+     * @return list of data
+     */
     @GetMapping(path = "/search/tweet")
     public List getTweets(@RequestParam(value = "search")String search) {
         try {

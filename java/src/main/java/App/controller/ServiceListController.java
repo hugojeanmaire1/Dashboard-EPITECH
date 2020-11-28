@@ -16,6 +16,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * List of services
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services")
@@ -24,16 +27,30 @@ public class ServiceListController {
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
 
+    /**
+     * Nothing
+     * @return nothing
+     */
     @RequestMapping("/")
     public String getHome() {
         return "Services";
     }
 
+    /**
+     * get the list of all the services in the db
+     * @return
+     */
     @RequestMapping("/list")
     public String getList() {
         return "Services list";
     }
 
+    /**
+     * List all the services in the db
+     * @return list of data
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @GetMapping("/get")
     public ArrayList<Services> getServices() throws ExecutionException, InterruptedException {
         ArrayList<Services> services = new ArrayList<>();

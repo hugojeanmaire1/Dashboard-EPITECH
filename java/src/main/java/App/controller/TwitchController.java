@@ -22,16 +22,29 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Twitch Controller
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/twitch")
 public class TwitchController {
 
+    /**
+     * All the static Variable
+     */
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final Twitch twitch = new Twitch("kwhp5wznikfygc3faiad50fqep61w2", "emulvozjrzr3stv5fl5dzcvx42479r", "http://localhost:4200/login/twitch/callback");
     private static final Firestore db = FirestoreClient.getFirestore();
 
+    /**
+     * Request for the login
+     * @param url redirect url
+     * @param parameters infos to send
+     * @param headers header of the request
+     * @return request builder
+     */
     @SneakyThrows
     private Request PostRequestBuilder(String url, Map<String, String> parameters, Map<String, String> headers)
     {
@@ -58,6 +71,13 @@ public class TwitchController {
                 .build();
     }
 
+    /**
+     * Getter request builder
+     * @param url redirect url
+     * @param parameters infos to send
+     * @param headers header of the request
+     * @return request builder
+     */
     @SneakyThrows
     private Request GetRequestBuilder(String url, Map<String, String> parameters, Map<String, String> headers)
     {
@@ -84,8 +104,14 @@ public class TwitchController {
                 .build();
     }
 
+    /**
+     * Callback function for login twitch
+     * @param body infos
+     * @param code id
+     * @return user infos
+     */
     @PostMapping("/login/callback")
-    public Object callbackTwitch(@org.springframework.web.bind.annotation.RequestBody User body, @RequestParam String code, HttpServletRequest request)
+    public Object callbackTwitch(@org.springframework.web.bind.annotation.RequestBody User body, @RequestParam String code)
     {
         Map<String, String> params = new HashMap<>();
         params.put("client_id", twitch.getClientID());
@@ -122,6 +148,14 @@ public class TwitchController {
         return null;
     }
 
+    /**
+     * Login to twitch plateform
+     * @param request resuest
+     * @param uid id of the user
+     * @return user infos
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @SneakyThrows
     @GetMapping(path="/login")
     public RedirectView loginTwitch(HttpServletRequest request, @RequestParam(value="uid") String uid) throws ExecutionException, InterruptedException {
@@ -135,6 +169,12 @@ public class TwitchController {
         return new RedirectView(r.url().toString());
     }
 
+    /**
+     * Get all top games
+     * @param request nothing
+     * @return
+     * @throws IOException
+     */
     @SneakyThrows
     @GetMapping(path="/trends")
     public Object getTrends(HttpServletRequest request) throws IOException {
@@ -150,6 +190,11 @@ public class TwitchController {
         }
     }
 
+    /**
+     * Get list of streams fr
+     * @return list of data
+     * @throws IOException
+     */
     @SneakyThrows
     @GetMapping(path = "/active-streams")
     public Object getStreams() throws IOException {
@@ -169,6 +214,12 @@ public class TwitchController {
         }
     }
 
+    /**
+     * Get user infos on twitch plateform
+     * @param login user id
+     * @return list of users
+     * @throws IOException
+     */
     @SneakyThrows
     @GetMapping(path = "/get-user")
     public Object getUser(@RequestParam(value = "login")String login) throws IOException {

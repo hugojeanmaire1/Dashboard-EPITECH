@@ -32,11 +32,17 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Spotify call
+ */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/services/spotify")
 public class SpotifyController {
 
+    /**
+     * Static variables
+     */
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4200/login/spotify/callback");
@@ -46,6 +52,14 @@ public class SpotifyController {
             .setRedirectUri(redirectUri)
             .build();
 
+    /**
+     * login callback
+     * @param body infos to have
+     * @param code id
+     * @return user infos
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
     @PostMapping(path = "/login/callback")
     public User CallbackLogin(@RequestBody User body,
                               @RequestParam(value = "code") String code) throws ExecutionException, InterruptedException {
@@ -77,6 +91,14 @@ public class SpotifyController {
         return null;
     }
 
+    /**
+     * Login to spotify
+     * @param response redirect link
+     * @param uid user id
+     * @throws ExecutionException
+     * @throws InterruptedException
+     * @throws IOException
+     */
     @GetMapping(path = "/login")
     public void loginSpotify(HttpServletResponse response, @RequestParam(value = "uid") String uid) throws ExecutionException, InterruptedException, IOException {
         AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
@@ -87,6 +109,13 @@ public class SpotifyController {
         response.sendRedirect(String.valueOf(authorizationCodeUriRequest.execute()));
     }
 
+    /**
+     * Search for an artist
+     * @param artist name
+     * @return list of artists
+     * @throws ExecutionException
+     * @throws IOException
+     */
     @GetMapping(path = "search/artist")
     public Artist[] getArtist(@RequestParam(value = "artist") String artist) throws ExecutionException, IOException {
         try {
@@ -100,6 +129,12 @@ public class SpotifyController {
         }
     }
 
+    /**
+     * Search for a given albums
+     * @param albums name
+     * @return list of datas
+     * @throws IOException
+     */
     @GetMapping(path="search/albums")
     public AlbumSimplified[] getAlbums(@RequestParam(value = "albums") String albums) throws IOException {
         try {
@@ -113,6 +148,12 @@ public class SpotifyController {
         }
     }
 
+    /**
+     * Search for pa playlist
+     * @param playlist name
+     * @return list of data
+     * @throws IOException
+     */
     @GetMapping(path="search/playlist")
     public PlaylistSimplified[] getPlaylist(@RequestParam(value = "playlist") String playlist) throws IOException {
         try {
