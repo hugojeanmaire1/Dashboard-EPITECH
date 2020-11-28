@@ -18,6 +18,7 @@ import { AuthService } from "./shared/services/auth.service";
 import { TwitterService} from "./shared/services/twitter.service";
 import { UserService } from "./shared/services/user.service";
 import {TwitchService} from "./shared/services/twitch.service";
+import {SpotifyService} from "./shared/services/spotify.service";
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -126,6 +127,7 @@ import { SearchAlbumsComponent } from './components/services/spotify/search-albu
     UserService,
     GithubService,
     TwitchService,
+    SpotifyService
   ],
   bootstrap: [AppComponent]
 })

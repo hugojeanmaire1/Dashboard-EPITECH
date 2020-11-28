@@ -24,6 +24,11 @@ export class TwitchService {
 
   }
 
+
+  /**
+   * Handle Error in call to back-end
+   * @param error
+   */
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -40,14 +45,24 @@ export class TwitchService {
       'Something bad happened; please try again later.');
   }
 
+  /**
+   * Get most seen games on twitch
+   */
   getTrends(): Observable<any> {
     return this._httpClient.get<any>("http://localhost:8080/services/twitch/trends");
   }
 
+  /**
+   * Get most viewed stream in France
+   */
   getStreams(): Observable<any> {
     return this._httpClient.get<any>("http://localhost:8080/services/twitch/active-streams");
   }
 
+  /**
+   * Get info from a twitch user
+   * @param login
+   */
   getUser(login: string): Observable<any> {
     return this._httpClient.get<any>("http://localhost:8080/services/twitch/get-user?login=" + login);
   }

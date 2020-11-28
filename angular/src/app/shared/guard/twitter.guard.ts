@@ -15,6 +15,9 @@ const httpOptions = {
   })
 };
 
+/**
+ * Guard for Twitter Login
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -24,6 +27,11 @@ export class TwitterGuard implements CanActivate {
     private _httpClient: HttpClient,
     ) { }
 
+  /**
+   * Get all the Twitter data of the user in the database
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

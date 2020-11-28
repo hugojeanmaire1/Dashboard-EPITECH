@@ -15,6 +15,9 @@ import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.c
 import {SpotifyGuard} from "./shared/guard/spotify.guard";
 import {GithubGuard} from "./shared/guard/github.guard";
 
+/**
+ * Route for the project
+ */
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full'},
   { path: 'sign-in', component: SignInComponent },

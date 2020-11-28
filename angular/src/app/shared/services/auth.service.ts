@@ -17,7 +17,6 @@ const httpOptions = {
  * Authentification Service
  * List all the functions for Authentification of the app using Firebase
  */
-
 @Injectable({
   providedIn: 'root'
 })
@@ -44,7 +43,7 @@ export class AuthService {
 
   /**
    * @example
-   * SignIn("prenom.nom@epitech.eu", "ABCDE12345")
+   * SignIn(prenom.nom@epitech.eu, ABCDE12345)
    *
    * @param email User email
    * @param password User password
@@ -68,10 +67,10 @@ export class AuthService {
 
   /**
    * @example
-   * SignUp("prenom.nom@epitech.eu", "ABCDE12345")
+   * SignUp(penom.nom@epitech.eu, ABCDE12345)
    *
-   * @param email User email
-   * @param password User password
+   * @param {string} email User email
+   * @param {string} password User password
    * @return the user infos and send verification email then redirect to /dashboard
    */
   SignUp(email, password) {
@@ -90,7 +89,7 @@ export class AuthService {
   }
 
   /**
-   *
+   * Firebase send email to verify is profil
    * @return send Verification email and redirect to /verify-email-address
    */
   SendVerificationMail() {
@@ -101,7 +100,7 @@ export class AuthService {
   }
 
   /**
-   *
+   * Send a email for reset password
    * @param passwordResetEmail
    * @return Email reset password
    */
@@ -149,7 +148,6 @@ export class AuthService {
   /**
    * Send the user to the login platform of the provider
    * @param provider
-   * @constructor
    * @return User infos and redirect to /dashboard
    */
   AuthLogin(provider) {
@@ -177,7 +175,6 @@ export class AuthService {
 
   /**
    * User logout
-   *
    * Redirect to /sign-in
    */
   SignOut() {

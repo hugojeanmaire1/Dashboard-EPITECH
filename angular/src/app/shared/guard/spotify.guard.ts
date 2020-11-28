@@ -9,6 +9,9 @@ const httpOptions = {
   })
 };
 
+/**
+ * Guard for Spotify Login
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +21,11 @@ export class SpotifyGuard implements CanActivate {
     private _httpClient: HttpClient,
   ) { }
 
+  /**
+   * Get all the spotify data of the user in the database
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

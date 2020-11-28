@@ -9,13 +9,26 @@ const httpOptions = {
   })
 };
 
+/**
+ * Guard for Twitch Login
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class TwitchGuard implements CanActivate {
 
+  /**
+   * @constructor
+   * @param router
+   * @param _httpClient
+   */
   constructor(private router: Router, private _httpClient: HttpClient) {}
 
+  /**
+   * Get all the Twitch data of the user in the database
+   * @param route
+   * @param state
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
