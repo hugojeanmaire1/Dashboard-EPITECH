@@ -26,9 +26,19 @@ public class Widgets {
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
 
+    /**
+     * Widgets
+     */
+
     public Widgets() {
 
     }
+
+    /**
+     * Widgets
+     * @param name
+     * @param description
+     */
 
     public Widgets(String name, String description) {
         this.name = name;
@@ -37,6 +47,15 @@ public class Widgets {
         this.params = new ArrayList<>();
         this.position = new HashMap<>();
     }
+
+    /**
+     * Update Position
+     * @param uid
+     * @param serviceName
+     * @param widget
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
 
     public void updatePosition(String uid, String serviceName, Widgets widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
@@ -55,31 +74,86 @@ public class Widgets {
 //        this.setUid(UUID.randomUUID().toString().replace("-", ""));
 //    }
 
+    /**
+     * Get Name
+     * @return
+     */
+
     public String getName() {
         return name;
     }
 
+    /**
+     * Get Position
+     * @return
+     */
+
     public HashMap<String, Object> getPosition() { return position; }
+
+    /**
+     * Set Position
+     * @param position
+     */
 
     public void setPosition(HashMap<String, Object> position) { this.position = position; }
 
+    /**
+     * Set Name
+     * @param name
+     */
+
     public void setName(String name) { this.name = name; }
+
+    /**
+     * Get Description
+     * @return
+     */
 
     public String getDescription() { return description; }
 
+    /**
+     * Set Description
+     * @param description
+     */
+
     public void setDescription(String description) { this.description = description; }
+
+    /**
+     * Get Params
+     * @return
+     */
 
     public ArrayList<HashMap<String, String>> getParams() {
         return params;
     }
 
+    /**
+     * Set Params
+     * @param params
+     */
+
     public void setParams(ArrayList<HashMap<String, String>> params) {
         this.params = params;
     }
 
+    /**
+     * GetT Title
+     * @return
+     */
+
     public String getTitle() { return title; }
 
+    /**
+     * Set Title
+     * @param title
+     */
+
     public void setTitle(String title) { this.title = title; }
+
+    /**
+     * toString Function
+     * @return
+     */
 
     @Override
     public String toString() {

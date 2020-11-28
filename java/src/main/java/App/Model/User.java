@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Class User
+ */
+
 public class User {
 
     private String uid;
@@ -26,9 +30,20 @@ public class User {
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
 
+    /**
+     * Public User
+     */
+
     public User() {
 
     }
+
+    /**
+     * Create New User
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
 
     public User createNewUser() throws ExecutionException, InterruptedException {
         Map<String, Object> docData = new HashMap<>();
@@ -51,6 +66,13 @@ public class User {
 
     }
 
+    /**
+     * User Login
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+
     public User userLogIn() throws ExecutionException, InterruptedException {
         User response = null;
 
@@ -69,6 +91,15 @@ public class User {
         }
         return response;
     }
+
+    /**
+     * Add a Refresh Token
+     * @param uid
+     * @param serviceName
+     * @param RequestToken
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
 
     public void addRefreshToken(String uid, String serviceName, String RequestToken) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(this.getUid());
@@ -92,6 +123,15 @@ public class User {
 
         }
     }
+
+    /**
+     * Update Widget
+     * @param uid
+     * @param new_widget
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
 
     public User updateWidget(String uid, Widgets new_widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
@@ -118,6 +158,16 @@ public class User {
         }
         return null;
     }
+
+    /**
+     * Add Widget
+     * @param uid
+     * @param serviceName
+     * @param new_widget
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
 
     public User addWidget(String uid, String serviceName, Widgets new_widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
@@ -155,6 +205,15 @@ public class User {
         return null;
     }
 
+    /**
+     * Remove Widget
+     * @param uid
+     * @param widget
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+
     public User removeWidget(String uid, Widgets widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -178,6 +237,14 @@ public class User {
         return null;
     }
 
+    /**
+     * Get Widget List
+     * @param uid
+     * @return
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+
     public ArrayList<Services> getWidgetsList(String uid) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -191,14 +258,35 @@ public class User {
         return null;
     }
 
+    /**
+     * Set Services
+     * @param services
+     */
+
 
     public void setServices(ArrayList<Services> services) {
         this.services = services;
     }
 
+    /**
+     * Set Widget
+     * @param widgets
+     */
+
     public void setWidgets(ArrayList<Widgets> widgets) {
         this.widgets = widgets;
     }
+
+
+    /**
+     * Create Services
+     * @param uid
+     * @param RequestToken
+     * @param RequestTokenSecret
+     * @param serviceName
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
 
     public void createService(String uid, String RequestToken, String RequestTokenSecret, String serviceName) throws ExecutionException, InterruptedException {
         Services new_service = new Services();
@@ -235,9 +323,18 @@ public class User {
         }
     }
 
+    /**
+     * Update Services
+     * @param service
+     */
+
     public void updateServices(Services service) {
         System.out.println(service);
     }
+
+    /**
+     * Print Data
+     */
 
     public void printData() {
         System.out.println("User data:");
@@ -251,33 +348,73 @@ public class User {
         System.out.println();
     }
 
+    /**
+     * Set getUID
+     * @return
+     */
+
     public String getUid() {
         return uid;
     }
+
+    /**
+     * Get DisplayName
+     * @return
+     */
 
     public String getDisplayName() {
         return displayName;
     }
 
+    /**
+     * Get Email
+     * @return
+     */
+
     public String getEmail() {
         return email;
     }
+
+    /**
+     * Get Email Verified
+     * @return
+     */
 
     public Boolean getEmailVerified() {
         return emailVerified;
     }
 
+    /**
+     * Get Photo Url
+     * @return
+     */
+
     public String getPhotoUrl() {
         return photoUrl;
     }
+
+    /**
+     * Get Services
+     * @return
+     */
 
     public ArrayList<Services> getServices() {
         return services;
     }
 
+    /**
+     * Get Widgets
+     * @return
+     */
+
     public ArrayList<Widgets> getWidgets() {
         return widgets;
     }
+
+    /**
+     * toString Function
+     * @return
+     */
 
     @Override
     public String toString() {

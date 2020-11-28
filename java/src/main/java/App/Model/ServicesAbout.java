@@ -11,10 +11,19 @@ public class ServicesAbout {
     private String name;
     private ArrayList<WidgetsAbout> widgets;
 
+    /**
+     * Services About
+     */
+
     public ServicesAbout() {
         this.name = "null";
         this.widgets = new ArrayList<WidgetsAbout>();
     }
+
+    /**
+     * Services About
+     * @param name
+     */
 
     public ServicesAbout(String name) {
         this.name = name;

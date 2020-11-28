@@ -10,6 +10,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
+/**
+ * Class CredentialsTwitch
+ */
+
 public class CredentialsTwitch {
 
     public String access_token;

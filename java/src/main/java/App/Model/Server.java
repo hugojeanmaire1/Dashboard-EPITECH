@@ -14,6 +14,10 @@ public class Server {
     private long current_time;
     private ArrayList<ServicesAbout> services;
 
+    /**
+     * Server
+     */
+
     public Server() {
         super();
         this.current_time = System.currentTimeMillis();
@@ -21,21 +25,45 @@ public class Server {
         this.updateServices();
     }
 
+    /**
+     * Get Current Time
+     * @return
+     */
+
     public long getCurrent_time() {
         return current_time;
     }
+
+    /**
+     * Set Current Time
+     * @param current_time
+     */
 
     public void setCurrent_time(long current_time) {
         this.current_time = current_time;
     }
 
+    /**
+     * Get the Services
+     * @return
+     */
+
     public ArrayList<ServicesAbout> getServices() {
         return services;
     }
 
+    /**
+     * Set the Services
+     * @param services
+     */
+
     public void setServices(ArrayList<ServicesAbout> services) {
         this.services = services;
     }
+
+    /**
+     * Update the Services
+     */
 
     private void updateServices()
     {
