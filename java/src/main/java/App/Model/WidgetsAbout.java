@@ -1,23 +1,31 @@
 package App.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Widgets class to handle about.json
+ */
 public class WidgetsAbout {
 
+    /**
+     * name of the widget
+     */
     private String name;
+
+    /**
+     * Description of the widgets
+     */
     private String description;
+
+    /**
+     * params of the widgets
+     */
     private ArrayList<HashMap<String, String>> params;
 
     /**
-     * WidgetsAbout
+     * WidgetsAbout constructor
      */
-
     public WidgetsAbout() {
         this.name = null;
         this.description = null;
@@ -25,11 +33,12 @@ public class WidgetsAbout {
     }
 
     /**
-     * WidgetsAbout
+     * WidgetsAbout constructor
      * @param name
+     * name of the widget
      * @param description
+     * description of this one
      */
-
     public WidgetsAbout(String name, String description) {
         this.name = name;
         this.description = description;
@@ -39,8 +48,8 @@ public class WidgetsAbout {
     /**
      * Get Name
      * @return
+     * the name
      */
-
     public String getName() {
         return name;
     }
@@ -48,8 +57,8 @@ public class WidgetsAbout {
     /**
      * Set Name
      * @param name
+     * set a new name
      */
-
     public void setName(String name) {
         this.name = name;
     }
@@ -57,8 +66,8 @@ public class WidgetsAbout {
     /**
      * Get Description
      * @return
+     * the description
      */
-
     public String getDescription() {
         return description;
     }
@@ -66,8 +75,8 @@ public class WidgetsAbout {
     /**
      * Set Description
      * @param description
+     * set a new description
      */
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -75,8 +84,8 @@ public class WidgetsAbout {
     /**
      * Get Params
      * @return
+     * the couple of params
      */
-
     public ArrayList<HashMap<String, String>> getParams() {
         return params;
     }
@@ -84,8 +93,8 @@ public class WidgetsAbout {
     /**
      * Set Params
      * @param params
+     * set a new couple of params
      */
-
     public void setParams(ArrayList<HashMap<String, String>> params) {
         this.params = params;
     }

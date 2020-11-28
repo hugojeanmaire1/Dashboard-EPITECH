@@ -58,7 +58,9 @@ public class SpotifyController {
      * @param code id
      * @return user infos
      * @throws ExecutionException
+     * If the connection is interrupted
      * @throws InterruptedException
+     * If the connection is interrupted
      */
     @PostMapping(path = "/login/callback")
     public User CallbackLogin(@RequestBody User body,
@@ -96,8 +98,11 @@ public class SpotifyController {
      * @param response redirect link
      * @param uid user id
      * @throws ExecutionException
+     * If the connection is interrupted
      * @throws InterruptedException
+     * If the connection is interrupted
      * @throws IOException
+     * If the connection is interrupted
      */
     @GetMapping(path = "/login")
     public void loginSpotify(HttpServletResponse response, @RequestParam(value = "uid") String uid) throws ExecutionException, InterruptedException, IOException {
@@ -114,7 +119,9 @@ public class SpotifyController {
      * @param artist name
      * @return list of artists
      * @throws ExecutionException
+     * If the connection is interrupted
      * @throws IOException
+     * If the connection is interrupted
      */
     @GetMapping(path = "search/artist")
     public Artist[] getArtist(@RequestParam(value = "artist") String artist) throws ExecutionException, IOException {
@@ -134,6 +141,7 @@ public class SpotifyController {
      * @param albums name
      * @return list of datas
      * @throws IOException
+     * If the connection is interrupted
      */
     @GetMapping(path="search/albums")
     public AlbumSimplified[] getAlbums(@RequestParam(value = "albums") String albums) throws IOException {
@@ -153,6 +161,7 @@ public class SpotifyController {
      * @param playlist name
      * @return list of data
      * @throws IOException
+     * If the connection is interrupted
      */
     @GetMapping(path="search/playlist")
     public PlaylistSimplified[] getPlaylist(@RequestParam(value = "playlist") String playlist) throws IOException {

@@ -106,8 +106,11 @@ export class DashboardComponent implements OnInit {
     if (item.type === 'SpotifyArtist' || item.type === 'SpotifyAlbum' || item.type === 'SpotifyPlaylist') {
       return '#1DB954';
     }
-    if (item.type === 'ProjectOrganization') {
+    if (item.type === 'RepositoryList' || item.type === "TopicList") {
       return '#d73a49';
+    }
+    if (item.type === 'FindCrypto') {
+      return '#f2b60f'
     }
   }
 
@@ -137,8 +140,11 @@ export class DashboardComponent implements OnInit {
     if (widgetTitle === "SpotifyArtist" || widgetTitle === "SpotifyAlbum" || widgetTitle === "SpotifyPlaylist") {
       return "spotify";
     }
-    if (widgetTitle === "ProjectOrganization") {
+    if (widgetTitle === "RepositoryList" || widgetTitle === "TopicList") {
       return "github";
+    }
+    if (widgetTitle === 'FindCrypto') {
+      return 'coinmarketcap'
     }
   }
 

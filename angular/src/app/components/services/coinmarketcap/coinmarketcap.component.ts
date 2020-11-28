@@ -2,14 +2,14 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {GithubService} from "../../../shared/services/github.service";
 
 @Component({
-  selector: 'app-github',
-  templateUrl: './github.component.html',
-  styleUrls: ['./github.component.css']
+  selector: 'app-coinmarketcap',
+  templateUrl: './coinmarketcap.component.html',
+  styleUrls: ['./coinmarketcap.component.css']
 })
 /**
- * Github Component class to load github Widgets
+ * CoinMarketCap Component Widget
  */
-export class GithubComponent {
+export class CoinmarketcapComponent {
   @Input()
   widget;
   @Input()
@@ -18,7 +18,7 @@ export class GithubComponent {
   removeWidget = new EventEmitter();
 
   /**
-   * Remove Widget
+   * Remove widget
    * @param $event
    * @param item
    */

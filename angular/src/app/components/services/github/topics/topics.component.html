@@ -8,7 +8,7 @@
             <mat-label>Search</mat-label>
             <input matInput [(ngModel)]="input" placeholder="Ex. Ruby">
         </mat-form-field>
-        <button mat-mini-fab color="basic" (click)="findOrgProject()">
+        <button mat-mini-fab color="basic" (click)="findTopics()">
             <mat-icon>search</mat-icon>
         </button>
     </div>
@@ -27,26 +27,22 @@
     <div *ngFor="let repo of data.items">
         <mat-card style="margin: 15px 5px;">
             <mat-card-title>
-                <div class="row" style="padding-bottom: 2%">
-                    <img style="width: 50px; height: 50px" src="{{repo.owner.avatar_url}}">
-                    {{repo.language}}
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p>{{repo.display_name ? repo.display_name : repo.name}}</p>
                 </div>
-                <div class="row" style="padding-bottom: 2%">
-                    <mat-icon>visibility</mat-icon>
-                    <p>{{repo.watchers_count}}</p>
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p>{{repo.short_description ? repo.short_description : "No Description"}}</p>
                 </div>
-                <div class="row" style="padding-bottom: 2%">
-                    <mat-icon style="padding-right: 3%">star_rate</mat-icon>
-                    {{repo.stargazers_count}}
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p style="padding-right: 3%">Created by: </p>
+                    {{repo.created_by ? repo.created_by : "No Creator"}}
                 </div>
-                <div class="row" style="padding-bottom: 2%">
-                    <p style="padding-right: 3%">Description du repository: </p>
-                    {{repo.description}}
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p style="padding-right: 3%">Released: </p>
+                    {{repo.released ? repo.released: "No Release date"}}
                 </div>
-                <a href="{{repo.html_url}}">Repository link</a>
             </mat-card-title>
             <mat-card-content></mat-card-content>
         </mat-card>
     </div>
 </div>
-

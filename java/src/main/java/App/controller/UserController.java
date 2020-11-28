@@ -4,12 +4,9 @@ import App.Model.Services;
 import App.Model.User;
 
 import App.Model.Widgets;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -25,7 +22,9 @@ public class UserController {
      * @param body infos to send to the db
      * @param request for session
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
     @PostMapping(value = "/create-user")
     public void PostNewUser(@RequestBody User body, HttpServletRequest request) throws ExecutionException, InterruptedException {
@@ -39,7 +38,9 @@ public class UserController {
      * @param request request
      * @return user infos
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
     @PostMapping(value = "/check-user")
     public User checkUser(@RequestBody User body, HttpServletRequest request) throws ExecutionException, InterruptedException {
@@ -49,13 +50,15 @@ public class UserController {
     }
 
     /**
-     * Stock the widet in the widgets list of the user in db
+     * Stock the widget in the widgets list of the user in db
      * @param body widget infos
      * @param uid user id
      * @param serviceName name of service
      * @return modified user infos
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
     @PostMapping(value = "/add-widget")
     public User postWidget(@RequestBody Widgets body,
@@ -70,7 +73,9 @@ public class UserController {
      * @param uid user id
      * @return modified user infos
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
     @PostMapping(value = "/update-widget")
     public User updateWidget(@RequestBody Widgets body,
@@ -84,7 +89,9 @@ public class UserController {
      * @param uid user id
      * @return user modified infos
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
     @PostMapping(value = "/remove-widget")
     public User postWidgets(@RequestBody Widgets body,
@@ -93,11 +100,13 @@ public class UserController {
     }
 
     /**
-     * List all the wdgets of a user
+     * List all the widget of a user
      * @param uid user id
      * @return list of widgets
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
     @GetMapping(value = "/get-widgets")
     public ArrayList<Services> getWidgets(@RequestParam(value = "uid")String uid) throws ExecutionException, InterruptedException {

@@ -67,6 +67,9 @@ import { StreamsComponent } from './components/services/twitch/streams/streams.c
 import {UsersComponent} from "./components/services/twitch/users/users.component";
 import { SearchAlbumsComponent } from './components/services/spotify/search-albums/search-albums.component';
 import { SearchPlaylistComponent } from './components/services/spotify/search-playlist/search-playlist.component';
+import { CoinmarketcapComponent } from './components/services/coinmarketcap/coinmarketcap.component';
+import { WidgetCryptoComponent } from './components/services/coinmarketcap/widget-crypto/widget-crypto.component';
+import { TopicsComponent } from './components/services/github/topics/topics.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +96,9 @@ import { SearchPlaylistComponent } from './components/services/spotify/search-pl
     UsersComponent,
     SearchAlbumsComponent,
     SearchPlaylistComponent,
+    TopicsComponent,
+    CoinmarketcapComponent,
+    WidgetCryptoComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
@@ -17,8 +16,6 @@ import twitter4j.auth.RequestToken;
 import org.slf4j.Logger;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
@@ -46,22 +43,15 @@ public class TwitterController {
     Twitter twitter = factory.getInstance();
 
     /**
-     * Inutile
-     * @return
-     */
-    @GetMapping(path="/", consumes= MediaType.APPLICATION_JSON_VALUE)
-    public String TwitterWelcome() {
-        return "Welcome to Twitter Controller";
-    }
-
-    /**
-     * Get acccess_token and refresh_token
+     * Get access token and refresh_token
      * @param body body of the request
      * @param oauthVerifier id of the request
-     * @param denied je sais pas
+     * @param denied if the user can't be connected
      * @return user infos form firestore
      * @throws ExecutionException
+     * If the connection is interrupted
      * @throws InterruptedException
+     * If the connection is interrupted
      */
     @PostMapping(value = "/login/callback")
     public User CallbackLogin(@RequestBody User body,
@@ -76,6 +66,7 @@ public class TwitterController {
 
         if (document.exists()) {
             User user = document.toObject(User.class);
+            assert user != null;
             for (Services service: user.getServices()) {
                 if (service.getName().equals("twitter")) {
                     try {
@@ -96,10 +87,11 @@ public class TwitterController {
     }
 
     /**
-     * Login to twitter plateform
+     * Login to twitter platform
      * @param response link redirect
      * @param uid user id
      * @throws IOException
+     * If the connection is interrupted
      */
     @GetMapping(path="/login")
     public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid) throws IOException {
@@ -117,26 +109,14 @@ public class TwitterController {
         }
     }
 
-/*    @GetMapping(path="/{username}")
-    public Status TwitterFindUser(@PathVariable String username)
-    {
-        try {
-            Twitter twitter = DAO.getTwitter();
-            return (twitter.updateStatus("Salut from api"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-
     /**
      * Post a tweet
      * @param data text of the tweet
-     * @param request nothing
      * @return
+     * the data given by twitter when the tweet is posted
      */
     @GetMapping(path="/tweet/post/{data}")
-    public Status postTweet(@PathVariable String data, HttpServletRequest request)
+    public Status postTweet(@PathVariable String data)
     {
         try {
             return (twitter.updateStatus(data));
@@ -151,9 +131,10 @@ public class TwitterController {
      * @param username name of the user to follow
      * @return list of data
      * @throws TwitterException
+     * If the connection is interrupted
      */
     @GetMapping(path = "/timeline")
-    public List getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
+    public List<Status> getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
         return twitter.getUserTimeline(username);
     }
 
@@ -163,7 +144,7 @@ public class TwitterController {
      * @return list of data
      */
     @GetMapping(path = "/search/tweet")
-    public List getTweets(@RequestParam(value = "search")String search) {
+    public List<Status> getTweets(@RequestParam(value = "search")String search) {
         try {
             Query query = new Query(search);
             QueryResult result = twitter.search(query);

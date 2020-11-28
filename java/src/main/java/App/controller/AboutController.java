@@ -17,8 +17,10 @@ public class AboutController {
 
     /**
      * Generate the about.json
-     * @param request send the infos
+     * @param request
+     * request given by the host
      * @return
+     * return About class with all data
      */
     @RequestMapping(path = "/about.json")
     public About getAbout(HttpServletRequest request) {

@@ -33,7 +33,6 @@ public class User {
     /**
      * Public User
      */
-
     public User() {
 
     }
@@ -41,10 +40,12 @@ public class User {
     /**
      * Create New User
      * @return
+     * a new User created in the DB
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public User createNewUser() throws ExecutionException, InterruptedException {
         Map<String, Object> docData = new HashMap<>();
         docData.put("displayName", this.getDisplayName());
@@ -61,29 +62,25 @@ public class User {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
 
-        User data = document.toObject(User.class);
-        return data;
+        return document.toObject(User.class);
 
     }
 
     /**
      * User Login
      * @return
+     * the login in user
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public User userLogIn() throws ExecutionException, InterruptedException {
         User response = null;
 
-        // Get user data from Firestore
         DocumentReference docRef = db.collection("users").document(this.getUid());
-
-        // Check Value from database
         ApiFuture<DocumentSnapshot> future = docRef.get();
         DocumentSnapshot document = future.get();
-
-        // check if user exist
         if (document.exists()) {
             response = document.toObject(User.class);
         } else {
@@ -93,46 +90,18 @@ public class User {
     }
 
     /**
-     * Add a Refresh Token
-     * @param uid
-     * @param serviceName
-     * @param RequestToken
-     * @throws ExecutionException
-     * @throws InterruptedException
-     */
-
-    public void addRefreshToken(String uid, String serviceName, String RequestToken) throws ExecutionException, InterruptedException {
-        DocumentReference docRef = db.collection("users").document(this.getUid());
-
-        ApiFuture<DocumentSnapshot> future = docRef.get();
-        DocumentSnapshot document = future.get();
-
-        if (document.exists()) {
-            User response = document.toObject(User.class);
-            ArrayList<Services> services = response.getServices();
-            Boolean done = false;
-            for (Services service: services) {
-                if (service.getName() == serviceName) {
-                    service.setRequestToken(RequestToken);
-                    done = true;
-                }
-            }
-            if (!done) {
-
-            }
-
-        }
-    }
-
-    /**
      * Update Widget
      * @param uid
+     * uid of the user
      * @param new_widget
+     * the new widgets to setup
      * @return
+     * User with this modified data
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public User updateWidget(String uid, Widgets new_widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -140,6 +109,7 @@ public class User {
 
         if (document.exists()) {
             User user = document.toObject(User.class);
+            assert user != null;
             ArrayList<Services> services = user.getServices();
             for (Services service: services) {
                 ArrayList<Widgets> widgets = service.getWidgets();
@@ -162,13 +132,18 @@ public class User {
     /**
      * Add Widget
      * @param uid
+     * uid of the user
      * @param serviceName
+     * service to create widgets
      * @param new_widget
+     * new widgets to create
      * @return
+     * user with new data
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public User addWidget(String uid, String serviceName, Widgets new_widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -208,12 +183,16 @@ public class User {
     /**
      * Remove Widget
      * @param uid
+     * uid of the user
      * @param widget
+     * widget to remove
      * @return
+     * new user
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public User removeWidget(String uid, Widgets widget) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -221,6 +200,7 @@ public class User {
 
         if (document.exists()) {
             User user = document.toObject(User.class);
+            assert user != null;
             ArrayList<Services> services = user.getServices();
             for (Services service: services) {
                 ArrayList<Widgets> widgets = service.getWidgets();
@@ -240,11 +220,14 @@ public class User {
     /**
      * Get Widget List
      * @param uid
+     * uid of the user
      * @return
+     * list of services
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public ArrayList<Services> getWidgetsList(String uid) throws ExecutionException, InterruptedException {
         DocumentReference docRef = db.collection("users").document(uid);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -261,9 +244,8 @@ public class User {
     /**
      * Set Services
      * @param services
+     * set new services
      */
-
-
     public void setServices(ArrayList<Services> services) {
         this.services = services;
     }
@@ -271,8 +253,8 @@ public class User {
     /**
      * Set Widget
      * @param widgets
+     * set new widgets
      */
-
     public void setWidgets(ArrayList<Widgets> widgets) {
         this.widgets = widgets;
     }
@@ -281,13 +263,18 @@ public class User {
     /**
      * Create Services
      * @param uid
+     * uid of the user
      * @param RequestToken
+     * request token for API
      * @param RequestTokenSecret
+     * request token secret for the API
      * @param serviceName
+     * service name to create
      * @throws ExecutionException
+     * if the connection is interrupted
      * @throws InterruptedException
+     * if the connection is interrupted
      */
-
     public void createService(String uid, String RequestToken, String RequestTokenSecret, String serviceName) throws ExecutionException, InterruptedException {
         Services new_service = new Services();
         new_service.setName(serviceName);
@@ -324,35 +311,10 @@ public class User {
     }
 
     /**
-     * Update Services
-     * @param service
-     */
-
-    public void updateServices(Services service) {
-        System.out.println(service);
-    }
-
-    /**
-     * Print Data
-     */
-
-    public void printData() {
-        System.out.println("User data:");
-        System.out.println("    " + this.getUid());
-        System.out.println("    " + this.getDisplayName());
-        System.out.println("    " + this.getEmail());
-        System.out.println("    " + this.getEmailVerified());
-        System.out.println("    " + this.getPhotoUrl());
-        System.out.println("    " + this.getServices());
-        System.out.println("    " + this.getWidgets());
-        System.out.println();
-    }
-
-    /**
      * Set getUID
      * @return
+     * the uid of the user
      */
-
     public String getUid() {
         return uid;
     }
@@ -360,8 +322,8 @@ public class User {
     /**
      * Get DisplayName
      * @return
+     * the name of the user
      */
-
     public String getDisplayName() {
         return displayName;
     }
@@ -369,8 +331,8 @@ public class User {
     /**
      * Get Email
      * @return
+     * the mail
      */
-
     public String getEmail() {
         return email;
     }
@@ -378,8 +340,8 @@ public class User {
     /**
      * Get Email Verified
      * @return
+     * the mail verified or not
      */
-
     public Boolean getEmailVerified() {
         return emailVerified;
     }
@@ -387,8 +349,8 @@ public class User {
     /**
      * Get Photo Url
      * @return
+     * the photo url
      */
-
     public String getPhotoUrl() {
         return photoUrl;
     }
@@ -396,8 +358,8 @@ public class User {
     /**
      * Get Services
      * @return
+     * the list of all services connected
      */
-
     public ArrayList<Services> getServices() {
         return services;
     }
@@ -405,8 +367,8 @@ public class User {
     /**
      * Get Widgets
      * @return
+     * the list of widgets
      */
-
     public ArrayList<Widgets> getWidgets() {
         return widgets;
     }
@@ -414,8 +376,8 @@ public class User {
     /**
      * toString Function
      * @return
+     * string with all data to print out
      */
-
     @Override
     public String toString() {
         return "User{" +

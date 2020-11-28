@@ -154,7 +154,9 @@ public class TwitchController {
      * @param uid id of the user
      * @return user infos
      * @throws ExecutionException
+     * If the connection is interrupted
      * @throws InterruptedException
+     * If the connection is interrupted
      */
     @SneakyThrows
     @GetMapping(path="/login")
@@ -173,7 +175,9 @@ public class TwitchController {
      * Get all top games
      * @param request nothing
      * @return
+     * All the trends
      * @throws IOException
+     * If the connection is interrupted
      */
     @SneakyThrows
     @GetMapping(path="/trends")
@@ -194,6 +198,7 @@ public class TwitchController {
      * Get list of streams fr
      * @return list of data
      * @throws IOException
+     * If the connection is interrupted
      */
     @SneakyThrows
     @GetMapping(path = "/active-streams")
@@ -219,6 +224,7 @@ public class TwitchController {
      * @param login user id
      * @return list of users
      * @throws IOException
+     * If the connection is interrupted
      */
     @SneakyThrows
     @GetMapping(path = "/get-user")

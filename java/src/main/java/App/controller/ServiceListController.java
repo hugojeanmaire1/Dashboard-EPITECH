@@ -24,32 +24,19 @@ import java.util.concurrent.ExecutionException;
 @RequestMapping("/services")
 public class ServiceListController {
 
+    /**
+     * Connection to DB
+     */
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
-
-    /**
-     * Nothing
-     * @return nothing
-     */
-    @RequestMapping("/")
-    public String getHome() {
-        return "Services";
-    }
-
-    /**
-     * get the list of all the services in the db
-     * @return
-     */
-    @RequestMapping("/list")
-    public String getList() {
-        return "Services list";
-    }
 
     /**
      * List all the services in the db
      * @return list of data
      * @throws ExecutionException
+     * If the connection is interrupted
      * @throws InterruptedException
+     * If the connection is interrupted
      */
     @GetMapping("/get")
     public ArrayList<Services> getServices() throws ExecutionException, InterruptedException {

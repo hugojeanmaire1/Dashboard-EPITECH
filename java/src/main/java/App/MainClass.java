@@ -11,19 +11,16 @@ import com.google.firebase.cloud.FirestoreClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * App.MainClass in order to laucnh Spring boot app
  */
 @SpringBootApplication(scanBasePackages={
-        "App.controller", "App.firebase", "App.Model"})
+        "App.controller", "App.Model"})
 @ComponentScan({"App.controller"})
 public class MainClass {
 
@@ -50,14 +47,13 @@ public class MainClass {
         } else {
             System.out.println("Error when reading the file");
         }
-
 /*        Firestore db = FirestoreClient.getFirestore();
-        Services services = new Services("Github");
+        Services services = new Services("coinmarketcap");
         ArrayList<Widgets> widgets = new ArrayList<>();
-        Widgets widgets1 = new Widgets("ProjectOrganization", "See Projects Organization");
+        Widgets widgets1 = new Widgets("FindCrypto", "Find Crypto information");
         ArrayList<HashMap<String, String>> params = new ArrayList<>();
         HashMap<String, String> map = new HashMap<>();
-        map.put("name", "organization");
+        map.put("name", "coins");
         map.put("type", "string");
         params.add(map);
         widgets1.setParams(params);
@@ -68,35 +64,31 @@ public class MainClass {
         position.put("x", 0);
         position.put("y", 0);
         widgets1.setPosition(position);
-        widgets1.setTitle("Find Project Organization");
-        widgets.add(widgets1);
+        widgets1.setTitle("FindCrypto");*/
 
-        services.setWidgets(widgets);
-        ApiFuture<DocumentReference> future = db.collection("services").add(services);*/
+
+/*        Widgets widgets2 = new Widgets("TopicList", "See Topic by Id");
+        ArrayList<HashMap<String, String>> params2 = new ArrayList<>();
+        HashMap<String, String> map1 = new HashMap<>();
+        map1.put("name", "topics");
+        map1.put("type", "string");
+        params2.add(map1);
+        widgets2.setParams(params2);
+
+        HashMap<String, Object> position1 = new HashMap<>();
+        position1.put("cols", 2);
+        position1.put("rows", 4);
+        position1.put("x", 0);
+        position1.put("y", 0);
+        widgets2.setPosition(position1);
+        widgets2.setTitle("TopicList");*/
+
+        /*widgets.add(widgets1);*/
+        /*widgets.add(widgets2);*/
+
+        /*services.setWidgets(widgets);*/
+        /*ApiFuture<DocumentReference> future = db.collection("services").add(services);*/
 
         SpringApplication.run(MainClass.class, args);
     }
-
-
-
-    /**
-     * In order to configure CORS
-     * @return
-     * WebMVCConfigurer
-     */
-/*    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(@NotNull CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "PUT", "POST", "DELETE")
-                        .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers")
-                        .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials")
-                        .allowCredentials(true).maxAge(3600);
-            }
-        };
-    }*/
-
 }

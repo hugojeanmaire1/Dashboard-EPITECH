@@ -5,19 +5,27 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Server class to get data about server like services and widgets
+ */
 public class Server {
 
+    /**
+     * Current Timestamp when the request is handle
+     */
     private long current_time;
+
+    /**
+     * List of all services define on the server
+     */
     private ArrayList<ServicesAbout> services;
 
     /**
-     * Server
+     * Server constructor
      */
-
     public Server() {
         super();
         this.current_time = System.currentTimeMillis();
@@ -28,8 +36,8 @@ public class Server {
     /**
      * Get Current Time
      * @return
+     * the current timestamp
      */
-
     public long getCurrent_time() {
         return current_time;
     }
@@ -37,8 +45,8 @@ public class Server {
     /**
      * Set Current Time
      * @param current_time
+     * set a new timestamp
      */
-
     public void setCurrent_time(long current_time) {
         this.current_time = current_time;
     }
@@ -46,8 +54,8 @@ public class Server {
     /**
      * Get the Services
      * @return
+     * the list of all services
      */
-
     public ArrayList<ServicesAbout> getServices() {
         return services;
     }
@@ -55,8 +63,8 @@ public class Server {
     /**
      * Set the Services
      * @param services
+     * set a new list of services
      */
-
     public void setServices(ArrayList<ServicesAbout> services) {
         this.services = services;
     }
@@ -64,7 +72,6 @@ public class Server {
     /**
      * Update the Services
      */
-
     private void updateServices()
     {
         try {
@@ -73,7 +80,7 @@ public class Server {
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             for (QueryDocumentSnapshot document: documents)
                 this.services.add(document.toObject(ServicesAbout.class));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
     }
