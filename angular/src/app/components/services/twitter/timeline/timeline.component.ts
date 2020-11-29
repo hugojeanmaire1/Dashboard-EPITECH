@@ -53,7 +53,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
     })
 
     this.interval = setInterval(() => {
-      if (this.timelineUsername !== "" && this.find !== true) {
+      if (this.timelineUsername !== "" && this.find === true) {
         this.callTimeLine(this.timelineUsername);
         console.log("Refresh !");
       }
