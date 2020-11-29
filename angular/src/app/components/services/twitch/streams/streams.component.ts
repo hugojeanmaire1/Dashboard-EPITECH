@@ -11,6 +11,7 @@ import {TwitchService} from "../../../../shared/services/twitch.service";
 
 export class StreamsComponent implements OnInit, OnDestroy {
   data: any[] = [];
+  interval: any;
 
   @Input()
   widget;
@@ -34,9 +35,17 @@ export class StreamsComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.data = response.streams;
       })
+
+    this.interval = setInterval(() => {
+      this.twitchService.getStreams()
+        .subscribe(response => {
+          this.data = response.streams;
+        });
+    })
   }
 
   ngOnDestroy(): void {
+    clearInterval(this.interval);
     this.resizeSub.unsubscribe();
   }
 

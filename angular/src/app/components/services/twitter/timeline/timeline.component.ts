@@ -21,6 +21,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   data: any[] = [];
   timelineUsername: string = "Trashtalk_fr";
   find: boolean = false;
+  interval: any;
 
   @Input()
   widget;
@@ -28,7 +29,6 @@ export class TimelineComponent implements OnInit, OnDestroy {
   resizeEvent: EventEmitter<GridsterItem>;
   @Output()
   removeWidget = new EventEmitter<any>();
-
   resizeSub: Subscription;
 
   constructor(public twitterService: TwitterService, public userService: UserService) { }
@@ -51,10 +51,18 @@ export class TimelineComponent implements OnInit, OnDestroy {
           });
       }
     })
+
+    this.interval = setInterval(() => {
+      if (this.timelineUsername !== "") {
+        this.callTimeLine(this.timelineUsername);
+        console.log("Refresh !");
+      }
+    }, 10000);
   }
 
   ngOnDestroy(): void {
     this.resizeSub.unsubscribe();
+    clearInterval(this.interval);
   }
 
   /**

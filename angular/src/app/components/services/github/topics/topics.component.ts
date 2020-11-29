@@ -17,6 +17,7 @@ export class TopicsComponent implements OnInit {
   input: string;
   find: boolean = false;
   data: any;
+  interval: any;
 
   @Input()
   widget;
@@ -58,6 +59,10 @@ export class TopicsComponent implements OnInit {
             });
       }
     })
+
+    this.interval = setInterval(() => {
+      this.findTopics()
+    }, 10000);
   }
 
   /**

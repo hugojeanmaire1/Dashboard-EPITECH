@@ -10,6 +10,7 @@ import {TwitchService} from "../../../../shared/services/twitch.service";
 })
 export class TopgamesComponent implements OnInit, OnDestroy {
   data: any[] = [];
+  interval: any;
 
   @Input()
   widget;
@@ -19,8 +20,7 @@ export class TopgamesComponent implements OnInit, OnDestroy {
   removeWidget = new EventEmitter<any>();
 
   resizeSub: Subscription;
-
-  constructor(public twitchService: TwitchService) { }
+  constructor(public twitchService: TwitchService) {}
 
   ngOnInit(): void {
     this.resizeSub = this.resizeEvent.subscribe((widget) => {
@@ -33,9 +33,17 @@ export class TopgamesComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.data = response.top
       })
+
+    this.interval = setInterval(() => {
+      this.twitchService.getTrends()
+        .subscribe(response => {
+          this.data = response.top
+        })
+    }, 30000);
   }
 
   ngOnDestroy(): void {
+    clearInterval(this.interval);
     this.resizeSub.unsubscribe();
   }
 

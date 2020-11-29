@@ -12,6 +12,7 @@ import {UserService} from "../../../../shared/services/user.service";
 export class SearchTweetsComponent implements OnInit, OnDestroy {
   search: string = "";
   data: any[] = [];
+  interval: any;
 
   @Input()
   widget;
@@ -42,10 +43,17 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
           });
       }
     })
+
+    this.interval = setInterval(() => {
+      if (this.search !== "") {
+        this.searchTweet();
+      }
+    }, 10000)
   }
 
   ngOnDestroy(): void {
     this.resizeSub.unsubscribe();
+    clearInterval(this.interval);
   }
 
   /**
