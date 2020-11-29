@@ -6,6 +6,7 @@ import App.Model.User;
 import App.Model.Widgets;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -20,22 +21,22 @@ public class UserController {
     /**
      * Create a user in a db
      * @param body infos to send to the db
-     * @param request for session
+     * @param response to send data
      * @throws ExecutionException
      * if the connection is interrupted
      * @throws InterruptedException
      * if the connection is interrupted
      */
     @PostMapping(value = "/create-user")
-    public void PostNewUser(@RequestBody User body, HttpServletRequest request) throws ExecutionException, InterruptedException {
-        request.getSession().setAttribute("Create", body);
+    public void PostNewUser(@RequestBody User body, HttpServletResponse response) throws ExecutionException, InterruptedException {
         body.createNewUser();
+        response.setStatus(200);
     }
 
     /**
      * check if a user already in the db
      * @param body user infos
-     * @param request request
+     * @param response response to send
      * @return user infos
      * @throws ExecutionException
      * if the connection is interrupted
@@ -43,9 +44,8 @@ public class UserController {
      * if the connection is interrupted
      */
     @PostMapping(value = "/check-user")
-    public User checkUser(@RequestBody User body, HttpServletRequest request) throws ExecutionException, InterruptedException {
-        request.getSession().setAttribute("Login", body);
-
+    public User checkUser(@RequestBody User body, HttpServletResponse response) throws ExecutionException, InterruptedException {
+        response.setStatus(200);
         return body.userLogIn();
     }
 

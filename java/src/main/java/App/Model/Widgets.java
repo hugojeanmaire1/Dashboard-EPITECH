@@ -53,7 +53,13 @@ public class Widgets {
     /**
      * Widgets constructor
      */
-    public Widgets() {}
+    public Widgets() {
+        this.name = null;
+        this.title = null;
+        this.description = null;
+        this.params = null;
+        this.position = null;
+    }
 
     /**
      * Widgets constructor

@@ -1,15 +1,10 @@
 package App.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.api.UsageRule;
-import com.google.api.client.auth.oauth2.RefreshTokenRequest;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import twitter4j.auth.RequestToken;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -34,7 +29,13 @@ public class User {
      * Public User
      */
     public User() {
-
+        this.uid = null;
+        this.displayName = null;
+        this.email = null;
+        this.emailVerified = null;
+        this.photoUrl = null;
+        this.services = null;
+        this.widgets = null;
     }
 
     /**
@@ -371,6 +372,15 @@ public class User {
      */
     public ArrayList<Widgets> getWidgets() {
         return widgets;
+    }
+
+    /**
+     * To set uid of the user
+     * @param uid
+     * uid to set
+     */
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     /**

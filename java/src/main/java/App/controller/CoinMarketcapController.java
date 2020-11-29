@@ -41,7 +41,7 @@ public class CoinMarketcapController {
      * @return
      * a request with all of this
      */
-    private Request getRequest(String url, Map<String, String> parameters, Map<String, String> headers)
+    public Request getRequest(String url, Map<String, String> parameters, Map<String, String> headers)
     {
         Headers h = new Headers.Builder().build();
         if (headers != null) {
@@ -74,7 +74,7 @@ public class CoinMarketcapController {
      * a RedirectView to the dashboard
      */
     @GetMapping(path = "/login")
-    public RedirectView loginGithub(@RequestParam(value="uid") String uid)
+    public RedirectView loginCMC(@RequestParam(value="uid") String uid)
     {
         User user = new User();
         try {
@@ -107,12 +107,13 @@ public class CoinMarketcapController {
         try {
             String s = Objects.requireNonNull(client.newCall(r).execute().body()).string();
             res.setContentType("application/json");
+            res.setStatus(200);
             PrintWriter out = res.getWriter();
             out.print(s);
             out.flush();
             out.close();
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "The response is too bad");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The response is too bad");
         }
     }
 }

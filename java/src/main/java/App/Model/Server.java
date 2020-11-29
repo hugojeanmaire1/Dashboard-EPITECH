@@ -74,12 +74,14 @@ public class Server {
      */
     private void updateServices()
     {
+        ArrayList<ServicesAbout> s = new ArrayList<>();
         try {
             Firestore db = FirestoreClient.getFirestore();
             ApiFuture<QuerySnapshot> future = db.collection("services").get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             for (QueryDocumentSnapshot document: documents)
-                this.services.add(document.toObject(ServicesAbout.class));
+                s.add(document.toObject(ServicesAbout.class));
+            this.setServices(s);
         } catch (Exception ignored) {
 
         }

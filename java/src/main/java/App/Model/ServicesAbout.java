@@ -18,7 +18,7 @@ public class ServicesAbout {
      * Services About
      */
     public ServicesAbout() {
-        this.name = "null";
+        this.name = null;
         this.widgets = new ArrayList<WidgetsAbout>();
     }
 
