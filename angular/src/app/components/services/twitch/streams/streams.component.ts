@@ -41,7 +41,7 @@ export class StreamsComponent implements OnInit, OnDestroy {
         .subscribe(response => {
           this.data = response.streams;
         });
-    })
+    }, 30000);
   }
 
   ngOnDestroy(): void {

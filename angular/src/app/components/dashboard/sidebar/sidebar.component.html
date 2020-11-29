@@ -2,7 +2,7 @@
   <mat-card-title>{{service.name}}</mat-card-title>
   <mat-list role="list" dir="ltr">
     <mat-list-item *ngFor="let widget of service.widgets">
-      <div class="button-space">
+      <div class="button-space" color="primary">
         <button mat-icon-button color="primary" aria-label="{{widget.description}}" (click)="addWidget(widget)">
           <mat-icon>add</mat-icon>
         </button>

@@ -61,7 +61,9 @@ export class TopicsComponent implements OnInit {
     })
 
     this.interval = setInterval(() => {
-      this.findTopics()
+      if (this.input !== "" && this.input !== undefined) {
+        this.findTopics()
+      }
     }, 10000);
   }
 

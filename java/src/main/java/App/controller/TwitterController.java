@@ -135,7 +135,11 @@ public class TwitterController {
      */
     @GetMapping(path = "/timeline")
     public List<Status> getTimeline(@RequestParam(value = "user")String username) throws TwitterException {
-        return twitter.getUserTimeline(username);
+        try {
+            return twitter.getUserTimeline(username);
+        } catch (TwitterException e) {
+            return null;
+        }
     }
 
     /**

@@ -76,6 +76,8 @@ export class SearchTweetsComponent implements OnInit, OnDestroy {
         this.data.length = 0;
         this.data = response;
         this.search = "";
+      }, error => {
+        alert("You're not connected to Twitter")
       });
   }
 }

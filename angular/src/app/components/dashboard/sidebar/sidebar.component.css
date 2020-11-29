@@ -15,4 +15,9 @@ button {
 
 .button-space {
   min-width: 60px;
+  color: whitesmoke;
+}
+
+mat-card-title {
+  color: #3F51B5;
 }

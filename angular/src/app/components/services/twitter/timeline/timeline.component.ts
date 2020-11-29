@@ -53,7 +53,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
     })
 
     this.interval = setInterval(() => {
-      if (this.timelineUsername !== "") {
+      if (this.timelineUsername !== "" && this.find !== true) {
         this.callTimeLine(this.timelineUsername);
         console.log("Refresh !");
       }
@@ -82,6 +82,8 @@ export class TimelineComponent implements OnInit, OnDestroy {
       .subscribe(response => {
         this.data = response;
         this.find = true;
+      }, error => {
+        alert("You're not connected to Twitter")
       })
   }
 
