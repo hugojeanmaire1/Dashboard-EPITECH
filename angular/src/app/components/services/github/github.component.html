@@ -1,0 +1,2 @@
+<app-organisation-project *ngIf="widget.type === 'RepositoryList'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-organisation-project>
+<app-topics *ngIf="widget.type === 'TopicList'" [resizeEvent]="resizeEvent" [widget]="widget" (removeWidget)="removeItem($event.event, $event.item)"></app-topics>

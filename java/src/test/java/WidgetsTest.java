@@ -1,36 +1,42 @@
-import App.Model.Widgets;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import App.Model.WidgetsAbout;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-
+import static org.junit.Assert.*;
 
 public class WidgetsTest {
 
-    private Widgets widgets;
+    WidgetsAbout widgets;
 
-    @Before
+    @BeforeEach
     public void BeforeTest() {
-        this.widgets = new Widgets("Facebook", "Facebook widgets");
+        this.widgets = new WidgetsAbout();
     }
 
-
     @Test
-    public void TestWidgets() {
-        assertEquals(this.widgets.getName(), "Facebook");
-        assertEquals(this.widgets.getDescription(), "Facebook widgets");
+    public void TestWidgets()
+    {
+        System.err.println("STARTING WIDGETS TEST MODEL");
+        assertNull(this.widgets.getName());
+        assertNull(this.widgets.getDescription());
         assertEquals(this.widgets.getParams().size(), 0);
-        HashMap<String, String> hashMap = new HashMap<String, String>();
-        hashMap.put("value", "node");
-        hashMap.put("name", "zzz");
-        this.widgets.setParams(hashMap);
-        this.widgets.setName("Google");
-        this.widgets.setDescription("Google Widgets");
-        assertEquals(this.widgets.getName(), "Google");
-        assertEquals(this.widgets.getDescription(), "Google Widgets");
-        assertEquals(this.widgets.getParams().size(), 2);
+        ArrayList<HashMap<String, String>> params = new ArrayList<>();
+        HashMap<String, String> map = new HashMap<>();
+        map.put("data", "ok");
+        map.put("data2", "ok2");
+        params.add(map);
+        this.widgets.setName("github");
+        this.widgets.setDescription("github widgets");
+        this.widgets.setParams(params);
+        assertEquals(this.widgets.getName(), "github");
+        assertEquals(this.widgets.getDescription(), "github widgets");
+        assertEquals(this.widgets.getParams().size(), 1);
+        this.widgets = new WidgetsAbout("githubb", "github widgetss");
+        assertEquals(this.widgets.getName(), "githubb");
+        assertEquals(this.widgets.getDescription(), "github widgetss");
+        assertEquals(this.widgets.getParams().size(), 0);
     }
 }

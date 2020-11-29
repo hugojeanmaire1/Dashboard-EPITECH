@@ -1,0 +1,48 @@
+<mat-toolbar style="background-color: transparent;">
+    <button mat-mini-fab color="basic">
+        <img class="twitter-icon" src="./assets/github_logo.png" />
+    </button>
+    <mat-label class="timeline-title" *ngIf="find">Repository list of <span style="font-size: 20px">{{input}}</span></mat-label>
+    <div *ngIf="!find" class="input-user">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput [(ngModel)]="input" placeholder="Ex. Ruby">
+        </mat-form-field>
+        <button mat-mini-fab color="basic" (click)="findTopics()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+    <span class="example-spacer"></span>
+    <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+        <mat-icon color="primary">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span>
+        </button>
+    </mat-menu>
+</mat-toolbar>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+    <div *ngFor="let repo of data.items">
+        <mat-card style="margin: 15px 5px;">
+            <mat-card-title>
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p>{{repo.display_name ? repo.display_name : repo.name}}</p>
+                </div>
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p>{{repo.short_description ? repo.short_description : "No Description"}}</p>
+                </div>
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p style="padding-right: 3%">Created by: </p>
+                    {{repo.created_by ? repo.created_by : "No Creator"}}
+                </div>
+                <div class="row" style="padding-bottom: 2%; padding-left: 2%">
+                    <p style="padding-right: 3%">Released: </p>
+                    {{repo.released ? repo.released: "No Release date"}}
+                </div>
+            </mat-card-title>
+            <mat-card-content></mat-card-content>
+        </mat-card>
+    </div>
+</div>

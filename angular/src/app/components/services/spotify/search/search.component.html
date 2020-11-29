@@ -1,0 +1,37 @@
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="spotify-icon" src="./assets/spotify_icon.png" />
+  </button>
+  <div class="input-user">
+    <mat-form-field>
+      <mat-label>Search Artist</mat-label>
+      <input matInput [(ngModel)]="search" placeholder="Ex. Travis Scott">
+    </mat-form-field>
+    <button mat-mini-fab color="basic" (click)="getArtist()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px)">
+  <div *ngFor="let artist of data">
+    <mat-card style="margin: 15px 5px; border-radius: 30px;">
+      <mat-card-title>
+        <img class="profile-img" src="{{artist.images[0].url}}">
+        <span class="textScreenName">{{artist.name}}</span>
+        <div class="link-spotify">
+          <a href="{{artist.externalUrls.externalUrls.spotify}}">Click here to open Artist's Spotify Page</a>
+        </div>
+      </mat-card-title>
+    </mat-card>
+  </div>
+</div>

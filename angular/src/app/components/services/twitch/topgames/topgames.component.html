@@ -1,0 +1,29 @@
+<mat-toolbar style="background-color: transparent;">
+  <button mat-mini-fab color="basic">
+    <img class="twitch-icon" src="./assets/twitch_icon.png" />
+  </button>
+  <mat-card-title>Top games</mat-card-title>
+  <span class="example-spacer"></span>
+  <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+    <mat-icon color="primary">menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+      <mat-icon>delete</mat-icon>
+      <span>Remove</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+  <div *ngFor="let game of data">
+    <mat-card style="margin: 15px 5px; background-color: #543787">
+      <mat-card-title style="display: flex">
+        <img style="height: 100px; width: 70px" src="{{game.game.box.medium}}">
+        <div style="margin-top: 10px; margin-left: 15px;">
+          {{game.game.name}}
+          <mat-card-content>Viewers: {{game.viewers}}</mat-card-content>
+        </div>
+      </mat-card-title>
+    </mat-card>
+  </div>
+</div>

@@ -9,7 +9,15 @@ import { ForgotPasswordComponent } from "./components/forgot-password/forgot-pas
 import { VerifyEmailComponent } from "./components/verify-email/verify-email.component";
 
 import {AuthGuard} from "./shared/guard/auth.guard";
+import {TwitterGuard} from "./shared/guard/twitter.guard";
+import {TwitchGuard} from "./shared/guard/twitch.guard";
+import {LoadingscreenComponent} from "./components/loadingscreen/loadingscreen.component";
+import {SpotifyGuard} from "./shared/guard/spotify.guard";
+import {GithubGuard} from "./shared/guard/github.guard";
 
+/**
+ * Route for the project
+ */
 const routes: Routes = [
   { path: '', redirectTo: '/sign-in', pathMatch: 'full'},
   { path: 'sign-in', component: SignInComponent },
@@ -17,6 +25,10 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
+  { path: 'login/twitter/callback', canActivate: [TwitterGuard], component: LoadingscreenComponent},
+  { path: 'login/spotify/callback', canActivate: [SpotifyGuard], component: LoadingscreenComponent},
+  { path: 'login/twitch/callback', canActivate: [TwitchGuard], component: LoadingscreenComponent},
+  { path: 'login/github/callback', canActivate: [GithubGuard], component: LoadingscreenComponent},
 ];
 
 @NgModule({

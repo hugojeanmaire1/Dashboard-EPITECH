@@ -8,3 +8,16 @@
   margin-bottom: 0;
   list-style-type: none;
 }
+
+button {
+  margin-right: 10px;
+}
+
+.button-space {
+  min-width: 60px;
+  color: whitesmoke;
+}
+
+mat-card-title {
+  color: #3F51B5;
+}

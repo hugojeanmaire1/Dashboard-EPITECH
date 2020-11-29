@@ -1,0 +1,52 @@
+<mat-toolbar style="background-color: transparent;">
+    <button mat-mini-fab color="basic">
+        <img class="twitter-icon" src="./assets/github_logo.png" />
+    </button>
+    <mat-label class="timeline-title" *ngIf="find">Repository list of <span style="font-size: 20px">{{input}}</span></mat-label>
+    <div *ngIf="!find" class="input-user">
+        <mat-form-field>
+            <mat-label>Search</mat-label>
+            <input matInput [(ngModel)]="input" placeholder="Ex. Ruby">
+        </mat-form-field>
+        <button mat-mini-fab color="basic" (click)="findOrgProject()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+    <span class="example-spacer"></span>
+    <button mat-mini-fab color="basic" [matMenuTriggerFor]="menu">
+        <mat-icon color="primary">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (mousedown)="removeItem($event, widget)" (touchstart)="removeItem($event, widget)">
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span>
+        </button>
+    </mat-menu>
+</mat-toolbar>
+<div *ngIf="data" style="overflow-y: auto; max-height: calc(100% - 60px);">
+    <div *ngFor="let repo of data.items">
+        <mat-card style="margin: 15px 5px;">
+            <mat-card-title>
+                <div class="row" style="padding-bottom: 2%">
+                    <img style="width: 50px; height: 50px" src="{{repo.owner.avatar_url}}">
+                    {{repo.language}}
+                </div>
+                <div class="row" style="padding-bottom: 2%">
+                    <mat-icon>visibility</mat-icon>
+                    <p>{{repo.watchers_count}}</p>
+                </div>
+                <div class="row" style="padding-bottom: 2%">
+                    <mat-icon style="padding-right: 3%">star_rate</mat-icon>
+                    {{repo.stargazers_count}}
+                </div>
+                <div class="row" style="padding-bottom: 2%">
+                    <p style="padding-right: 3%">Description du repository: </p>
+                    {{repo.description}}
+                </div>
+                <a href="{{repo.html_url}}">Repository link</a>
+            </mat-card-title>
+            <mat-card-content></mat-card-content>
+        </mat-card>
+    </div>
+</div>
+

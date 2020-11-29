@@ -6,6 +6,9 @@ import { AuthService } from "../../shared/services/auth.service";
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })
+/**
+ * Component for forgot password page
+ */
 export class ForgotPasswordComponent implements OnInit {
 
   constructor(
