@@ -36,8 +36,8 @@ public class TwitterController {
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
     private final Configuration configuration = new ConfigurationBuilder()
-        .setOAuthConsumerKey("S2O303TWOCfZHx3e8Jt16AgCr")
-        .setOAuthConsumerSecret("VEquyDohQ2YaXueBqmL0akbAJR16v0GxxTXpxRGDCjuJ9F0QRk")
+        .setOAuthConsumerKey(System.getenv("TWITTER_CLIENTID"))
+        .setOAuthConsumerSecret(System.getenv("TWITTER_CLIENT_SECRET"))
         .build();
     TwitterFactory factory = new TwitterFactory(configuration);
     Twitter twitter = factory.getInstance();
@@ -96,8 +96,7 @@ public class TwitterController {
     @GetMapping(path="/login")
     public void LoginTwitter(HttpServletResponse response, @RequestParam(value="uid") String uid) throws IOException {
         try {
-            String callbackUrl = "http://localhost:4200/login/twitter/callback";
-            RequestToken requestToken = twitter.getOAuthRequestToken(callbackUrl);
+            RequestToken requestToken = twitter.getOAuthRequestToken(System.getenv("TWITTER_CALLBACK_URL"));
             User user = new User();
             user.createService(uid, requestToken.getToken(), requestToken.getTokenSecret(),"twitter");
             response.sendRedirect(requestToken.getAuthenticationURL());

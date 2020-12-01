@@ -80,10 +80,9 @@ public class Server {
             ApiFuture<QuerySnapshot> future = db.collection("services").get();
             List<QueryDocumentSnapshot> documents = future.get().getDocuments();
             for (QueryDocumentSnapshot document: documents)
-                s.add(document.toObject(ServicesAbout.class));
-            this.setServices(s);
-        } catch (Exception ignored) {
-
+                this.services.add(document.toObject(ServicesAbout.class));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

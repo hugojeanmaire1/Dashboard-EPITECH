@@ -35,7 +35,7 @@ public class TwitchController {
      */
     private final OkHttpClient client = new OkHttpClient();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final Twitch twitch = new Twitch("kwhp5wznikfygc3faiad50fqep61w2", "emulvozjrzr3stv5fl5dzcvx42479r", "http://localhost:4200/login/twitch/callback");
+    private final Twitch twitch = new Twitch(System.getenv("TWITCH_CLIENTID"), System.getenv("TWITCH_CLIENT_SECRET"), System.getenv("TWITCH_CALLBACK_URL"));
     private static final Firestore db = FirestoreClient.getFirestore();
 
     /**
@@ -183,7 +183,7 @@ public class TwitchController {
     @GetMapping(path="/trends")
     public Object getTrends(HttpServletRequest request) throws IOException {
         Map<String, String> headers = new HashMap<>();
-        headers.put("Client-ID", "kwhp5wznikfygc3faiad50fqep61w2");
+        headers.put("Client-ID", System.getenv("TWITCH_CLIENTID"));
         headers.put("Accept", "application/vnd.twitchtv.v5+json");
 
         Request r = GetRequestBuilder("https://api.twitch.tv/kraken/games/top", null, headers);
@@ -204,7 +204,7 @@ public class TwitchController {
     @GetMapping(path = "/active-streams")
     public Object getStreams() throws IOException {
         Map<String, String> hearder = new HashMap<>();
-        hearder.put("Client-ID", "kwhp5wznikfygc3faiad50fqep61w2");
+        hearder.put("Client-ID", System.getenv("TWITCH_CLIENTID"));
         hearder.put("Accept", "application/vnd.twitchtv.v5+json");
 
         Map<String, String> params = new HashMap<>();
@@ -230,7 +230,7 @@ public class TwitchController {
     @GetMapping(path = "/get-user")
     public Object getUser(@RequestParam(value = "login")String login) throws IOException {
         Map<String, String> hearder = new HashMap<>();
-        hearder.put("Client-ID", "kwhp5wznikfygc3faiad50fqep61w2");
+        hearder.put("Client-ID", System.getenv("TWITCH_CLIENTID"));
         hearder.put("Accept", "application/vnd.twitchtv.v5+json");
 
         Map<String, String> params = new HashMap<>();

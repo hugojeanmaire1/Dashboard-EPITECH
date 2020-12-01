@@ -45,10 +45,10 @@ public class SpotifyController {
      */
     @JsonIgnore
     private static final Firestore db = FirestoreClient.getFirestore();
-    private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:4200/login/spotify/callback");
+    private static final URI redirectUri = SpotifyHttpManager.makeUri(System.getenv("SPOTIFY_CALLBACK_URL"));
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
-            .setClientId("1510f8bbdfae4bc2acd94094b2cac94e")
-            .setClientSecret("f199f9625cd9441d93fd637602c8d146")
+            .setClientId(System.getenv("SPOTIFY_CLIENTID"))
+            .setClientSecret(System.getenv("SPOTIFY_CLIENT_SECRET"))
             .setRedirectUri(redirectUri)
             .build();
 

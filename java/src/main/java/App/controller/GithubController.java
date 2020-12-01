@@ -39,10 +39,10 @@ public class GithubController {
     /**
      * OAuth service wrapper with clientID/ client-secret
      */
-    final OAuth20Service service = new ServiceBuilder("3ef842eaee82559be97c")
-            .apiSecret("cdc46a4beb24472144d4500981a3d3b52397ab87")
+    final OAuth20Service service = new ServiceBuilder(System.getenv("GITHUB_CLIENTID"))
+            .apiSecret(System.getenv("GITHUB_CLIENT_SECRET"))
             .defaultScope("notifications")
-            .callback("http://localhost:4200/login/github/callback")
+            .callback(System.getenv("GITHUB_CALLBACK_URL"))
             .build(GitHubApi.instance());
 
     /**
